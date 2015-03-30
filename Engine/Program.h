@@ -24,7 +24,7 @@ public:
     virtual inline string getClassName( void )
         const { return "Program"; }
 
-    void run( void );
+    void Run( void );
 
 private:
 
@@ -32,11 +32,11 @@ private:
     Program(Program const&);
     void operator=(Program const&);
 
-    bool init( void );
-    void term( void );
+    bool Init( void );
+    void Term( void );
 
-    void update( void );
-    void render( void );
+    void Update( void );
+    void Render( void );
 
 }; // class Program
 

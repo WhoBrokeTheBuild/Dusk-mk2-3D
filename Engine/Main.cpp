@@ -4,7 +4,7 @@ int main(int argc, char* argv[])
 {
 	Dusk::Program* pProgram = Dusk::Program::Inst();
 
-    pProgram->run();
+    pProgram->Run();
 
     delete pProgram;
 
