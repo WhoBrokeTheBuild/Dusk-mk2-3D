@@ -3,16 +3,10 @@ WORKDIR = `pwd`
 
 CXX = g++
 AR = ar
-LD = g++
 
 INC = \
--I. \
--I../Libraries/glm/include \
--I/usr/include/SDL2
-LIBDIR = -L/usr/lib64
-LIB = -lSDL2 -lSDL2main -lSDL2_image -lpng
+-I.
 CFLAGS = -pedantic-errors -pedantic -std=c++11 -Wall
-LDFLAGS =
 
 # Debug
 XCFLAGS = $(CFLAGS) -g -DDEBUG
@@ -23,11 +17,10 @@ XLDFLAGS = $(LDFLAGS)
 #LDFLAGS = $(LDFLAGS) -s
 
 OBJDIR = obj
-OUTDIR = ../../
-OUT = duskrc
+OUT = ../libdusk.a
 
 SOURCES = \
-Main.cpp
+Dusk.cpp
 
 OBJECTS=$(addprefix $(OBJDIR)/, $(SOURCES:.cpp=.o))
 
@@ -42,4 +35,4 @@ $(OBJDIR)/%.o: %.cpp
 	$(CXX) $(XCFLAGS) $(INC) -c $< -o $@
 
 $(OUT): $(OBJECTS)
-	$(LD) $(LIBDIR) -o $(OUTDIR)$(OUT) $(OBJECTS) $(XLDFLAGS) $(LIB)
+	$(AR) rvs $(OUT) $(OBJECTS)

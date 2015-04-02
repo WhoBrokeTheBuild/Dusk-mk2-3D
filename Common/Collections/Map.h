@@ -42,7 +42,7 @@ public:
 
     inline void Clear( void ) { m_Map.clear(); }
 
-    inline void RemoveKey( const K& key ) 
+    inline void RemoveKey( const K& key )
 		{ m_Map.erase(key); }
     bool RemoveFirstValue( const T& value );
     bool RemoveAllValues( const T& value );
@@ -52,7 +52,7 @@ public:
 	inline T& operator[]( const K& key )	   { return At(key); }
 	inline T& operator[]( const K& key ) const { return At(key); }
 
-    inline bool ContainsKey( const K& key ) 
+    inline bool ContainsKey( const K& key )
 		{ return (m_Map.find(key) != ConstEnd()); }
     bool ContainsValue( const T& value ) const;
 
@@ -109,7 +109,7 @@ private:
 template <class K, class T, typename Sort>
 bool Dusk::Collections::Map<K, T, Sort>::RemoveFirstValue( const T& value )
 {
-	for (auto it = itBegin(); it != End(); ++it)
+	for (auto it = Begin(); it != End(); ++it)
     {
         if (it->second == value)
         {
@@ -124,7 +124,7 @@ template <class K, class T, typename Sort>
 bool Dusk::Collections::Map<K, T, Sort>::RemoveAllValues(const T& value)
 {
     bool found = false;
-    for (auto it = itBegin(); it != End(); ++it)
+    for (auto it = Begin(); it != End(); ++it)
     {
         if (it->second == value)
         {

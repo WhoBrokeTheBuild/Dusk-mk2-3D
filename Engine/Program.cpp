@@ -4,7 +4,6 @@ void Dusk::Program::Run( void )
 {
 	if ( ! Init())
 	{
-
 	}
 }
 

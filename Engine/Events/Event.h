@@ -24,6 +24,8 @@ public:
     inline EventData( void ) { }
     inline EventData( const EventData& rhs ) { }
 
+    virtual inline ~EventData( void ) { }
+
     virtual inline string getClassName( void ) const { return "Event Data"; }
 
     virtual EventData* clone( void ) const { return new EventData(); };

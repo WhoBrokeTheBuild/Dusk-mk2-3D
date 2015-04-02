@@ -77,7 +77,7 @@ public:
     { }
 
     inline virtual ReturnType invoke( Param param ) { return (static_cast<ObjectType*>(mp_Object)->*m_Method)(param); }
-    inline virtual MethodCallback* clone ( void ) { return New MethodCallback(mp_Object, m_Method); }
+    inline virtual MethodCallback* clone ( void ) { return new MethodCallback(mp_Object, m_Method); }
     inline virtual bool isMethodOf( void* pObject ) { return mp_Object == pObject; }
 
     virtual inline string getClassName( void ) const { return "Method Callback"; }

@@ -85,9 +85,9 @@ void IEventDispatcher::removeAllMethods( ObjectType* object )
     while(needRepeat)
     {
         needRepeat = false;
-        for(mapIt = m_EventMap.itBegin(); !needRepeat && mapIt != m_EventMap.itEnd(); ++mapIt)
+        for(mapIt = m_EventMap.Begin(); !needRepeat && mapIt != m_EventMap.End(); ++mapIt)
         {
-            for(listIt = mapIt->second.itBegin(); !needRepeat && listIt != mapIt->second.itEnd(); ++listIt)
+            for(listIt = mapIt->second.Begin(); !needRepeat && listIt != mapIt->second.End(); ++listIt)
             {
                 if ( *listIt == nullptr )
                     continue;

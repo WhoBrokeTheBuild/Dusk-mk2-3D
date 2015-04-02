@@ -6,15 +6,17 @@ AR = ar
 LD = g++
 
 INC = \
--I./
+-I. \
+-I../Common/ \
 -I../Libraries/glm/include \
 -I/usr/include/lua5.2/
 
 LIBDIR = \
+-L.. \
 -L/usr/lib64
 
 LIB = \
--lm -lglfw3 -lGL -lGLU -lGLEW -lX11 -lXi -lXxf86vm \
+-ldusk -lm -lglfw3 -lGL -lGLU -lGLEW -lX11 -lXi -lXxf86vm \
 -lXrandr -lpthread -llua5.2
 
 CFLAGS = -pedantic-errors -pedantic -std=c++11 -Wall
@@ -29,10 +31,13 @@ XLDFLAGS = $(LDFLAGS)
 #CFLAGS = $(CFLAGS) -O2 -DRELEASE
 #LDFLAGS = $(LDFLAGS) -s
 
-OBJDIR = obj/
-OUT = ../dusk
+OBJDIR = obj
+OUTDIR = ../
+OUT = dusk
 
 SOURCES = \
+Events/Event.cpp \
+Events/IEventDispatcher.cpp \
 Program.cpp \
 Main.cpp
 
@@ -49,4 +54,4 @@ $(OBJDIR)/%.o: %.cpp
 	$(CXX) $(XCFLAGS) $(INC) -c $< -o $@
 
 $(OUT): $(OBJECTS)
-	$(LD) $(LIBDIR) -o $(OUT) $(OBJECTS) $(XLDFLAGS) $(LIB)
+	$(LD) $(LIBDIR) -o $(OUTDIR)$(OUT) $(OBJECTS) $(XLDFLAGS) $(LIB)
