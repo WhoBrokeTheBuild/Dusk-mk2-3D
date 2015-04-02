@@ -45,7 +45,7 @@ public:
 
     static void cleanEvents( void )
     {
-        int length = s_Dispatchers.getSize();
+        int length = s_Dispatchers.Size();
         for (int i = 0; i < length; ++i)
             s_Dispatchers[i]->cleanMap();
     }

@@ -42,7 +42,7 @@ public:
     { }
 
     inline virtual ReturnType invoke( Param param ) { return (*mp_Function)(param); }
-    inline virtual FunctionCallback* clone ( void ) { return New FunctionCallback(mp_Function); }
+    inline virtual FunctionCallback* clone ( void ) { return new FunctionCallback(mp_Function); }
     inline virtual bool isMethodOf( void* pObject ) { return false; }
 
     virtual inline string getClassName( void ) const { return "Function Callback"; }

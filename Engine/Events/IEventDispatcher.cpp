@@ -1,26 +1,26 @@
 #include "IEventDispatcher.h"
 
-Arc::ArrayList<Dusk::Events::IEventDispatcher*> Dusk::Events::IEventDispatcher::s_Dispatchers = Arc::ArrayList<Dusk::Events::IEventDispatcher*>();
+ArrayList<Dusk::Events::IEventDispatcher*> Dusk::Events::IEventDispatcher::s_Dispatchers = ArrayList<Dusk::Events::IEventDispatcher*>();
 
 Dusk::Events::IEventDispatcher::IEventDispatcher( void )
 	: m_EventMap(),
 	  m_Changed(false)
 {
-    s_Dispatchers.add(this);
+    s_Dispatchers.Add(this);
 }
 
 Dusk::Events::IEventDispatcher::~IEventDispatcher( void )
 {
-    s_Dispatchers.remove(this);
+    s_Dispatchers.Remove(this);
     removeAllListeners();
 }
 
 void Dusk::Events::IEventDispatcher::addEventListener( const EventID& eventId, const EventDelegate& functionDelegate )
 {
-    if ( ! m_EventMap.containsKey(eventId))
+    if ( ! m_EventMap.ContainsKey(eventId))
         m_EventMap[eventId] = ArrayList<EventDelegate*>();
 
-    int length = m_EventMap[eventId].getSize();
+    int length = m_EventMap[eventId].Size();
 
     for(int i = 0; i < length; ++i)
     {
@@ -30,15 +30,15 @@ void Dusk::Events::IEventDispatcher::addEventListener( const EventID& eventId, c
             return;
     }
 
-    m_EventMap[eventId].add(New EventDelegate(functionDelegate));
+    m_EventMap[eventId].Add(new EventDelegate(functionDelegate));
 }
 
 void Dusk::Events::IEventDispatcher::removeEventListener( const EventID& eventId, const EventDelegate& functionDelegate )
 {
-    if ( ! m_EventMap.containsKey(eventId))
+    if ( ! m_EventMap.ContainsKey(eventId))
         return;
 
-    int length = m_EventMap[eventId].getSize();
+    int length = m_EventMap[eventId].Size();
 
     for(int i = 0; i < length; ++i)
     {
@@ -70,9 +70,9 @@ void Dusk::Events::IEventDispatcher::removeAllListeners( void )
     ArrayList<EventDelegate*>::Iterator listIt;
 
     int length;
-    for (mapIt = m_EventMap.itBegin(); mapIt != m_EventMap.itEnd(); ++mapIt)
+    for (mapIt = m_EventMap.Begin(); mapIt != m_EventMap.End(); ++mapIt)
     {
-        length = mapIt->second.getSize();
+        length = mapIt->second.Size();
         for (int i = 0; i < length; ++i)
         {
             if (mapIt->second[i] != nullptr)
@@ -83,15 +83,15 @@ void Dusk::Events::IEventDispatcher::removeAllListeners( void )
         }
     }
 
-    m_EventMap.clear();
+    m_EventMap.Clear();
 }
 
 void Dusk::Events::IEventDispatcher::removeAllListeners( const EventID& eventId )
 {
-    if ( ! m_EventMap.containsKey(eventId))
+    if ( ! m_EventMap.ContainsKey(eventId))
         return;
 
-    int length = m_EventMap[eventId].getSize();
+    int length = m_EventMap[eventId].Size();
     for(int i = 0; i < length; ++i)
     {
         if ( m_EventMap[eventId][i] != nullptr )
@@ -101,7 +101,7 @@ void Dusk::Events::IEventDispatcher::removeAllListeners( const EventID& eventId 
         }
     }
 
-    m_EventMap.removeKey(eventId);
+    m_EventMap.RemoveKey(eventId);
 
     m_Changed = true;
 }
@@ -110,14 +110,14 @@ void Dusk::Events::IEventDispatcher::dispatch( const Event& event )
 {
     EventID id = event.getID();
 
-    if ( ! m_EventMap.containsKey(id))
+    if ( ! m_EventMap.ContainsKey(id))
         return;
 
     Event tmp = Event(event);
 
     tmp.setTarget(this);
 
-    unsigned int length = m_EventMap[id].getSize();
+    unsigned int length = m_EventMap[id].Size();
     for(unsigned int i = 0; i < length; ++i)
     {
         if (m_EventMap[id][i] != nullptr)
@@ -137,14 +137,14 @@ void Dusk::Events::IEventDispatcher::cleanMap( void )
     while (needRepeat)
     {
         needRepeat = false;
-        for (mapIt = m_EventMap.itBegin(); !needRepeat && mapIt != m_EventMap.itEnd(); ++mapIt)
+        for (mapIt = m_EventMap.Begin(); !needRepeat && mapIt != m_EventMap.End(); ++mapIt)
         {
             list = &mapIt->second;
-            for (unsigned int i = 0; !needRepeat && i < list->getSize(); ++i)
+            for (unsigned int i = 0; !needRepeat && i < list->Size(); ++i)
             {
-                if (list->at(i) == nullptr)
+                if (list->At(i) == nullptr)
                 {
-                    list->removeAt(i);
+                    list->RemoveAt(i);
                     needRepeat = true;
                     break;
                 }

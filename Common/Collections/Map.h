@@ -5,29 +5,27 @@
 
 #include <map>
 
-using std::map;
-
 namespace Dusk
 {
 
 namespace Collections
 {
 
-template <typename K, typename T, typename Sort = less<K>>
+template <class K, class T, typename Sort = std::less<K>>
 class Map
 {
 public:
 
-    typedef typename map<K, T>::iterator
+	typedef typename std::map<K, T>::iterator
         Iterator;
-    typedef typename map<K, T>::reverse_iterator
+	typedef typename std::map<K, T>::reverse_iterator
         ReverseIterator;
-    typedef typename map<K, T>::const_iterator
+	typedef typename std::map<K, T>::const_iterator
         ConstIterator;
-    typedef typename map<K, T>::const_reverse_iterator
+	typedef typename std::map<K, T>::const_reverse_iterator
         ConstReverseIterator;
 
-    typedef pair<K, T> Pair;
+	typedef std::pair<K, T> Pair;
 
     inline Map( void ) :
         m_Map()
@@ -37,22 +35,25 @@ public:
         m_Map(rhs.m_Map)
     { }
 
-    virtual inline ~Map( void ) { clear(); }
+    virtual inline ~Map( void ) { Clear(); }
 
     inline void Add( const K& key, const T& item )
         { m_Map.insert(Pair(key, item)); }
 
     inline void Clear( void ) { m_Map.clear(); }
 
-    inline void RemoveKey( const K& key );
-    inline void RemoveFirstValue( const T& value );
-    inline void RemoveAllValues( const T& value );
+    inline void RemoveKey( const K& key ) 
+		{ m_Map.erase(key); }
+    bool RemoveFirstValue( const T& value );
+    bool RemoveAllValues( const T& value );
 
     inline T& At( const K& key )       { return m_Map[key]; }
     inline T& At( const K& key ) const { return m_Map[key]; }
+	inline T& operator[]( const K& key )	   { return At(key); }
+	inline T& operator[]( const K& key ) const { return At(key); }
 
-    bool ContainsKey( const K& key ) const
-        { return (m_Map.find(key) !== ConstEnd())}
+    inline bool ContainsKey( const K& key ) 
+		{ return (m_Map.find(key) != ConstEnd()); }
     bool ContainsValue( const T& value ) const;
 
     inline bool IsEmpty( void ) const
@@ -101,27 +102,18 @@ public:
 
 private:
 
-    map<K, T, Sort>    m_Map;
+    std::map<K, T, Sort>    m_Map;
 
 }; // class Map<T, K, Sort>
 
 template <class K, class T, typename Sort>
-bool Dusk::Collections::Map<K, T, Sort>::removeKey( const K& key )
+bool Dusk::Collections::Map<K, T, Sort>::RemoveFirstValue( const T& value )
 {
-	bool removed = (m_Map.erase(key) == 1);
-	updateSize();
-	return removed;
-}
-
-template <class K, class T, typename Sort>
-bool Arc::Map<K, T, Sort>::removeFirstValue( const T& value )
-{
-	for (auto it = itBegin(); it != itEnd(); ++it)
+	for (auto it = itBegin(); it != End(); ++it)
     {
         if (it->second == value)
         {
 			m_Map.erase(it);
-			updateSize();
             return true;
         }
 	}
@@ -129,10 +121,10 @@ bool Arc::Map<K, T, Sort>::removeFirstValue( const T& value )
 }
 
 template <class K, class T, typename Sort>
-bool Arc::Map<K, T, Sort>::removeAllValues( const T& value )
+bool Dusk::Collections::Map<K, T, Sort>::RemoveAllValues(const T& value)
 {
     bool found = false;
-    for (auto it = itBegin(); it != itEnd(); ++it)
+    for (auto it = itBegin(); it != End(); ++it)
     {
         if (it->second == value)
         {
@@ -140,7 +132,6 @@ bool Arc::Map<K, T, Sort>::removeAllValues( const T& value )
             found = true;
         }
 	}
-	updateSize();
     return found;
 }
 

@@ -1,30 +1,30 @@
 #include "Program.h"
 
-void Dusk::Program::run( void )
+void Dusk::Program::Run( void )
 {
-	if ( ! init())
+	if ( ! Init())
 	{
 
 	}
 }
 
-bool Dusk::Program::init( void )
+bool Dusk::Program::Init( void )
 {
 
 	return true;
 }
 
-void Dusk::Program::term( void )
+void Dusk::Program::Term( void )
 {
 
 }
 
-void Dusk::Program::update( void )
+void Dusk::Program::Update( void )
 {
 
 }
 
-void Dusk::Program::render( void )
+void Dusk::Program::Render( void )
 {
 
 }
