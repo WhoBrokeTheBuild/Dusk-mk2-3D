@@ -4,6 +4,7 @@
 namespace Dusk
 {
 
+/// Audio Handling Objects and Methods
 namespace Audio
 {
 

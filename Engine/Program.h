@@ -5,6 +5,7 @@
 
 using std::string;
 
+/// Parent namespace for all of Dusk
 namespace Dusk
 {
 

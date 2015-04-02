@@ -4,6 +4,7 @@
 namespace Dusk
 {
 
+/// Collection Objects and Data Structures
 namespace Collections
 {
 

@@ -11,6 +11,11 @@ namespace Dusk
 namespace Collections
 {
 
+/// List of objects backed by an Array
+/*!
+ * Wrapper for std::vector with added functionality and standardized function
+ * names. 
+ */
 template <class T>
 class ArrayList
 {
@@ -35,31 +40,91 @@ public:
 																			   
     virtual inline ~ArrayList( void ) { Clear(); }
 
+	/// Add a new element to the list
+	/*! 
+	 * \param item The item to be added to the list
+	 */
     inline void Add( const T& item )
         { m_List.push_back(item); }
 
+	/// Clear the list of all elements
     inline void Clear( void ) { m_List.clear(); }
 
+	/// Returns the element at the given index
+	/*!
+	 * \param index The index to get the element from
+	 * \returns The element at the given index
+	 */
     inline       T& At( const int& index )       { return m_List[index]; }
+
+	/// Returns the element at the given index
+	/*!
+	* \param index The index to get the element from
+	* \returns The element at the given index
+	*/
     inline const T& At( const int& index ) const { return m_List[index]; }
 
+	/// Returns the element at the given index
+	/*!
+	* \param index The index to get the element from
+	* \returns The element at the given index
+	*/
 	inline       T& operator[]( const int& index )       { return At(index); }
+
+	/// Returns the element at the given index
+	/*!
+	 * \param index The index to get the element from
+	 * \returns The element at the given index
+	 */
 	inline const T& operator[]( const int& index ) const { return At(index); }
 
+	// TODO: Implement Data()
+
+	/// Returns if the given element exists within the list
+	/*! 
+	 * \param item The item to look for in the list
+	 * \returns True if the element is in the list, False otherwise
+	 */
 	inline bool Contains( const T& item ) const 
 		{ return (IsEmpty() ? false : 
 			find(ConstBegin(), ConstEnd(), item) != ConstEnd()); }
 
-	bool HasIndex( const unsigned int& index ) const
+	/// Returns if the given index exists within the list
+	/*!
+	 * \param index The index to check against the bounds of the list
+	 * \returns True if the index is in the list, False otherwise
+	 */
+	inline bool HasIndex( const unsigned int& index ) const
 		{ return (IsEmpty() ? false : (index >= 0 && index <= Size() - 1)); }
 
-	bool IndexOf( const T& item ) const;
+	/// Returns the index of a given element, or -1 if not found
+	/*!
+	* \param item The element to get the index of
+	* \returns The index of the element, or -1 if it could not be found
+	*/
+	unsigned int IndexOf( const T& item ) const;
 
+	/// Returns if the list is empty
+	/*!
+	* \returns True if the list is empty, False otherwise
+	*/
     inline bool IsEmpty( void ) const
         { return m_List.empty(); }
 
+	/// Returns the size of the array
+	/*!
+	* \returns The size of the array
+	*/
     inline size_t Size( void ) const { return m_List.size(); }
 
+	/// Resizes the internal capacity of the array
+	/*!
+	* Resizes the internal capacity of the array, which will remove elements if
+	* the new capacity is less than the current size of the array, but will not
+	* add any new elements if the capacity is larger than the current size of
+	* the array.
+	* \param size The new internal size of the array
+	*/
 	inline void Resize( const unsigned int& size ) 
 		{ m_List.resize(size); }
 
@@ -87,6 +152,11 @@ public:
 	bool Remove( const T& item );
 	bool RemoveAll( const T& item );
 
+	/// Remove the element at the given index
+	/*!
+	 * \param index The index of the element to remove
+	 * \returns True if the element exists and was removed, False otherwise
+	 */
 	inline bool RemoveAt( const unsigned int& index )
 	{
 		if ( ! HasIndex(index))
@@ -138,6 +208,15 @@ private:
 	std::vector<T>		m_List;
 
 }; // class ArrayList
+
+template <class T>
+unsigned int Dusk::Collections::ArrayList<T>::IndexOf(const T& item) const
+{
+	if (IsEmpty())
+		return -1;
+	auto it = find(ConstBegin(), ConstEnd(), item);
+	return (it == ConstEnd() ? -1 : it - ConstBegin());
+}
 
 template <class T>
 bool Dusk::Collections::ArrayList<T>::Remove(const T& item)
