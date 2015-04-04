@@ -6,12 +6,17 @@ using namespace Dusk::Logging;
 
 int main(int argc, char* argv[])
 {
-	LoggingSystem::AddLevel("info");
-	LoggingSystem::AddLevel("debug");
-	LoggingSystem::AddLevel("error");
-	LoggingSystem::AddLevel("critical");
+	LoggingSystem::AddLevel("info",     1);
+	LoggingSystem::AddLevel("debug",    2);
+	LoggingSystem::AddLevel("error",    3);
+	LoggingSystem::AddLevel("critical", 4);
 
-	LoggingSystem::AddFileLogger("info", "info.log");
+	LoggingSystem::AddFileLogger("info",     "info.log");
+	LoggingSystem::AddFileLogger("debug",    "debug.log");
+	LoggingSystem::AddFileLogger("error",    "error.log");
+	LoggingSystem::AddFileLogger("critical", "critical.log");
+
+	LoggingSystem::SetLoggingLevel("error");
 
 	DuskLog("info", "Test Info");
 	DuskLog("debug", "Test Debug");

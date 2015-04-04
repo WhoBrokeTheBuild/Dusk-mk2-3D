@@ -9,8 +9,16 @@
 char Dusk::Logging::LoggingSystem::m_LogBuffer[DUSK_LOGGING_MAX_BUFFER_SIZE];
 char Dusk::Logging::LoggingSystem::m_FormatBuffer[DUSK_LOGGING_MAX_BUFFER_SIZE];
 
+int Dusk::Logging::LoggingSystem::
+m_CurrentLevel = 0;
+
+Map<int, string>
+Dusk::Logging::LoggingSystem::
+m_Levels = Map<int, string>();
+
 Map<string, ArrayList<Dusk::Logging::Logger*>>
-Dusk::Logging::LoggingSystem::m_Loggers = Map<string, ArrayList<Dusk::Logging::Logger*>>();
+Dusk::Logging::LoggingSystem::
+m_Loggers = Map<string, ArrayList<Dusk::Logging::Logger*>>();
 
 bool Dusk::Logging::LoggingSystem::
 AddFileLogger( const string& level, const string& filename )
@@ -40,7 +48,7 @@ void Dusk::Logging::LoggingSystem::
 Log( const string& level, const string& message,
      const string& file, const int& line )
 {
-    if ( ! HasLevel(level)) return;
+    if ( ! LevelShown(level)) return;
 
     Format(level.c_str(), message.c_str(), file.c_str(), line);
     DispatchLog(level);
@@ -50,7 +58,7 @@ void Dusk::Logging::LoggingSystem::
 ExtLog( const string& level, const string& format,
      const string& file, const int& line, va_list args )
 {
-    if ( ! HasLevel(level)) return;
+    if ( ! LevelShown(level)) return;
 
     vsnprintf(m_FormatBuffer, DUSK_LOGGING_MAX_BUFFER_SIZE, format.c_str(), args);
     Format(level.c_str(), m_FormatBuffer, file.c_str(), line);

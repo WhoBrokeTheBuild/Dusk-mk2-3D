@@ -25,16 +25,31 @@ class LoggingSystem
 {
 public:
 
-    static inline bool AddLevel( const string& level )
+    static inline bool AddLevel( const string& level, const int& index )
     {
-        if (m_Loggers.ContainsKey(level))
+        if (m_Loggers.ContainsKey(level) || m_Levels.ContainsKey(index))
             return false;
+
         m_Loggers.Add(level, ArrayList<Logger*>());
+        m_Levels.Add(index, level);
+
         return true;
     }
 
     static inline bool HasLevel( const string& level )
         { return (m_Loggers.ContainsKey(level)); }
+
+    static inline bool LevelShown( const string& level )
+        { return (m_Levels.GetIndexOf(level) >= m_CurrentLevel); }
+
+    static inline void SetLoggingLevel( const string& level )
+        { m_CurrentLevel = m_Levels.GetIndexOf(level); }
+
+    static inline void SetLoggingLevel( const int& index )
+        { m_CurrentLevel = index; }
+
+    static inline int GetLoggingLevel( void )
+        { return m_CurrentLevel; }
 
     static bool AddFileLogger    ( const string& level, const string& filename );
     static bool AddStreamLogger  ( const string& level, ostream& stream );
@@ -58,7 +73,11 @@ private:
     static char  m_LogBuffer[DUSK_LOGGING_MAX_BUFFER_SIZE],
                  m_FormatBuffer[DUSK_LOGGING_MAX_BUFFER_SIZE];
 
-    static Map<string, ArrayList<Logger*>>     m_Loggers;
+    static int                                  m_CurrentLevel;
+
+    static Map<int, string>                     m_Levels;
+
+    static Map<string, ArrayList<Logger*>>      m_Loggers;
 
 }; // class LoggingSystem
 

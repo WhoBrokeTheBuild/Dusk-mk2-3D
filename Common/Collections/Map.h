@@ -88,16 +88,16 @@ public:
     inline ReverseIterator RevEnd( void )
         { return m_Map.rend(); }
 
-    inline ConstIterator ConstBegin( void )
+    inline ConstIterator ConstBegin( void ) const
         { return m_Map.cbegin(); }
 
-    inline ConstIterator ConstEnd( void )
+    inline ConstIterator ConstEnd( void ) const
         { return m_Map.cend(); }
 
-    inline ConstReverseIterator ConstRevBegin( void )
+    inline ConstReverseIterator ConstRevBegin( void ) const
         { return m_Map.crbegin(); }
 
-    inline ConstReverseIterator ConstRevEnd( void )
+    inline ConstReverseIterator ConstRevEnd( void ) const
         { return m_Map.crend(); }
 
 private:
@@ -133,6 +133,24 @@ bool Dusk::Collections::Map<K, T, Sort>::RemoveAllValues(const T& value)
         }
 	}
     return found;
+}
+
+template <class K, class T, typename Sort>
+bool Dusk::Collections::Map<K, T, Sort>::ContainsValue( const T& value ) const
+{
+	for (auto it = ConstBegin(); it != ConstEnd(); ++it)
+        if (it->second == value)
+            return true;
+    return false;
+}
+
+template <class K, class T, typename Sort>
+K Dusk::Collections::Map<K, T, Sort>::GetIndexOf( const T& item ) const
+{
+	for (auto it = ConstBegin(); it != ConstEnd(); ++it)
+        if (it->second == item)
+            return it->first;
+    return K();
 }
 
 } // namespace Collections
