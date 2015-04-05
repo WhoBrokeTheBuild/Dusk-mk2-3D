@@ -4,6 +4,8 @@
 #include <Collections/Map.h>
 #include <Collections/ArrayList.h>
 
+#include <Logging/LogColors.h>
+
 #include <string>
 #include <fstream>
 
@@ -25,25 +27,16 @@ class LoggingSystem
 {
 public:
 
-    static inline bool AddLevel( const string& level, const int& index )
-    {
-        if (m_Loggers.ContainsKey(level) || m_Levels.ContainsKey(index))
-            return false;
-
-        m_Loggers.Add(level, ArrayList<Logger*>());
-        m_Levels.Add(index, level);
-
-        return true;
-    }
+    static bool AddLevel( const int& index, const string& level );
 
     static inline bool HasLevel( const string& level )
         { return (m_Loggers.ContainsKey(level)); }
 
     static inline bool LevelShown( const string& level )
-        { return (m_Levels.GetIndexOf(level) >= m_CurrentLevel); }
+        { return (m_Levels[level] >= m_CurrentLevel); }
 
     static inline void SetLoggingLevel( const string& level )
-        { m_CurrentLevel = m_Levels.GetIndexOf(level); }
+        { m_CurrentLevel = m_Levels[level]; }
 
     static inline void SetLoggingLevel( const int& index )
         { m_CurrentLevel = index; }
@@ -51,10 +44,14 @@ public:
     static inline int GetLoggingLevel( void )
         { return m_CurrentLevel; }
 
+    static bool AddConsoleLogger ( const string& level );
     static bool AddFileLogger    ( const string& level, const string& filename );
     static bool AddStreamLogger  ( const string& level, ostream& stream );
-    static bool AddStdOutLogger  ( const string& level );
-    static bool AddStdErrorLogger( const string& level );
+
+    static void SetLevelForegroundColor( const string& level,
+                                         const LogForegroundColor& color );
+    static void SetLevelBackgroundColor( const string& level,
+                                         const LogBackgroundColor& color );
 
     static void CloseAllLoggers( void );
 
@@ -75,7 +72,10 @@ private:
 
     static int                                  m_CurrentLevel;
 
-    static Map<int, string>                     m_Levels;
+    static Map<string, int>                     m_Levels;
+
+    static Map<string, LogForegroundColor>      m_ForegroundColors;
+    static Map<string, LogBackgroundColor>      m_BackgroundColors;
 
     static Map<string, ArrayList<Logger*>>      m_Loggers;
 

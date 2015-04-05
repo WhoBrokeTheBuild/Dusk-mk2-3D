@@ -7,7 +7,7 @@ FileLogger( const string& filename )
 }
 
 void Dusk::Logging::FileLogger::
-Log( const string& line )
+Log( const string& line, const LogForegroundColor& fgColor,
+                         const LogBackgroundColor& bgColor )
 {
-    printf("%s\n", line.c_str());
 }

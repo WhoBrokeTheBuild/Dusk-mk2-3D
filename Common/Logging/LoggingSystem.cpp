@@ -1,6 +1,7 @@
 #include "LoggingSystem.h"
 
 #include <Logging/Logger.h>
+#include <Logging/Loggers/ConsoleLogger.h>
 #include <Logging/Loggers/FileLogger.h>
 #include <Logging/Loggers/StreamLogger.h>
 
@@ -12,20 +13,33 @@ char Dusk::Logging::LoggingSystem::m_FormatBuffer[DUSK_LOGGING_MAX_BUFFER_SIZE];
 int Dusk::Logging::LoggingSystem::
 m_CurrentLevel = 0;
 
-Map<int, string>
+Map<string, int>
 Dusk::Logging::LoggingSystem::
-m_Levels = Map<int, string>();
+m_Levels = Map<string, int>();
+
+Map<string, Dusk::Logging::LogForegroundColor>
+Dusk::Logging::LoggingSystem::
+m_ForegroundColors = Map<string, Dusk::Logging::LogForegroundColor>();
+
+Map<string, Dusk::Logging::LogBackgroundColor>
+Dusk::Logging::LoggingSystem::
+m_BackgroundColors = Map<string, Dusk::Logging::LogBackgroundColor>();
 
 Map<string, ArrayList<Dusk::Logging::Logger*>>
 Dusk::Logging::LoggingSystem::
 m_Loggers = Map<string, ArrayList<Dusk::Logging::Logger*>>();
 
 bool Dusk::Logging::LoggingSystem::
-AddFileLogger( const string& level, const string& filename )
+AddLevel( const int& index, const string& level )
 {
-    if ( ! m_Loggers.ContainsKey(level))
+    if (m_Loggers.ContainsKey(level) || m_Levels.ContainsKey(level))
         return false;
-    m_Loggers[level].Add(new FileLogger(filename));
+
+    m_Loggers.Add(level, ArrayList<Logger*>());
+    m_Levels.Add(level, index);
+    m_ForegroundColors.Add(level, LOG_FG_DEFAULT);
+    m_BackgroundColors.Add(level, LOG_BG_DEFAULT);
+
     return true;
 }
 
@@ -42,6 +56,22 @@ CloseAllLoggers( void )
         loggers.Clear();
     }
     m_Loggers.Clear();
+}
+
+void Dusk::Logging::LoggingSystem::
+SetLevelForegroundColor( const string& level, const LogForegroundColor& color )
+{
+    if ( ! HasLevel(level)) return;
+
+    m_ForegroundColors[level] = color;
+}
+
+void Dusk::Logging::LoggingSystem::
+SetLevelBackgroundColor( const string& level, const LogBackgroundColor& color )
+{
+    if ( ! HasLevel(level)) return;
+
+    m_BackgroundColors[level] = color;
 }
 
 void Dusk::Logging::LoggingSystem::
@@ -81,6 +111,9 @@ DispatchLog( const string& level )
 {
     if ( ! HasLevel(level)) return;
 
+    LogForegroundColor fgColor = m_ForegroundColors[level];
+    LogBackgroundColor bgColor = m_BackgroundColors[level];
+
     ArrayList<Logger*>& loggers = m_Loggers[level];
     for (auto it = loggers.Begin(); it != loggers.End(); ++it)
     {
@@ -88,8 +121,26 @@ DispatchLog( const string& level )
         if (pLogger == nullptr)
             continue;
 
-        pLogger->Log(m_LogBuffer);
+        pLogger->Log(m_LogBuffer, fgColor, bgColor);
     }
+}
+
+bool Dusk::Logging::LoggingSystem::
+AddConsoleLogger( const string& level )
+{
+    if ( ! m_Loggers.ContainsKey(level))
+        return false;
+    m_Loggers[level].Add(new ConsoleLogger());
+    return true;
+}
+
+bool Dusk::Logging::LoggingSystem::
+AddFileLogger( const string& level, const string& filename )
+{
+    if ( ! m_Loggers.ContainsKey(level))
+        return false;
+    m_Loggers[level].Add(new FileLogger(filename));
+    return true;
 }
 
 /*

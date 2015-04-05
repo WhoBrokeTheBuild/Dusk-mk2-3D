@@ -1,6 +1,8 @@
 #ifndef DUSK_LOGGING_LOGGER_H
 #define DUSK_LOGGING_LOGGER_H
 
+#include <Logging/LogColors.h>
+
 #include <string>
 
 using std::string;
@@ -17,7 +19,9 @@ public:
 
     virtual inline ~Logger( void ) { }
 
-    virtual void Log( const string& line ) = 0;
+    virtual void Log( const string& line,
+                      const LogForegroundColor& fgColor,
+                      const LogBackgroundColor& bgColor ) = 0;
 
 }; // class Logger
 

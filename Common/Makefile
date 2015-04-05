@@ -22,6 +22,7 @@ OUT = ../libdusk.a
 SOURCES = \
 Logging/LoggingSystem.cpp \
 Logging/Logger.cpp \
+Logging/Loggers/ConsoleLogger.cpp \
 Logging/Loggers/FileLogger.cpp \
 Logging/Loggers/StreamLogger.cpp \
 Dusk.cpp

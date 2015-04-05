@@ -1,5 +1,5 @@
-#ifndef DUSK_LOGGING_FILE_LOGGER_H
-#define DUSK_LOGGING_FILE_LOGGER_H
+#ifndef DUSK_LOGGING_CONSOLE_LOGGER_H
+#define DUSK_LOGGING_CONSOLE_LOGGER_H
 
 #include <Logging/Logger.h>
 
@@ -13,22 +13,22 @@ namespace Dusk
 namespace Logging
 {
 
-class FileLogger :
+class ConsoleLogger :
     public Logger
 {
 public:
 
-    FileLogger( const string& filename );
-    virtual ~FileLogger( void ) { }
+    inline ConsoleLogger( void ) { }
+    virtual ~ConsoleLogger( void ) { }
 
     virtual void Log( const string& line,
                       const LogForegroundColor& fgColor,
                       const LogBackgroundColor& bgColor );
 
-}; // class FileLogger
+}; // class ConsoleLogger
 
 } // namespace Logging
 
 } // namespace Dusk
 
-#endif // DUSK_LOGGING_FILE_LOGGER_H
+#endif // DUSK_LOGGING_CONSOLE_LOGGER_H
