@@ -1,9 +1,15 @@
 #include "Program.h"
 
+#include <Logging/Logging.h>
+
+using namespace Dusk::Logging;
+
 void Dusk::Program::Run( void )
 {
 	if ( ! Init())
 	{
+		DuskLog("error", "Program Initialization Failed");
+		return;
 	}
 }
 

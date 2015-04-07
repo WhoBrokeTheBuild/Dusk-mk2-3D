@@ -1,6 +1,8 @@
 #ifndef DUSK_LOGGING_H
 #define DUSK_LOGGING_H
 
+#include <Logging/LoggingSystem.h>
+
 namespace Dusk
 {
 

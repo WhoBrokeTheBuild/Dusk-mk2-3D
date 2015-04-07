@@ -15,6 +15,10 @@ using std::ostream;
 
 #define DUSK_LOGGING_MAX_BUFFER_SIZE 4096
 
+#ifdef _WIN32
+#define snprintf _snprintf
+#endif
+
 namespace Dusk
 {
 

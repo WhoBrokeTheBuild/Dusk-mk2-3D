@@ -5,5 +5,23 @@
     <ClInclude Include="Collections\ArrayList.h" />
     <ClInclude Include="Tracking\Tracking.h" />
     <ClInclude Include="Collections\Collections.h" />
+    <ClInclude Include="Logging\Loggers\ConsoleLogger.h" />
+    <ClInclude Include="Logging\Loggers\FileLogger.h" />
+    <ClInclude Include="Logging\Loggers\StreamLogger.h" />
+    <ClInclude Include="Logging\LogColors.h" />
+    <ClInclude Include="Logging\Logger.h" />
+    <ClInclude Include="Logging\Logging.h" />
+    <ClInclude Include="Logging\LoggingSystem.h" />
+    <ClInclude Include="Dusk.h" />
+    <ClInclude Include="Utility\Console.h" />
+    <ClInclude Include="Utility\Utility.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Logging\Loggers\ConsoleLogger.cpp" />
+    <ClCompile Include="Logging\Loggers\FileLogger.cpp" />
+    <ClCompile Include="Logging\Loggers\StreamLogger.cpp" />
+    <ClCompile Include="Logging\Logger.cpp" />
+    <ClCompile Include="Logging\LoggingSystem.cpp" />
+    <ClCompile Include="Dusk.cpp" />
   </ItemGroup>
 </Project>

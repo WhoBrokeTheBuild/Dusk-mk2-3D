@@ -1,6 +1,7 @@
 #include <Program.h>
 
 #include <Logging/LoggingSystem.h>
+#include <Utility/Console.h>
 
 using namespace Dusk::Logging;
 
@@ -25,7 +26,7 @@ int main(int argc, char* argv[])
 	LoggingSystem::SetLevelForegroundColor("info", LOG_FG_BLUE);
 	LoggingSystem::SetLevelForegroundColor("debug", LOG_FG_GREEN);
 
-	LoggingSystem::SetLoggingLevel("verbose");
+	LoggingSystem::SetLoggingLevel("debug");
 
 	DuskLog("verbose", "Finished LoggingSystem setup");
 
@@ -42,6 +43,8 @@ int main(int argc, char* argv[])
 	DuskLog("verbose", "Program deleted, preparing to close logs");
 
 	LoggingSystem::CloseAllLoggers();
+
+	Dusk::Utility::ConsolePause();
 
     return 0;
 }
