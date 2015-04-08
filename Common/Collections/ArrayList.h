@@ -2,6 +2,7 @@
 #define DUSK_COLLECTIONS_ARRAY_LIST_H
 
 #include <Collections/Collections.h>
+#include <Tracking/TrackedObject.h>
 
 #include <vector>
 
@@ -17,7 +18,8 @@ namespace Collections
  * names. 
  */
 template <class T>
-class ArrayList
+class ArrayList :
+	public Tracking::TrackedObject
 {
 public:
 
@@ -39,6 +41,8 @@ public:
     { }
 																			   
     virtual inline ~ArrayList( void ) { Clear(); }
+
+	virtual inline string ClassName( void ) const { return "Array List"; }
 
 	/// Add a new element to the list
 	/*! 

@@ -2,6 +2,7 @@
 #define DUSK_COLLECTIONS_MAP_H
 
 #include <Collections/Collections.h>
+#include <Tracking/TrackedObject.h>
 
 #include <map>
 
@@ -12,7 +13,8 @@ namespace Collections
 {
 
 template <class K, class T, typename Sort = std::less<K>>
-class Map
+class Map :
+	public Tracking::TrackedObject
 {
 public:
 
@@ -36,6 +38,8 @@ public:
     { }
 
     virtual inline ~Map( void ) { Clear(); }
+
+	virtual inline string ClassName( void ) const { return "Map"; }
 
     inline void Add( const K& key, const T& item )
         { m_Map.insert(Pair(key, item)); }
