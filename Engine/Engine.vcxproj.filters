@@ -5,6 +5,7 @@
     <ClCompile Include="Program.cpp" />
     <ClCompile Include="Events\Event.cpp" />
     <ClCompile Include="Events\IEventDispatcher.cpp" />
+    <ClCompile Include="Graphics\GraphicsSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Program.h" />
@@ -17,5 +18,6 @@
     <ClInclude Include="Events\Delegate.h" />
     <ClInclude Include="Events\Event.h" />
     <ClInclude Include="Events\IEventDispatcher.h" />
+    <ClInclude Include="Graphics\GraphicsSystem.h" />
   </ItemGroup>
 </Project>

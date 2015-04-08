@@ -1,13 +1,13 @@
 #ifndef DUSK_PROGRAM_H
 #define DUSK_PROGRAM_H
 
-#include <string>
-
-using std::string;
-
-/// Parent namespace for all of Dusk
 namespace Dusk
 {
+
+namespace Graphics
+{
+	class GraphicsSystem;
+}
 
 class Program
 {
@@ -22,22 +22,25 @@ public:
 
     virtual inline ~Program() { }
 
-    virtual inline string getClassName( void )
-        const { return "Program"; }
-
     void Run( void );
 
 private:
 
-    Program() {};
-    Program(Program const&);
-    void operator=(Program const&);
+    Program( void ) { };
+    Program( Program const& );
+    void operator=( Program const& );
 
     bool Init( void );
     void Term( void );
 
     void Update( void );
     void Render( void );
+
+	bool InitGraphics( void );
+	bool InitInput( void );
+	bool InitAudio( void );
+
+	Graphics::GraphicsSystem*		mp_GraphicsSystem;
 
 }; // class Program
 
