@@ -1,6 +1,8 @@
 #ifndef DUSK_CALLBACKS_H
 #define DUSK_CALLBACKS_H
 
+#include <Tracking/TrackedObject.h>
+
 namespace Dusk
 {
 
@@ -8,7 +10,8 @@ namespace Events
 {
 
 template <typename ReturnType, typename Param = void>
-class Callback
+class Callback :
+	public Tracking::TrackedObject
 {
 public:
 
@@ -17,7 +20,7 @@ public:
     friend bool operator==( const Callback<ReturnType, Param>& lhs, const Callback<ReturnType, Param>& rhs ) { return lhs.isEqualTo(rhs); }
     friend bool operator!=( const Callback<ReturnType, Param>& lhs, const Callback<ReturnType, Param>& rhs ) { return ! lhs.isEqualTo(rhs); }
 
-    virtual inline string getClassName( void ) const { return "Callback"; }
+    virtual inline string ClassName( void ) const { return "Callback"; }
 
     virtual ReturnType invoke( Param param ) = 0;
     virtual Callback* clone( void )          = 0;
@@ -42,10 +45,10 @@ public:
     { }
 
     inline virtual ReturnType invoke( Param param ) { return (*mp_Function)(param); }
-    inline virtual FunctionCallback* clone ( void ) { return new FunctionCallback(mp_Function); }
+    inline virtual FunctionCallback* clone ( void ) { return New FunctionCallback(mp_Function); }
     inline virtual bool isMethodOf( void* pObject ) { return false; }
 
-    virtual inline string getClassName( void ) const { return "Function Callback"; }
+    virtual inline string ClassName( void ) const { return "Function Callback"; }
 
 protected:
 
@@ -77,10 +80,10 @@ public:
     { }
 
     inline virtual ReturnType invoke( Param param ) { return (static_cast<ObjectType*>(mp_Object)->*m_Method)(param); }
-    inline virtual MethodCallback* clone ( void ) { return new MethodCallback(mp_Object, m_Method); }
+    inline virtual MethodCallback* clone ( void ) { return New MethodCallback(mp_Object, m_Method); }
     inline virtual bool isMethodOf( void* pObject ) { return mp_Object == pObject; }
 
-    virtual inline string getClassName( void ) const { return "Method Callback"; }
+    virtual inline string ClassName( void ) const { return "Method Callback"; }
 
 protected:
 

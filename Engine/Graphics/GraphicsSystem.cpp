@@ -1,6 +1,9 @@
 #include "GraphicsSystem.h"
 
-bool Dusk::Graphics::GraphicsSystem::Init(void)
+using namespace Dusk::Graphics;
+
+bool GraphicsSystem::
+Init(void)
 {
 
 

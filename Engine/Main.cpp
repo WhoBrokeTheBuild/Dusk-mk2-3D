@@ -1,12 +1,17 @@
 #include <Program.h>
 
+#include <Tracking/MemoryTracker.h>
 #include <Logging/LoggingSystem.h>
 #include <Utility/Console.h>
+#include <Utility/Platform.h>
 
+using namespace Dusk::Tracking;
 using namespace Dusk::Logging;
 
 int main(int argc, char* argv[])
 {
+	MemoryTracker::Init();
+
 	LoggingSystem::AddLevel(3, "error");
 	LoggingSystem::AddLevel(2, "info");
 	LoggingSystem::AddLevel(1, "debug");
@@ -26,7 +31,7 @@ int main(int argc, char* argv[])
 	LoggingSystem::SetLevelForegroundColor("info",  LOG_FG_BLUE);
 	LoggingSystem::SetLevelForegroundColor("debug", LOG_FG_GREEN);
 
-	LoggingSystem::SetLoggingLevel("verbose");
+	LoggingSystem::SetLoggingLevel("info");
 
 	DuskLog("verbose", "Finished LoggingSystem setup");
 
@@ -43,6 +48,15 @@ int main(int argc, char* argv[])
 	DuskLog("verbose", "Program deleted, preparing to close logs");
 
 	LoggingSystem::CloseAllLoggers();
+
+#ifdef DUSK_DEBUG_BUILD
+
+	if (MemoryTracker::AllocationCount() > 0)
+		MemoryTracker::PrintAllocations();
+
+#endif // DUSK_DEBUG_BUILD
+
+	MemoryTracker::Term();
 
 	Dusk::Utility::ConsolePause();
 

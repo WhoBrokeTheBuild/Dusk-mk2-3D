@@ -30,7 +30,7 @@ void Dusk::Events::IEventDispatcher::addEventListener( const EventID& eventId, c
             return;
     }
 
-    m_EventMap[eventId].Add(new EventDelegate(functionDelegate));
+    m_EventMap[eventId].Add(New EventDelegate(functionDelegate));
 }
 
 void Dusk::Events::IEventDispatcher::removeEventListener( const EventID& eventId, const EventDelegate& functionDelegate )

@@ -1,12 +1,14 @@
 #include "FileLogger.h"
 
-Dusk::Logging::FileLogger::
+using namespace Dusk::Logging;
+
+FileLogger::
 FileLogger( const string& filename )
 {
 
 }
 
-void Dusk::Logging::FileLogger::
+void FileLogger::
 Log( const string& line, const LogForegroundColor& fgColor,
                          const LogBackgroundColor& bgColor )
 {

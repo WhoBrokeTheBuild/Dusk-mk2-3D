@@ -21,6 +21,8 @@ public:
     FileLogger( const string& filename );
     virtual ~FileLogger( void ) { }
 
+	virtual inline string ClassName( void ) const { return "File Logger"; }
+
     virtual void Log( const string& line,
                       const LogForegroundColor& fgColor,
                       const LogBackgroundColor& bgColor );

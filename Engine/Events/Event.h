@@ -1,6 +1,7 @@
 #ifndef DUSK_EVENT_H
 #define DUSK_EVENT_H
 
+#include <Tracking/TrackedObject.h>
 #include <string>
 
 using std::string;
@@ -15,7 +16,8 @@ typedef unsigned int EventID;
 
 class IEventDispatcher;
 
-class EventData
+class EventData :
+	public Tracking::TrackedObject
 {
 public:
 
@@ -26,13 +28,14 @@ public:
 
     virtual inline ~EventData( void ) { }
 
-    virtual inline string getClassName( void ) const { return "Event Data"; }
+    virtual inline string ClassName( void ) const { return "Event Data"; }
 
-    virtual EventData* clone( void ) const { return new EventData(); };
+    virtual EventData* clone( void ) const { return New EventData(); };
 
 }; // class EventData
 
-class Event
+class Event :
+	public Tracking::TrackedObject
 {
 public:
 
@@ -57,7 +60,7 @@ public:
         delete mp_Data;
     }
 
-    virtual inline string getClassName( void ) const { return "Event"; }
+    virtual inline string ClassName( void ) const { return "Event"; }
 
     inline EventID getID( void ) const { return m_ID; }
 

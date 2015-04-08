@@ -15,6 +15,9 @@
     <ClInclude Include="Dusk.h" />
     <ClInclude Include="Utility\Console.h" />
     <ClInclude Include="Utility\Utility.h" />
+    <ClInclude Include="Tracking\MemoryTracker.h" />
+    <ClInclude Include="Tracking\TrackedObject.h" />
+    <ClInclude Include="Utility\Platform.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Logging\Loggers\ConsoleLogger.cpp" />
@@ -23,5 +26,7 @@
     <ClCompile Include="Logging\Logger.cpp" />
     <ClCompile Include="Logging\LoggingSystem.cpp" />
     <ClCompile Include="Dusk.cpp" />
+    <ClCompile Include="Tracking\MemoryTracker.cpp" />
+    <ClCompile Include="Tracking\TrackedObject.cpp" />
   </ItemGroup>
 </Project>

@@ -1,6 +1,7 @@
 #ifndef DUSK_DELEGATE_H
 #define DUSK_DELEGATE_H
 
+#include <Tracking/TrackedObject.h>
 #include <Events/Callbacks.h>
 
 namespace Dusk
@@ -10,19 +11,20 @@ namespace Events
 {
 
 template <typename ReturnType, typename Param = void>
-class Delegate
+class Delegate :
+	public Tracking::TrackedObject
 {
 public:
 
     Delegate( ReturnType (*pFunction)(Param) )
     {
-        mp_Callback = new FunctionCallback<ReturnType, Param>(pFunction);
+        mp_Callback = New FunctionCallback<ReturnType, Param>(pFunction);
     }
 
     template <typename ObjectType, typename Method>
     Delegate( ObjectType* pObject, Method method )
     {
-		mp_Callback = new MethodCallback<ReturnType, Param, ObjectType, Method>(pObject, method);
+		mp_Callback = New MethodCallback<ReturnType, Param, ObjectType, Method>(pObject, method);
     }
 
     Delegate( const Delegate<ReturnType, Param>& rhs )
@@ -32,7 +34,7 @@ public:
 
     virtual inline ~Delegate( void ) { delete mp_Callback; mp_Callback = nullptr; }
 
-    virtual inline string getClassName( void ) const { return "Delegate"; }
+    virtual inline string ClassName( void ) const { return "Delegate"; }
 
     inline ReturnType invoke( Param param ) { return mp_Callback->invoke(param); }
     inline ReturnType operator()( Param param ) { return invoke(param); }

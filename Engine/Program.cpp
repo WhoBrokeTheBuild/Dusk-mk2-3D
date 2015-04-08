@@ -6,7 +6,8 @@
 using namespace Dusk::Logging;
 using namespace Dusk::Graphics;
 
-void Dusk::Program::Run( void )
+void Dusk::Program::
+Run( void )
 {
 	if ( ! Init() )
 	{
@@ -16,7 +17,8 @@ void Dusk::Program::Run( void )
 	DuskLog("info", "Program Init Succeeded");
 }
 
-bool Dusk::Program::Init( void )
+bool Dusk::Program::
+Init( void )
 {
 	if ( ! InitGraphics() )
 	{
@@ -42,35 +44,42 @@ bool Dusk::Program::Init( void )
 	return true;
 }
 
-void Dusk::Program::Term( void )
-{
-
-}
-
-void Dusk::Program::Update( void )
-{
-
-}
-
-void Dusk::Program::Render( void )
-{
-
-}
-
-bool Dusk::Program::InitGraphics( void )
+void Dusk::Program::
+Term( void )
 {
 	delete mp_GraphicsSystem;
-	mp_GraphicsSystem = new GraphicsSystem();
+	mp_GraphicsSystem = nullptr;
+}
+
+void Dusk::Program::
+Update( void )
+{
+
+}
+
+void Dusk::Program::
+Render( void )
+{
+
+}
+
+bool Dusk::Program::
+InitGraphics( void )
+{
+	delete mp_GraphicsSystem;
+	mp_GraphicsSystem = New GraphicsSystem();
 
 	return mp_GraphicsSystem->Init();
 }
 
-bool Dusk::Program::InitInput( void )
+bool Dusk::Program::
+InitInput( void )
 {
 	return true;
 }
 
-bool Dusk::Program::InitAudio( void )
+bool Dusk::Program::
+InitAudio( void )
 {
 	return true;
 }

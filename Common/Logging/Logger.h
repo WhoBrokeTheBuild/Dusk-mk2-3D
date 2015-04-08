@@ -1,6 +1,7 @@
 #ifndef DUSK_LOGGING_LOGGER_H
 #define DUSK_LOGGING_LOGGER_H
 
+#include <Tracking/TrackedObject.h>
 #include <Logging/LogColors.h>
 
 #include <string>
@@ -13,7 +14,8 @@ namespace Dusk
 namespace Logging
 {
 
-class Logger
+class Logger :
+	public Tracking::TrackedObject
 {
 public:
 
