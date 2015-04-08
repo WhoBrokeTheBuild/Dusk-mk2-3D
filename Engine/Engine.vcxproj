@@ -76,6 +76,7 @@
   <ItemGroup>
     <ClCompile Include="Events\Event.cpp" />
     <ClCompile Include="Events\IEventDispatcher.cpp" />
+    <ClCompile Include="Graphics\GraphicsSystem.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Program.cpp" />
   </ItemGroup>
@@ -86,6 +87,7 @@
     <ClInclude Include="Events\Event.h" />
     <ClInclude Include="Events\IEventDispatcher.h" />
     <ClInclude Include="Graphics\Graphics.h" />
+    <ClInclude Include="Graphics\GraphicsSystem.h" />
     <ClInclude Include="Input\Input.h" />
     <ClInclude Include="Logging\Logging.h" />
     <ClInclude Include="Program.h" />

@@ -23,10 +23,10 @@ int main(int argc, char* argv[])
 	LoggingSystem::AddConsoleLogger("verbose");
 
 	LoggingSystem::SetLevelForegroundColor("error", LOG_FG_RED);
-	LoggingSystem::SetLevelForegroundColor("info", LOG_FG_BLUE);
+	LoggingSystem::SetLevelForegroundColor("info",  LOG_FG_BLUE);
 	LoggingSystem::SetLevelForegroundColor("debug", LOG_FG_GREEN);
 
-	LoggingSystem::SetLoggingLevel("debug");
+	LoggingSystem::SetLoggingLevel("verbose");
 
 	DuskLog("verbose", "Finished LoggingSystem setup");
 
