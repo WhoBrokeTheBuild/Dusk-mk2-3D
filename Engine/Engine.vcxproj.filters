@@ -20,6 +20,5 @@
     <ClInclude Include="Graphics\Graphics.h" />
     <ClInclude Include="Graphics\GraphicsSystem.h" />
     <ClInclude Include="Input\Input.h" />
-    <ClInclude Include="Timing\Timing.h" />
   </ItemGroup>
 </Project>

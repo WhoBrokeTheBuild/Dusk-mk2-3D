@@ -4,7 +4,7 @@
 #include <Logging/Loggers/ConsoleLogger.h>
 #include <Logging/Loggers/FileLogger.h>
 #include <Logging/Loggers/StreamLogger.h>
-#include <Utility/Utility.h>
+#include <Utility/Strings.h>
 
 #include <chrono>
 

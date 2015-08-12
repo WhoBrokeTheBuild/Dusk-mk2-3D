@@ -9,7 +9,7 @@
     <ClCompile Include="Logging\Loggers\StreamLogger.cpp" />
     <ClCompile Include="Tracking\MemoryTracker.cpp" />
     <ClCompile Include="Tracking\TrackedObject.cpp" />
-    <ClCompile Include="Utility\Utility.cpp" />
+    <ClCompile Include="Utility\Strings.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dusk.h" />
@@ -29,5 +29,7 @@
     <ClInclude Include="Utility\Console.h" />
     <ClInclude Include="Utility\Platform.h" />
     <ClInclude Include="Utility\Utility.h" />
+    <ClInclude Include="Timing\Timing.h" />
+    <ClInclude Include="Utility\Strings.h" />
   </ItemGroup>
 </Project>

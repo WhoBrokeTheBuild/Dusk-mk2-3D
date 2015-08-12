@@ -155,7 +155,7 @@
     <ClCompile Include="Logging\LoggingSystem.cpp" />
     <ClCompile Include="Tracking\MemoryTracker.cpp" />
     <ClCompile Include="Tracking\TrackedObject.cpp" />
-    <ClCompile Include="Utility\Utility.cpp" />
+    <ClCompile Include="Utility\Strings.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Collections\ArrayList.h" />
@@ -169,11 +169,13 @@
     <ClInclude Include="Logging\Loggers\StreamLogger.h" />
     <ClInclude Include="Logging\Logging.h" />
     <ClInclude Include="Logging\LoggingSystem.h" />
+    <ClInclude Include="Timing\Timing.h" />
     <ClInclude Include="Tracking\MemoryTracker.h" />
     <ClInclude Include="Tracking\TrackedObject.h" />
     <ClInclude Include="Tracking\Tracking.h" />
     <ClInclude Include="Utility\Console.h" />
     <ClInclude Include="Utility\Platform.h" />
+    <ClInclude Include="Utility\Strings.h" />
     <ClInclude Include="Utility\Utility.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

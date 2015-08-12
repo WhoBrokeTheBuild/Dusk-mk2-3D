@@ -17,21 +17,21 @@ int main(int argc, char* argv[])
 	LoggingSystem::AddLevel(1, "debug");
 	LoggingSystem::AddLevel(0, "verbose");
 
-	LoggingSystem::AddFileLogger("error",   "error.log");
-	LoggingSystem::AddFileLogger("info",    "info.log");
-	LoggingSystem::AddFileLogger("debug",   "info.log");
-	LoggingSystem::AddFileLogger("verbose", "info.log");
-
 	LoggingSystem::AddConsoleLogger("error");
 	LoggingSystem::AddConsoleLogger("info");
 	LoggingSystem::AddConsoleLogger("debug");
 	LoggingSystem::AddConsoleLogger("verbose");
 
+	LoggingSystem::AddFileLogger("error",   "error.log");
+	LoggingSystem::AddFileLogger("info",    "info.log");
+	LoggingSystem::AddFileLogger("debug",   "info.log");
+	LoggingSystem::AddFileLogger("verbose", "info.log");
+
 	LoggingSystem::SetLevelForegroundColor("error", LOG_FG_RED);
 	LoggingSystem::SetLevelForegroundColor("info",  LOG_FG_BLUE);
 	LoggingSystem::SetLevelForegroundColor("debug", LOG_FG_GREEN);
 
-	LoggingSystem::SetLoggingLevel("info");
+	LoggingSystem::SetLoggingLevel("verbose");
 
 	DuskLog("verbose", "Finished LoggingSystem setup");
 

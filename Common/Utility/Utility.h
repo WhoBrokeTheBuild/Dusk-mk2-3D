@@ -11,8 +11,6 @@ namespace Dusk
 namespace Utility
 {
 
-string Basename( const string& filename );
-
 }; // namespace Utility
 
 }; // namespace Dusk
