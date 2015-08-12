@@ -44,7 +44,7 @@ RemoveAllocation( TrackedObject* pObject )
 	if ( ! s_Allocations.ContainsKey(pObject) )
 		return false;
 
-	s_Allocations.RemoveKey(pObject);
+	s_Allocations.RemoveAt(pObject);
 
 	return true;
 }

@@ -45,8 +45,8 @@ public:
 
     static void cleanEvents( void )
     {
-        int length = s_Dispatchers.Size();
-        for (int i = 0; i < length; ++i)
+        unsigned int length = (unsigned int)s_Dispatchers.Size();
+        for (unsigned int i = 0; i < length; ++i)
             s_Dispatchers[i]->cleanMap();
     }
 

@@ -2,10 +2,16 @@
 #define DUSK_LOGGING_FILE_LOGGER_H
 
 #include <Logging/Logger.h>
+#include <Collections/Map.h>
+#include <Collections/ArrayList.h>
 
 #include <string>
+#include <fstream>
 
+using Dusk::Collections::Map;
+using Dusk::Collections::ArrayList;
 using std::string;
+using std::ofstream;
 
 namespace Dusk
 {
@@ -19,13 +25,21 @@ class FileLogger :
 public:
 
     FileLogger( const string& filename );
-    virtual ~FileLogger( void ) { }
+    virtual ~FileLogger( void );
 
 	virtual inline string ClassName( void ) const { return "File Logger"; }
 
     virtual void Log( const string& line,
                       const LogForegroundColor& fgColor,
                       const LogBackgroundColor& bgColor );
+
+private:
+
+	static Map<string, ofstream*>	m_Streams;
+	static Map<string, int>			m_StreamOwners;
+
+	string		m_Filename;
+	ofstream*	m_Stream;
 
 }; // class FileLogger
 

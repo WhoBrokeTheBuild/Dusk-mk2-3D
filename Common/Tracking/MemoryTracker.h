@@ -30,7 +30,7 @@ public:
 	static bool RemoveAllocation( TrackedObject* pObject );
 
 	static inline unsigned int AllocationCount( void ) 
-		{ return s_Allocations.Size(); }
+		{ return (unsigned int)s_Allocations.Size(); }
 
 	static void PrintAllocations( void );
 

@@ -4,10 +4,12 @@
 #include <Logging/Loggers/ConsoleLogger.h>
 #include <Logging/Loggers/FileLogger.h>
 #include <Logging/Loggers/StreamLogger.h>
+#include <Utility/Utility.h>
 
 #include <chrono>
 
 using namespace Dusk::Logging;
+using Dusk::Utility::Basename;
 
 char LoggingSystem::m_LogBuffer[DUSK_LOGGING_MAX_BUFFER_SIZE];
 char LoggingSystem::m_FormatBuffer[DUSK_LOGGING_MAX_BUFFER_SIZE];
@@ -78,7 +80,7 @@ Log( const string& level, const string& message,
 {
     if ( ! LevelShown(level)) return;
 
-    Format(level.c_str(), message.c_str(), file.c_str(), line);
+    Format(level.c_str(), message.c_str(), Basename(file).c_str(), line);
     DispatchLog(level);
 }
 
@@ -86,10 +88,10 @@ void LoggingSystem::
 ExtLog( const string& level, const string& format,
      const string& file, const int& line, va_list args )
 {
-    if ( ! LevelShown(level)) return;
+	if (!LevelShown(level)) return;
 
     vsnprintf(m_FormatBuffer, DUSK_LOGGING_MAX_BUFFER_SIZE, format.c_str(), args);
-    Format(level.c_str(), m_FormatBuffer, file.c_str(), line);
+    Format(level.c_str(), m_FormatBuffer, Basename(file).c_str(), line);
     DispatchLog(level);
 }
 
@@ -140,14 +142,3 @@ AddFileLogger( const string& level, const string& filename )
 	m_Loggers[level].Add(New FileLogger(filename));
     return true;
 }
-
-/*
-    static bool AddFileLogger    ( const string& level, const string& filename );
-    static bool AddStreamLogger  ( const string& level, ostream& stream );
-    static bool AddStdOutLogger  ( const string& level );
-    static bool AddStdErrorLogger( const string& level );
-
-
-
-    static void Log( const string& level, const string& format const string& file, const int& line, ... );
-*/

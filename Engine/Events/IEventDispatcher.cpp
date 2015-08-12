@@ -20,9 +20,9 @@ void Dusk::Events::IEventDispatcher::addEventListener( const EventID& eventId, c
     if ( ! m_EventMap.ContainsKey(eventId))
         m_EventMap[eventId] = ArrayList<EventDelegate*>();
 
-    int length = m_EventMap[eventId].Size();
+    unsigned int length = (unsigned int)m_EventMap[eventId].Size();
 
-    for(int i = 0; i < length; ++i)
+    for(unsigned int i = 0; i < length; ++i)
     {
         if (m_EventMap[eventId][i] == nullptr)
             continue;
@@ -38,9 +38,9 @@ void Dusk::Events::IEventDispatcher::removeEventListener( const EventID& eventId
     if ( ! m_EventMap.ContainsKey(eventId))
         return;
 
-    int length = m_EventMap[eventId].Size();
+	unsigned int length = (unsigned int)m_EventMap[eventId].Size();
 
-    for(int i = 0; i < length; ++i)
+    for(unsigned int i = 0; i < length; ++i)
     {
         if (m_EventMap[eventId][i] == nullptr)
             continue;
@@ -69,11 +69,11 @@ void Dusk::Events::IEventDispatcher::removeAllListeners( void )
     Map<EventID, ArrayList<EventDelegate*>>::Iterator mapIt;
     ArrayList<EventDelegate*>::Iterator listIt;
 
-    int length;
+    unsigned int length;
     for (mapIt = m_EventMap.Begin(); mapIt != m_EventMap.End(); ++mapIt)
     {
-        length = mapIt->second.Size();
-        for (int i = 0; i < length; ++i)
+        length = (unsigned int)mapIt->second.Size();
+        for (unsigned int i = 0; i < length; ++i)
         {
             if (mapIt->second[i] != nullptr)
             {
@@ -91,8 +91,8 @@ void Dusk::Events::IEventDispatcher::removeAllListeners( const EventID& eventId 
     if ( ! m_EventMap.ContainsKey(eventId))
         return;
 
-    int length = m_EventMap[eventId].Size();
-    for(int i = 0; i < length; ++i)
+    unsigned int length = (unsigned int)m_EventMap[eventId].Size();
+    for(unsigned int i = 0; i < length; ++i)
     {
         if ( m_EventMap[eventId][i] != nullptr )
         {
@@ -101,7 +101,7 @@ void Dusk::Events::IEventDispatcher::removeAllListeners( const EventID& eventId 
         }
     }
 
-    m_EventMap.RemoveKey(eventId);
+    m_EventMap.RemoveAt(eventId);
 
     m_Changed = true;
 }
@@ -117,7 +117,7 @@ void Dusk::Events::IEventDispatcher::dispatch( const Event& event )
 
     tmp.setTarget(this);
 
-    unsigned int length = m_EventMap[id].Size();
+    unsigned int length = (unsigned int)m_EventMap[id].Size();
     for(unsigned int i = 0; i < length; ++i)
     {
         if (m_EventMap[id][i] != nullptr)

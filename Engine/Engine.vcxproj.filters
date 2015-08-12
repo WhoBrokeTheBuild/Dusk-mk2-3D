@@ -8,16 +8,18 @@
     <ClCompile Include="Graphics\GraphicsSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Makefile" />
+  </ItemGroup>
+  <ItemGroup>
     <ClInclude Include="Program.h" />
     <ClInclude Include="Audio\Audio.h" />
-    <ClInclude Include="Graphics\Graphics.h" />
-    <ClInclude Include="Input\Input.h" />
-    <ClInclude Include="Logging\Logging.h" />
-    <ClInclude Include="Timing\Timing.h" />
     <ClInclude Include="Events\Callbacks.h" />
     <ClInclude Include="Events\Delegate.h" />
     <ClInclude Include="Events\Event.h" />
     <ClInclude Include="Events\IEventDispatcher.h" />
+    <ClInclude Include="Graphics\Graphics.h" />
     <ClInclude Include="Graphics\GraphicsSystem.h" />
+    <ClInclude Include="Input\Input.h" />
+    <ClInclude Include="Timing\Timing.h" />
   </ItemGroup>
 </Project>

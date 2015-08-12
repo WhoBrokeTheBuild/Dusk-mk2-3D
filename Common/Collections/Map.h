@@ -46,7 +46,7 @@ public:
 
     inline void Clear( void ) { m_Map.clear(); }
 
-    inline void RemoveKey( const K& key )
+    inline void RemoveAt( const K& key )
 		{ m_Map.erase(key); }
     bool RemoveFirstValue( const T& value );
     bool RemoveAllValues( const T& value );

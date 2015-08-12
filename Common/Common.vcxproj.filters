@@ -1,32 +1,33 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClInclude Include="Collections\Map.h" />
+    <ClCompile Include="Dusk.cpp" />
+    <ClCompile Include="Logging\Logger.cpp" />
+    <ClCompile Include="Logging\LoggingSystem.cpp" />
+    <ClCompile Include="Logging\Loggers\ConsoleLogger.cpp" />
+    <ClCompile Include="Logging\Loggers\FileLogger.cpp" />
+    <ClCompile Include="Logging\Loggers\StreamLogger.cpp" />
+    <ClCompile Include="Tracking\MemoryTracker.cpp" />
+    <ClCompile Include="Tracking\TrackedObject.cpp" />
+    <ClCompile Include="Utility\Utility.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Dusk.h" />
     <ClInclude Include="Collections\ArrayList.h" />
-    <ClInclude Include="Tracking\Tracking.h" />
     <ClInclude Include="Collections\Collections.h" />
-    <ClInclude Include="Logging\Loggers\ConsoleLogger.h" />
-    <ClInclude Include="Logging\Loggers\FileLogger.h" />
-    <ClInclude Include="Logging\Loggers\StreamLogger.h" />
+    <ClInclude Include="Collections\Map.h" />
     <ClInclude Include="Logging\LogColors.h" />
     <ClInclude Include="Logging\Logger.h" />
     <ClInclude Include="Logging\Logging.h" />
     <ClInclude Include="Logging\LoggingSystem.h" />
-    <ClInclude Include="Dusk.h" />
-    <ClInclude Include="Utility\Console.h" />
-    <ClInclude Include="Utility\Utility.h" />
+    <ClInclude Include="Logging\Loggers\ConsoleLogger.h" />
+    <ClInclude Include="Logging\Loggers\FileLogger.h" />
+    <ClInclude Include="Logging\Loggers\StreamLogger.h" />
     <ClInclude Include="Tracking\MemoryTracker.h" />
     <ClInclude Include="Tracking\TrackedObject.h" />
+    <ClInclude Include="Tracking\Tracking.h" />
+    <ClInclude Include="Utility\Console.h" />
     <ClInclude Include="Utility\Platform.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Logging\Loggers\ConsoleLogger.cpp" />
-    <ClCompile Include="Logging\Loggers\FileLogger.cpp" />
-    <ClCompile Include="Logging\Loggers\StreamLogger.cpp" />
-    <ClCompile Include="Logging\Logger.cpp" />
-    <ClCompile Include="Logging\LoggingSystem.cpp" />
-    <ClCompile Include="Dusk.cpp" />
-    <ClCompile Include="Tracking\MemoryTracker.cpp" />
-    <ClCompile Include="Tracking\TrackedObject.cpp" />
+    <ClInclude Include="Utility\Utility.h" />
   </ItemGroup>
 </Project>
