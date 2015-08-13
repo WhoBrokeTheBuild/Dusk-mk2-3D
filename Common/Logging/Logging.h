@@ -10,7 +10,6 @@ namespace Logging
 {
 
 
-
 } // namespace Logging
 
 } // namespace Dusk

@@ -12,24 +12,28 @@ int main(int argc, char* argv[])
 {
 	MemoryTracker::Init();
 
-	LoggingSystem::AddLevel(3, "error");
-	LoggingSystem::AddLevel(2, "info");
-	LoggingSystem::AddLevel(1, "debug");
+	LoggingSystem::AddLevel(4, "error");
+	LoggingSystem::AddLevel(3, "info");
+	LoggingSystem::AddLevel(2, "debug");
+	LoggingSystem::AddLevel(1, "perf");
 	LoggingSystem::AddLevel(0, "verbose");
 
 	LoggingSystem::AddConsoleLogger("error");
 	LoggingSystem::AddConsoleLogger("info");
 	LoggingSystem::AddConsoleLogger("debug");
+	LoggingSystem::AddConsoleLogger("perf");
 	LoggingSystem::AddConsoleLogger("verbose");
 
 	LoggingSystem::AddFileLogger("error",   "error.log");
 	LoggingSystem::AddFileLogger("info",    "info.log");
 	LoggingSystem::AddFileLogger("debug",   "info.log");
+	LoggingSystem::AddFileLogger("perf",    "info.log");
 	LoggingSystem::AddFileLogger("verbose", "info.log");
 
 	LoggingSystem::SetLevelForegroundColor("error", LOG_FG_RED);
 	LoggingSystem::SetLevelForegroundColor("info",  LOG_FG_BLUE);
 	LoggingSystem::SetLevelForegroundColor("debug", LOG_FG_GREEN);
+	LoggingSystem::SetLevelForegroundColor("perf",  LOG_FG_YELLOW);
 
 	LoggingSystem::SetLoggingLevel("verbose");
 

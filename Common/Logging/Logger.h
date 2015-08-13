@@ -1,6 +1,7 @@
 #ifndef DUSK_LOGGING_LOGGER_H
 #define DUSK_LOGGING_LOGGER_H
 
+#include <Logging/Logging.h>
 #include <Tracking/TrackedObject.h>
 #include <Logging/LogColors.h>
 

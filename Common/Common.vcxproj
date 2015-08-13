@@ -173,6 +173,8 @@
     <ClInclude Include="Tracking\MemoryTracker.h" />
     <ClInclude Include="Tracking\TrackedObject.h" />
     <ClInclude Include="Tracking\Tracking.h" />
+    <ClInclude Include="Utility\Benchmark.h" />
+    <ClInclude Include="Utility\Types.h" />
     <ClInclude Include="Utility\Console.h" />
     <ClInclude Include="Utility\Platform.h" />
     <ClInclude Include="Utility\Strings.h" />
