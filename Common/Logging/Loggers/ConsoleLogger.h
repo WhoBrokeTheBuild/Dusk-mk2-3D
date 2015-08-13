@@ -21,7 +21,7 @@ public:
     inline ConsoleLogger( void ) { }
     virtual ~ConsoleLogger( void ) { }
 
-	virtual inline string ClassName( void ) const { return "Console Logger"; }
+	virtual inline string GetClassName( void ) const { return "Console Logger"; }
 
     virtual void Log( const string& line,
                       const LogForegroundColor& fgColor,

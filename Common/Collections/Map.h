@@ -39,7 +39,7 @@ public:
 
     virtual inline ~Map( void ) { Clear(); }
 
-	virtual inline string ClassName( void ) const { return "Map"; }
+	virtual inline string GetClassName( void ) const { return "Map"; }
 
     inline void Add( const K& key, const T& item )
         { m_Map.insert(Pair(key, item)); }

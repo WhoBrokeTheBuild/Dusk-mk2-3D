@@ -62,7 +62,7 @@ public:
     static void Log   ( const string& level, const string& message,
                         const string& file, const int& line );
     static void ExtLog( const string& level, const string& format,
-                        const string& file, const int& line, va_list args );
+                        const string& file, const int line, ... );
 
 private:
 

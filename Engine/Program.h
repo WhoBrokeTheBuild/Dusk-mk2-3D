@@ -27,6 +27,8 @@ public:
 
     void Run( void );
 
+	Graphics::GraphicsSystem* GetGraphicsSystem( void );
+
 private:
 
     Program( void ) :
@@ -36,7 +38,7 @@ private:
     Program( Program const& );
     void operator=( Program const& );
 
-	virtual inline string ClassName( void ) const { return "Program"; }
+	virtual inline string GetClassName( void ) const { return "Program"; }
 
     bool Init( void );
     void Term( void );

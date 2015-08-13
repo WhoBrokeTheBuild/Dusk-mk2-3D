@@ -7,6 +7,7 @@
     <ClCompile Include="Events\IEventDispatcher.cpp" />
     <ClCompile Include="Graphics\GraphicsSystem.cpp" />
     <ClCompile Include="Graphics\Window.cpp" />
+    <ClCompile Include="Graphics\GraphicsContext.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Makefile" />
@@ -22,5 +23,6 @@
     <ClInclude Include="Graphics\GraphicsSystem.h" />
     <ClInclude Include="Input\Input.h" />
     <ClInclude Include="Graphics\Window.h" />
+    <ClInclude Include="Graphics\GraphicsContext.h" />
   </ItemGroup>
 </Project>

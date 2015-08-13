@@ -16,7 +16,7 @@ class TrackedObject
 {
 public:
 
-	virtual string ClassName( void ) const = 0;
+	virtual string GetClassName( void ) const = 0;
 
 	// Normal new operator
 	void* operator new  ( size_t size );

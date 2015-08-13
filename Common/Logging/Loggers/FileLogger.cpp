@@ -40,11 +40,12 @@ void FileLogger::
 Log( const string& line, const LogForegroundColor& fgColor,
                          const LogBackgroundColor& bgColor )
 {
-	unsigned int len = line.length();
+	size_t len = line.length();
 	char* fullLine = new char[len + 1];
 
 	memcpy(fullLine, line.c_str(), len);
 	fullLine[len] = '\n';
 
 	m_Stream->write(fullLine, len + 1);
+	m_Stream->flush();
 }

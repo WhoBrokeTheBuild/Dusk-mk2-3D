@@ -42,7 +42,7 @@ public:
 																			   
     virtual inline ~ArrayList( void ) { Clear(); }
 
-	virtual inline string ClassName( void ) const { return "Array List"; }
+	virtual inline string GetClassName( void ) const { return "Array List"; }
 
 	/// Add a new element to the list
 	/*! 

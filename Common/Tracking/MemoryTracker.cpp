@@ -58,7 +58,7 @@ PrintAllocations(void)
 		printf("#%d: (address: %p) %s \n\t At %s:%d\n", 
 			it->second.Number, 
 			(void*)it->first, 
-			it->first->ClassName().c_str(),
+			it->first->GetClassName().c_str(),
 			it->second.Filename.c_str(),
 			it->second.LineNumber);
 	}

@@ -3,10 +3,11 @@
 #include <Logging/Logging.h>
 #include <Graphics/GraphicsSystem.h>
 
+using namespace Dusk;
 using namespace Dusk::Logging;
 using namespace Dusk::Graphics;
 
-void Dusk::Program::
+void Program::
 Run( void )
 {
 	if ( ! Init() )
@@ -15,9 +16,11 @@ Run( void )
 		return;
 	}
 	DuskLog("info", "Program Init Succeeded");
+
+	while (true) { }
 }
 
-bool Dusk::Program::
+bool Program::
 Init( void )
 {
 	if ( ! InitGraphics() )
@@ -44,42 +47,48 @@ Init( void )
 	return true;
 }
 
-void Dusk::Program::
+void Program::
 Term( void )
 {
 	delete mp_GraphicsSystem;
 	mp_GraphicsSystem = nullptr;
 }
 
-void Dusk::Program::
+void Program::
 Update( void )
 {
 
 }
 
-void Dusk::Program::
+void Program::
 Render( void )
 {
 
 }
 
-bool Dusk::Program::
+bool Program::
 InitGraphics( void )
 {
 	delete mp_GraphicsSystem;
-	mp_GraphicsSystem = New GraphicsSystem();
+	mp_GraphicsSystem = New Dusk::Graphics::GraphicsSystem();
 
 	return mp_GraphicsSystem->Init();
 }
 
-bool Dusk::Program::
+bool Program::
 InitInput( void )
 {
 	return true;
 }
 
-bool Dusk::Program::
+bool Program::
 InitAudio( void )
 {
 	return true;
+}
+
+GraphicsSystem* Program::
+GetGraphicsSystem(void)
+{
+	return mp_GraphicsSystem;
 }

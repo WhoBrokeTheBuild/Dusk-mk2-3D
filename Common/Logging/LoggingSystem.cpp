@@ -6,6 +6,7 @@
 #include <Logging/Loggers/StreamLogger.h>
 #include <Utility/Strings.h>
 
+#include <cstdarg>
 #include <chrono>
 
 using namespace Dusk::Logging;
@@ -86,11 +87,16 @@ Log( const string& level, const string& message,
 
 void LoggingSystem::
 ExtLog( const string& level, const string& format,
-     const string& file, const int& line, va_list args )
+     const string& file, const int line, ... )
 {
 	if (!LevelShown(level)) return;
 
-    vsnprintf(m_FormatBuffer, DUSK_LOGGING_MAX_BUFFER_SIZE, format.c_str(), args);
+	va_list args;
+
+	va_start(args, line);
+	vsnprintf(m_FormatBuffer, DUSK_LOGGING_MAX_BUFFER_SIZE, format.c_str(), args);
+	va_end(args);
+
     Format(level.c_str(), m_FormatBuffer, Basename(file).c_str(), line);
     DispatchLog(level);
 }

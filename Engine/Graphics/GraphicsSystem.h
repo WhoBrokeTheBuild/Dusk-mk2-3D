@@ -9,16 +9,32 @@ namespace Dusk
 namespace Graphics
 {
 
+class Window;
+
 class GraphicsSystem :
 	public Tracking::TrackedObject
 {
 public:
 
-	virtual inline string ClassName( void ) const { return "Graphics System"; }
+	GraphicsSystem( void ) :
+		mp_Window(nullptr)
+	{ }
+
+	~GraphicsSystem( void );
+
+	virtual inline string GetClassName( void ) const { return "Graphics System"; }
 
 	bool Init( void );
 
+	Graphics::Window * GetWindow( void ) const;
+
+private:
+
+	Graphics::Window	*mp_Window;
+
 }; // class GraphicsSystem
+
+void glfwError( int error, const char* description );
 
 } // namespace Graphics
 

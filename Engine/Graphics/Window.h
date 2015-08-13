@@ -1,10 +1,9 @@
 #ifndef DUSK_GRAPHICS_WINDOW_H
 #define DUSK_GRAPHICS_WINDOW_H
 
+#include <Graphics/Graphics.h>
 #include <Tracking/TrackedObject.h>
 #include <Utility/Types.h>
-
-#include <GLFW/glfw3.h>
 
 using namespace Dusk::Tracking;
 using namespace Dusk::Utility;
@@ -14,6 +13,8 @@ namespace Dusk
 
 namespace Graphics
 {
+
+class GraphicsContext;
 
 class Window :
 	public Tracking::TrackedObject
@@ -26,14 +27,17 @@ public:
 
 	inline Window(void) :
 		mp_GLFWWindow(nullptr),
+		mp_GraphicsContext(nullptr),
 		m_Width(0),
 		m_Height(0),
-		m_Fullscreen(false)
+		m_Fullscreen(false),
+		m_Decorated(false),
+		m_Resizable(false)
 	{ }
 
 	~Window(void);
 
-	virtual inline string ClassName(void) const { return "Window"; }
+	virtual inline string GetClassName(void) const { return "Window"; }
 
 	bool Init( const size_t& width, const size_t& height, const string& title, const Flag& flags );
 
@@ -49,11 +53,14 @@ public:
 	inline bool Resizable ( void ) const { return m_Resizable; }
 	inline void Resizable ( const bool& resizable ) { m_Resizable = resizable; }
 
+	GraphicsContext* GetGraphicsContext( void );
+
 private:
 
-	bool Init( void );
+	bool CreateGLFWWindow( void );
 
-	GLFWwindow*		mp_GLFWWindow;
+	GLFWwindow			*mp_GLFWWindow;
+	GraphicsContext		*mp_GraphicsContext;
 
 	size_t			m_Width,
 					m_Height;
@@ -65,6 +72,8 @@ private:
 					m_Resizable;
 
 }; // class Window
+
+void glfwResize( GLFWwindow* pGLFWWindow, int width, int height );
 
 } // namespace Graphics
 

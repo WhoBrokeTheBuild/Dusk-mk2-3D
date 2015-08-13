@@ -93,7 +93,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>./;../Common/;../Libraries/GLFW/include/</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./;../Common/;../Libraries/GLEW/include;../Libraries/GLFW/include/;../Libraries/GLM/include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -108,7 +108,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>./;../Common/;../Libraries/GLFW/include/</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./;../Common/;../Libraries/GLEW/include;../Libraries/GLFW/include/;../Libraries/GLM/include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -125,7 +125,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>./;../Common/;../Libraries/GLFW/include/</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./;../Common/;../Libraries/GLEW/include;../Libraries/GLFW/include/;../Libraries/GLM/include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -143,7 +143,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>./;../Common/;../Libraries/GLFW/include/</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./;../Common/;../Libraries/GLEW/include;../Libraries/GLFW/include/;../Libraries/GLM/include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -157,6 +157,7 @@
   <ItemGroup>
     <ClCompile Include="Events\Event.cpp" />
     <ClCompile Include="Events\IEventDispatcher.cpp" />
+    <ClCompile Include="Graphics\GraphicsContext.cpp" />
     <ClCompile Include="Graphics\GraphicsSystem.cpp" />
     <ClCompile Include="Graphics\Window.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -172,6 +173,7 @@
     <ClInclude Include="Events\Event.h" />
     <ClInclude Include="Events\IEventDispatcher.h" />
     <ClInclude Include="Graphics\Graphics.h" />
+    <ClInclude Include="Graphics\GraphicsContext.h" />
     <ClInclude Include="Graphics\GraphicsSystem.h" />
     <ClInclude Include="Graphics\Window.h" />
     <ClInclude Include="Input\Input.h" />

@@ -20,7 +20,7 @@ public:
     friend bool operator==( const Callback<ReturnType, Param>& lhs, const Callback<ReturnType, Param>& rhs ) { return lhs.isEqualTo(rhs); }
     friend bool operator!=( const Callback<ReturnType, Param>& lhs, const Callback<ReturnType, Param>& rhs ) { return ! lhs.isEqualTo(rhs); }
 
-    virtual inline string ClassName( void ) const { return "Callback"; }
+    virtual inline string GetClassName( void ) const { return "Callback"; }
 
     virtual ReturnType invoke( Param param ) = 0;
     virtual Callback* clone( void )          = 0;
@@ -48,7 +48,7 @@ public:
     inline virtual FunctionCallback* clone ( void ) { return New FunctionCallback(mp_Function); }
     inline virtual bool isMethodOf( void* pObject ) { return false; }
 
-    virtual inline string ClassName( void ) const { return "Function Callback"; }
+    virtual inline string GetClassName( void ) const { return "Function Callback"; }
 
 protected:
 
@@ -83,7 +83,7 @@ public:
     inline virtual MethodCallback* clone ( void ) { return New MethodCallback(mp_Object, m_Method); }
     inline virtual bool isMethodOf( void* pObject ) { return mp_Object == pObject; }
 
-    virtual inline string ClassName( void ) const { return "Method Callback"; }
+    virtual inline string GetClassName( void ) const { return "Method Callback"; }
 
 protected:
 

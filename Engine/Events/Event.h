@@ -28,7 +28,7 @@ public:
 
     virtual inline ~EventData( void ) { }
 
-    virtual inline string ClassName( void ) const { return "Event Data"; }
+    virtual inline string GetClassName( void ) const { return "Event Data"; }
 
     virtual EventData* clone( void ) const { return New EventData(); };
 
@@ -60,7 +60,7 @@ public:
         delete mp_Data;
     }
 
-    virtual inline string ClassName( void ) const { return "Event"; }
+    virtual inline string GetClassName( void ) const { return "Event"; }
 
     inline EventID getID( void ) const { return m_ID; }
 

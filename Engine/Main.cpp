@@ -25,6 +25,7 @@ int main(int argc, char* argv[])
 	LoggingSystem::AddConsoleLogger("verbose");
 
 	LoggingSystem::AddFileLogger("error",   "error.log");
+	LoggingSystem::AddFileLogger("error",   "info.log");
 	LoggingSystem::AddFileLogger("info",    "info.log");
 	LoggingSystem::AddFileLogger("debug",   "info.log");
 	LoggingSystem::AddFileLogger("perf",    "info.log");

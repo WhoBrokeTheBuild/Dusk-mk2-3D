@@ -34,7 +34,7 @@ public:
 
     virtual inline ~Delegate( void ) { delete mp_Callback; mp_Callback = nullptr; }
 
-    virtual inline string ClassName( void ) const { return "Delegate"; }
+    virtual inline string GetClassName( void ) const { return "Delegate"; }
 
     inline ReturnType invoke( Param param ) { return mp_Callback->invoke(param); }
     inline ReturnType operator()( Param param ) { return invoke(param); }
