@@ -33,5 +33,6 @@
     <ClInclude Include="Utility\Strings.h" />
     <ClInclude Include="Utility\Types.h" />
     <ClInclude Include="Utility\Benchmark.h" />
+    <ClInclude Include="Timing\TimeInfo.h" />
   </ItemGroup>
 </Project>

@@ -74,6 +74,7 @@ private:
 }; // class Window
 
 void glfwResize( GLFWwindow* pGLFWWindow, int width, int height );
+void glfwClose( GLFWwindow* pGLFWWindow );
 
 } // namespace Graphics
 

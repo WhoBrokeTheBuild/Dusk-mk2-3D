@@ -169,6 +169,7 @@
     <ClInclude Include="Logging\Loggers\StreamLogger.h" />
     <ClInclude Include="Logging\Logging.h" />
     <ClInclude Include="Logging\LoggingSystem.h" />
+    <ClInclude Include="Timing\TimeInfo.h" />
     <ClInclude Include="Timing\Timing.h" />
     <ClInclude Include="Tracking\MemoryTracker.h" />
     <ClInclude Include="Tracking\TrackedObject.h" />

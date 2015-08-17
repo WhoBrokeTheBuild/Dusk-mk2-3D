@@ -1,11 +1,18 @@
 #include "Program.h"
 
 #include <Logging/Logging.h>
+#include <Timing/TimeInfo.h>
 #include <Graphics/GraphicsSystem.h>
+
+#include <chrono>
+#include <GLFW/glfw3.h>
 
 using namespace Dusk;
 using namespace Dusk::Logging;
+using namespace Dusk::Timing;
 using namespace Dusk::Graphics;
+
+using namespace std::chrono;
 
 void Program::
 Run( void )
@@ -17,7 +24,42 @@ Run( void )
 	}
 	DuskLog("info", "Program Init Succeeded");
 
-	while (true) { }
+	TimeInfo timeInfo;
+	unsigned long long frameCount = 0;
+
+	auto startTime = high_resolution_clock::now();
+	auto lastTime = startTime;
+
+	double secsSinceLastFrame = 0;
+
+	m_Running = true;
+	while ( m_Running )
+	{
+		auto time = high_resolution_clock::now();
+		auto elapsedTime = time - lastTime;
+		lastTime = time;
+
+		timeInfo.ElapsedSeconds = duration_cast<duration<double>>(elapsedTime).count();
+		timeInfo.ElapsedMilliseconds = duration_cast<duration<double, std::milli>>(elapsedTime).count();
+		timeInfo.TotalSeconds += timeInfo.ElapsedSeconds;
+		timeInfo.TotalMilliseconds += timeInfo.ElapsedMilliseconds;
+
+		timeInfo.Delta = timeInfo.ElapsedSeconds / m_UpdateInterval;
+
+		secsSinceLastFrame += timeInfo.ElapsedSeconds;
+
+		Update(timeInfo);
+
+		if (secsSinceLastFrame >= m_UpdateInterval) {
+			Render();
+			++frameCount;
+			m_CurrentFPS = (m_UpdateInterval / secsSinceLastFrame) * m_TargetFPS;
+
+			secsSinceLastFrame = 0;
+		}
+
+		glfwPollEvents();
+	}
 }
 
 bool Program::
@@ -44,6 +86,8 @@ Init( void )
 	}
 	DuskLog("info", "Input Init Succeeded");
 
+	SetTargetFPS(60.0);
+
 	return true;
 }
 
@@ -55,9 +99,8 @@ Term( void )
 }
 
 void Program::
-Update( void )
+Update( TimeInfo& timeInfo )
 {
-
 }
 
 void Program::
@@ -91,4 +134,11 @@ GraphicsSystem* Program::
 GetGraphicsSystem(void)
 {
 	return mp_GraphicsSystem;
+}
+
+void Program::
+SetTargetFPS( double fps )
+{
+	m_TargetFPS = fps;
+	m_UpdateInterval = (1.0 / m_TargetFPS);
 }

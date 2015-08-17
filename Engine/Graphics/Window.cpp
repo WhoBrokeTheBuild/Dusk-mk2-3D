@@ -12,6 +12,9 @@ using Dusk::Program;
 Window::
 ~Window(void)
 {
+	delete mp_GraphicsContext;
+	mp_GraphicsContext = nullptr;
+
 	glfwHideWindow(mp_GLFWWindow);
 	glfwDestroyWindow(mp_GLFWWindow);
 	mp_GLFWWindow = nullptr;
@@ -79,6 +82,7 @@ CreateGLFWWindow( void )
 
 	DuskLog("verbose", "Attaching GLFW Callbacks");
 
+	glfwSetWindowCloseCallback(mp_GLFWWindow, glfwClose);
 	glfwSetFramebufferSizeCallback(mp_GLFWWindow, glfwResize);
 	//glfwSetKeyCallback(mp_GLFWWindow, glfwKey);
 	//glfwSetMouseButtonCallback(mp_GLFWWindow, glfwMouse);
@@ -89,7 +93,7 @@ CreateGLFWWindow( void )
 }
 
 void Window::
-Title(const string& title)
+Title( const string& title )
 {
 
 }
@@ -105,4 +109,9 @@ glfwResize( GLFWwindow* pGLFWWindow, int width, int height )
 {
 	Window* pWindow = Program::Inst()->GetGraphicsSystem()->GetWindow();
 	//pWindow->hookResize(width, height);
+}
+
+void Dusk::Graphics::glfwClose(GLFWwindow* pGLFWWindow)
+{
+	Program::Inst()->Exit();
 }
