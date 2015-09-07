@@ -3,11 +3,11 @@
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Program.cpp" />
-    <ClCompile Include="Events\Event.cpp" />
-    <ClCompile Include="Events\IEventDispatcher.cpp" />
     <ClCompile Include="Graphics\GraphicsSystem.cpp" />
     <ClCompile Include="Graphics\Window.cpp" />
     <ClCompile Include="Graphics\GraphicsContext.cpp" />
+    <ClCompile Include="Input\InputSystem.cpp" />
+    <ClCompile Include="Input\Inputs\Key.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Makefile" />
@@ -15,14 +15,16 @@
   <ItemGroup>
     <ClInclude Include="Program.h" />
     <ClInclude Include="Audio\Audio.h" />
-    <ClInclude Include="Events\Callbacks.h" />
-    <ClInclude Include="Events\Delegate.h" />
-    <ClInclude Include="Events\Event.h" />
-    <ClInclude Include="Events\IEventDispatcher.h" />
     <ClInclude Include="Graphics\Graphics.h" />
     <ClInclude Include="Graphics\GraphicsSystem.h" />
     <ClInclude Include="Input\Input.h" />
     <ClInclude Include="Graphics\Window.h" />
     <ClInclude Include="Graphics\GraphicsContext.h" />
+    <ClInclude Include="Input\InputSystem.h" />
+    <ClInclude Include="Input\IKeyListener.h" />
+    <ClInclude Include="Input\IMouseListener.h" />
+    <ClInclude Include="Input\IMappedInputListener.h" />
+    <ClInclude Include="Input\Inputs\Key.h" />
+    <ClInclude Include="Input\Inputs\Mouse.h" />
   </ItemGroup>
 </Project>

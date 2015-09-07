@@ -128,13 +128,18 @@ template <class K, class T, typename Sort>
 bool Dusk::Collections::Map<K, T, Sort>::RemoveAllValues(const T& value)
 {
     bool found = false;
-    for (auto it = Begin(); it != End(); ++it)
-    {
-        if (it->second == value)
-        {
-            m_Map.erase(it);
-            found = true;
-        }
+	auto it = Begin();
+	while (it != End())
+	{
+		if (it->second == value)
+		{
+			it = m_Map.erase(it);
+			found = true;
+		}
+		else
+		{
+			++it;
+		}
 	}
     return found;
 }

@@ -1,5 +1,6 @@
 #include <Program.h>
 
+#include <Utility/Benchmark.h>
 #include <Tracking/MemoryTracker.h>
 #include <Logging/LoggingSystem.h>
 #include <Utility/Console.h>
@@ -8,9 +9,8 @@
 using namespace Dusk::Tracking;
 using namespace Dusk::Logging;
 
-int main(int argc, char* argv[])
-{
-	MemoryTracker::Init();
+void initLoggingSystem(void) {
+	DuskBenchStart();
 
 	LoggingSystem::AddLevel(4, "error");
 	LoggingSystem::AddLevel(3, "info");
@@ -24,21 +24,29 @@ int main(int argc, char* argv[])
 	LoggingSystem::AddConsoleLogger("perf");
 	LoggingSystem::AddConsoleLogger("verbose");
 
-	LoggingSystem::AddFileLogger("error",   "error.log");
-	LoggingSystem::AddFileLogger("error",   "info.log");
-	LoggingSystem::AddFileLogger("info",    "info.log");
-	LoggingSystem::AddFileLogger("debug",   "info.log");
-	LoggingSystem::AddFileLogger("perf",    "info.log");
+	LoggingSystem::AddFileLogger("error", "error.log");
+	LoggingSystem::AddFileLogger("error", "info.log");
+	LoggingSystem::AddFileLogger("info", "info.log");
+	LoggingSystem::AddFileLogger("debug", "info.log");
+	LoggingSystem::AddFileLogger("perf", "info.log");
+	LoggingSystem::AddFileLogger("perf", "perf.log");
 	LoggingSystem::AddFileLogger("verbose", "info.log");
 
 	LoggingSystem::SetLevelForegroundColor("error", LOG_FG_RED);
-	LoggingSystem::SetLevelForegroundColor("info",  LOG_FG_BLUE);
+	LoggingSystem::SetLevelForegroundColor("info", LOG_FG_BLUE);
 	LoggingSystem::SetLevelForegroundColor("debug", LOG_FG_GREEN);
-	LoggingSystem::SetLevelForegroundColor("perf",  LOG_FG_YELLOW);
+	LoggingSystem::SetLevelForegroundColor("perf", LOG_FG_YELLOW);
 
 	LoggingSystem::SetLoggingLevel("verbose");
 
 	DuskLog("verbose", "Finished LoggingSystem setup");
+	DuskBenchEnd("main::initLoggingSystem");
+}
+
+int main(int argc, char* argv[])
+{
+	MemoryTracker::Init();
+	initLoggingSystem();
 
 	Dusk::Program* pProgram = Dusk::Program::Inst();
 

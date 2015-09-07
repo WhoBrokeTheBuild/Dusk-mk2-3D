@@ -3,6 +3,8 @@
 
 #include <Tracking/TrackedObject.h>
 
+#include <Events/Event.h>
+
 namespace Dusk
 {
 
@@ -11,15 +13,24 @@ namespace Graphics
 	class GraphicsSystem;
 }
 
+namespace Input
+{
+	class InputSystem;
+}
+
 namespace Timing
 {
-	class TimeInfo;
+	class FrameTimeInfo;
 }
 
 class Program :
 	public Tracking::TrackedObject
 {
 public:
+
+	static Events::EventID 
+		EVT_UPDATE,
+		EVT_RENDER;
 
     static inline Program* Inst()
     {
@@ -28,7 +39,7 @@ public:
         return pProgram;
     }
 
-	virtual inline ~Program() { Term(); }
+	virtual inline ~Program( void ) { Term(); }
 
     void Run( void );
 
@@ -41,6 +52,11 @@ public:
 
 	Graphics::GraphicsSystem* GetGraphicsSystem( void );
 
+	Input::InputSystem* GetInputSystem( void );
+
+	void MappedInputPressCallback(const Events::Event& event);
+	void KeyPressCallback(const Events::Event& event);
+
 private:
 
     Program( void ) :
@@ -48,7 +64,10 @@ private:
 		m_TargetFPS(),
 		m_CurrentFPS(),
 		m_UpdateInterval(),
-		mp_GraphicsSystem(nullptr)
+		mp_GraphicsSystem(nullptr),
+		mp_InputSystem(nullptr),
+
+		m_Remap(false)
 	{ };
 
     Program( Program const& );
@@ -59,7 +78,7 @@ private:
     bool Init( void );
     void Term( void );
 
-    void Update( Timing::TimeInfo& timeInfo );
+    void Update( Timing::FrameTimeInfo& timeInfo );
     void Render( void );
 
 	bool InitGraphics( void );
@@ -73,6 +92,13 @@ private:
 				m_UpdateInterval;
 
 	Graphics::GraphicsSystem*		mp_GraphicsSystem;
+
+	Input::InputSystem*				mp_InputSystem;
+
+
+
+	bool m_Remap;
+
 
 }; // class Program
 

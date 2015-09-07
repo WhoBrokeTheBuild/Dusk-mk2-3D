@@ -108,7 +108,7 @@ void Dusk::Events::IEventDispatcher::removeAllListeners( const EventID& eventId 
 
 void Dusk::Events::IEventDispatcher::dispatch( const Event& event )
 {
-    EventID id = event.getID();
+    EventID id = event.GetID();
 
     if ( ! m_EventMap.ContainsKey(id))
         return;

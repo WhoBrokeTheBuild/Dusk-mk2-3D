@@ -10,6 +10,8 @@
     <ClCompile Include="Tracking\MemoryTracker.cpp" />
     <ClCompile Include="Tracking\TrackedObject.cpp" />
     <ClCompile Include="Utility\Strings.cpp" />
+    <ClCompile Include="Events\Event.cpp" />
+    <ClCompile Include="Events\IEventDispatcher.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dusk.h" />
@@ -33,6 +35,10 @@
     <ClInclude Include="Utility\Strings.h" />
     <ClInclude Include="Utility\Types.h" />
     <ClInclude Include="Utility\Benchmark.h" />
-    <ClInclude Include="Timing\TimeInfo.h" />
+    <ClInclude Include="Timing\FrameTimeInfo.h" />
+    <ClInclude Include="Events\Callbacks.h" />
+    <ClInclude Include="Events\Delegate.h" />
+    <ClInclude Include="Events\Event.h" />
+    <ClInclude Include="Events\IEventDispatcher.h" />
   </ItemGroup>
 </Project>

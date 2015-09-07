@@ -13,11 +13,14 @@ namespace Timing
 * program started running, as well as the seconds and milliseconds that have
 * elapsed since the last update and the Delta Time.
 */
-class TimeInfo
+class FrameTimeInfo
 {
 public:
 
-	TimeInfo() { }
+	FrameTimeInfo() { }
+
+	double TargetFPS;
+	double CurrentFPS;
 
 	/// The total seconds that have elapsed since the program started
 	double TotalSeconds;

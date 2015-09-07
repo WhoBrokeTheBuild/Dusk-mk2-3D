@@ -1,8 +1,11 @@
 #include "Window.h"
+
+#include <Utility/Benchmark.h>
 #include <Program.h>
 #include <Logging/Logging.h>
 #include <Graphics/GraphicsContext.h>
 #include <Graphics/GraphicsSystem.h>
+#include <Input/InputSystem.h>
 
 using namespace Dusk::Graphics;
 using namespace Dusk::Logging;
@@ -23,6 +26,7 @@ Window::
 bool Window::
 Init(const size_t& width, const size_t& height, const string& title, const Flag& flags)
 {
+	DuskBenchStart();
 	DuskLog("info", "Initializing Window");
 
 	m_Width = width;
@@ -34,12 +38,16 @@ Init(const size_t& width, const size_t& height, const string& title, const Flag&
 	m_Decorated = (flags & Window::DECORATED) > 0;
 	m_Resizable = (flags & Window::RESIZABLE) > 0;
 
-	return CreateGLFWWindow();
+	bool res = CreateGLFWWindow();
+
+	DuskBenchEnd("Window::Init");
+	return res;
 }
 
 bool Window::
 CreateGLFWWindow( void )
 {
+	DuskBenchStart();
 	DuskLog("verbose", "Setting GLFW Window Hints");
 
 	glfwWindowHint(GLFW_DEPTH_BITS, 24);
@@ -84,11 +92,13 @@ CreateGLFWWindow( void )
 
 	glfwSetWindowCloseCallback(mp_GLFWWindow, glfwClose);
 	glfwSetFramebufferSizeCallback(mp_GLFWWindow, glfwResize);
-	//glfwSetKeyCallback(mp_GLFWWindow, glfwKey);
-	//glfwSetMouseButtonCallback(mp_GLFWWindow, glfwMouse);
-	//glfwSetCursorPosCallback(mp_GLFWWindow, glfwMouseMove);
-	//glfwSetScrollCallback(mp_GLFWWindow, glfwMouseScroll);
 
+	glfwSetKeyCallback(mp_GLFWWindow, Dusk::Input::glfwKey);
+	glfwSetMouseButtonCallback(mp_GLFWWindow, Dusk::Input::glfwMouse);
+	glfwSetCursorPosCallback(mp_GLFWWindow, Dusk::Input::glfwMouseMove);
+	glfwSetScrollCallback(mp_GLFWWindow, Dusk::Input::glfwMouseScroll);
+
+	DuskBenchEnd("Window::CreateGLFWWindow");
 	return true;
 }
 

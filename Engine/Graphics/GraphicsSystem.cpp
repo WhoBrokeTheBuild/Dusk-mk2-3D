@@ -1,5 +1,6 @@
 #include "GraphicsSystem.h"
 
+#include <Utility/Benchmark.h>
 #include <Logging/Logging.h>
 #include <Graphics/Window.h>
 #include <Graphics/GraphicsContext.h>
@@ -17,6 +18,8 @@ GraphicsSystem::
 bool GraphicsSystem::
 Init( void )
 {
+	DuskBenchStart();
+
 	if ( ! glfwInit() )
 	{
 		DuskLog("error", "Failed to initialize GLFW");
@@ -33,6 +36,7 @@ Init( void )
 
 	GetWindow()->GetGraphicsContext()->Bind();
 
+	DuskBenchEnd("GraphicsSystem::Init");
 	return true;
 }
 
