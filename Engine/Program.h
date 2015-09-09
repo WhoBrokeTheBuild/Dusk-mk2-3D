@@ -56,6 +56,7 @@ public:
 
 	void MappedInputPressCallback(const Events::Event& event);
 	void KeyPressCallback(const Events::Event& event);
+	void MouseButtonPressCallback(const Events::Event& event);
 
 private:
 

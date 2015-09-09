@@ -55,6 +55,7 @@ Init( void )
 
 	GetInputSystem()->addEventListener(InputSystem::EVT_MAPPED_INPUT_PRESS, this, &Program::MappedInputPressCallback);
 	GetInputSystem()->addEventListener(InputSystem::EVT_KEY_PRESS, this, &Program::KeyPressCallback);
+	GetInputSystem()->addEventListener(InputSystem::EVT_MOUSE_BUTTON_PRESS, this, &Program::MouseButtonPressCallback);
 
 
 	DuskBenchEnd("Program::Init");
@@ -64,6 +65,7 @@ Init( void )
 void Program::
 Term( void )
 {
+	GetInputSystem()->removeEventListener(InputSystem::EVT_MOUSE_BUTTON_PRESS, this, &Program::MouseButtonPressCallback);
 	GetInputSystem()->removeEventListener(InputSystem::EVT_KEY_PRESS, this, &Program::KeyPressCallback);
 	GetInputSystem()->removeEventListener(InputSystem::EVT_MAPPED_INPUT_PRESS, this, &Program::MappedInputPressCallback);
 
@@ -201,7 +203,19 @@ void Dusk::Program::KeyPressCallback(const Events::Event& event)
 
 	if (m_Remap && key != Key::KEY_ENTER) {
 		GetInputSystem()->MapKey("jump", key);
-		DuskExtLog("debug", "Remapped jump to %d", key);
+		DuskExtLog("debug", "Remapped jump to key %d", key);
+		m_Remap = false;
+	}
+}
+
+void Dusk::Program::MouseButtonPressCallback(const Events::Event& event)
+{
+	const MouseButtonEventData* pData = event.GetDataAs<MouseButtonEventData>();
+	MouseButton button = pData->GetMouseButton();
+
+	if (m_Remap) {
+		GetInputSystem()->MapMouseButton("jump", button);
+		DuskExtLog("debug", "Remapped jump to mouse button %d", button);
 		m_Remap = false;
 	}
 }

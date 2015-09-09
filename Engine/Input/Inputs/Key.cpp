@@ -46,6 +46,7 @@ void Dusk::Input::AddGLFWKeyMappings( Collections::Map<int, Key>& map )
 	map.Add(GLFW_KEY_END, Key::KEY_END);
 	map.Add(GLFW_KEY_PAGE_UP, Key::KEY_PAGE_UP);
 	map.Add(GLFW_KEY_PAGE_DOWN, Key::KEY_PAGE_DOWN);
+	map.Add(GLFW_KEY_ESCAPE, Key::KEY_ESCAPE);
 	map.Add(GLFW_KEY_MENU, Key::KEY_MENU);
 	map.Add(GLFW_KEY_LEFT_SUPER, Key::KEY_LEFT_SUPER);
 	map.Add(GLFW_KEY_RIGHT_SUPER, Key::KEY_RIGHT_SUPER);
@@ -61,7 +62,7 @@ void Dusk::Input::AddGLFWKeyMappings( Collections::Map<int, Key>& map )
 	map.Add(GLFW_KEY_KP_ENTER, Key::KEY_PAD_ENTER);
 	map.Add(GLFW_KEY_KP_DECIMAL, Key::KEY_PAD_DECIMAL);
 
-	for (unsigned int i = 0; i < 12; ++i) {
+	for (unsigned int i = 0; i < 25; ++i) {
 		map.Add(GLFW_KEY_F1 + i, (Key)(Key::KEY_F1 + i));
 	}
 }
