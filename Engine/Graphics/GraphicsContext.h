@@ -27,7 +27,7 @@ public:
 
 private:
 
-	inline GraphicsContext(GLFWwindow* pGLFWWindow) :
+	inline GraphicsContext( GLFWwindow* pGLFWWindow ) :
 		mp_GLFWWindow(pGLFWWindow)
 	{ }
 

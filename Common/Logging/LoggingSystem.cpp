@@ -5,11 +5,13 @@
 #include <Logging/Loggers/FileLogger.h>
 #include <Logging/Loggers/StreamLogger.h>
 #include <Utility/Strings.h>
+#include <Scripting/ScriptingSystem.h>
 
 #include <cstdarg>
 #include <chrono>
 
 using namespace Dusk::Logging;
+using namespace Dusk::Scripting;
 using Dusk::Utility::Basename;
 
 char LoggingSystem::m_LogBuffer[DUSK_LOGGING_MAX_BUFFER_SIZE];
@@ -147,4 +149,25 @@ AddFileLogger( const string& level, const string& filename )
         return false;
 	m_Loggers[level].Add(New FileLogger(filename));
     return true;
+}
+
+void LoggingSystem::
+InitScripting( void )
+{
+	ScriptingSystem::RegisterFunction("dusk_log", &LoggingSystem::Script_Log);
+}
+
+int LoggingSystem::
+Script_Log( lua_State* pState )
+{
+	lua_Debug ar;
+	lua_getstack(pState, 1, &ar);
+	lua_getinfo(pState, "nSl", &ar);
+
+	string level = lua_tostring(pState, 1);
+	string message = lua_tostring(pState, 2);
+
+	LoggingSystem::Log(level.c_str(), message.c_str(), ar.source, ar.currentline);
+
+	return 0;
 }

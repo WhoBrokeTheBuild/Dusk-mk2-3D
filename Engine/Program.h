@@ -18,6 +18,11 @@ namespace Input
 	class InputSystem;
 }
 
+namespace Scripting
+{
+	class ScriptingSystem;
+}
+
 namespace Timing
 {
 	class FrameTimeInfo;
@@ -32,7 +37,7 @@ public:
 		EVT_UPDATE,
 		EVT_RENDER;
 
-    static inline Program* Inst()
+    static inline Program* Inst( void )
     {
         static Program* pProgram = New Program();
 
@@ -54,6 +59,8 @@ public:
 
 	Input::InputSystem* GetInputSystem( void );
 
+	// Temporary
+
 	void MappedInputPressCallback(const Events::Event& event);
 	void KeyPressCallback(const Events::Event& event);
 	void MouseButtonPressCallback(const Events::Event& event);
@@ -67,6 +74,7 @@ private:
 		m_UpdateInterval(),
 		mp_GraphicsSystem(nullptr),
 		mp_InputSystem(nullptr),
+		mp_ScriptingSystem(nullptr),
 
 		m_Remap(false)
 	{ };
@@ -83,8 +91,13 @@ private:
     void Render( void );
 
 	bool InitGraphics( void );
+	void TermGraphics( void );
+
 	bool InitInput( void );
+	void TermInput( void );
+
 	bool InitAudio( void );
+	void TermAudio( void );
 
 	bool		m_Running;
 
@@ -96,10 +109,11 @@ private:
 
 	Input::InputSystem*				mp_InputSystem;
 
+	Scripting::ScriptingSystem*		mp_ScriptingSystem;
 
+	// Temporary
 
 	bool m_Remap;
-
 
 }; // class Program
 

@@ -1,6 +1,7 @@
 #ifndef DUSK_LOGGING_LOGGING_SYSTEM_H
 #define DUSK_LOGGING_LOGGING_SYSTEM_H
 
+#include <Scripting/Scripting.h>
 #include <Collections/Map.h>
 #include <Collections/ArrayList.h>
 
@@ -63,6 +64,9 @@ public:
                         const string& file, const int& line );
     static void ExtLog( const string& level, const string& format,
                         const string& file, const int line, ... );
+
+	static void InitScripting( void );
+	static int Script_Log( lua_State* pState );
 
 private:
 

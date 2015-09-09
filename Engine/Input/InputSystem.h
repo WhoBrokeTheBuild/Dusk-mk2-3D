@@ -3,6 +3,7 @@
 #ifndef DUSK_INPUT_INPUT_SYSTEM_H
 #define DUSK_INPUT_INPUT_SYSTEM_H
 
+#include <Scripting/Scripting.h>
 #include <Tracking/TrackedObject.h>
 #include <Events/IEventDispatcher.h>
 
@@ -58,12 +59,20 @@ public:
 		EVT_MAPPED_INPUT_PRESS,
 		EVT_MAPPED_INPUT_RELEASE;
 
-	InputSystem( void );
-	~InputSystem( void );
+	InputSystem( void ) :
+		m_MouseX(0),
+		m_MouseY(0),
+		m_GLFWKeyMap(),
+		m_MappedKeys(),
+		m_MappedMouseButtons()
+	{ }
+
+	~InputSystem( void ) { Term(); }
 
 	virtual inline string GetClassName( void ) const { return "Input System"; }
 
 	bool Init( void );
+	void Term( void );
 
 	void MapKey( const MappedInputID& id, const Key& key );
 	void MapMouseButton( const MappedInputID& id, const MouseButton& button );
@@ -82,6 +91,9 @@ public:
 
 	Key ConvertGLFWKey( const int& key );
 	MouseButton ConvertGLFWMouseButton( const int& mouseButton );
+
+	static void InitScripting( void );
+	static int Script_MapKey( lua_State* pState );
 
 private:
 

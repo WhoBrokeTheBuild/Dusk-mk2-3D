@@ -68,3 +68,5 @@ ipch/
 *.psess
 *.vsp
 *.vspx
+
+*.luac

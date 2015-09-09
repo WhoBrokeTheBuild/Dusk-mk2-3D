@@ -6,22 +6,11 @@
 #include <Graphics/GraphicsContext.h>
 #include <Graphics/GraphicsSystem.h>
 #include <Input/InputSystem.h>
+#include <Scripting/ScriptingSystem.h>
 
 using namespace Dusk::Graphics;
 using namespace Dusk::Logging;
-
-using Dusk::Program;
-
-Window::
-~Window(void)
-{
-	delete mp_GraphicsContext;
-	mp_GraphicsContext = nullptr;
-
-	glfwHideWindow(mp_GLFWWindow);
-	glfwDestroyWindow(mp_GLFWWindow);
-	mp_GLFWWindow = nullptr;
-}
+using namespace Dusk::Scripting;
 
 bool Window::
 Init(const size_t& width, const size_t& height, const string& title, const Flag& flags)
@@ -42,6 +31,17 @@ Init(const size_t& width, const size_t& height, const string& title, const Flag&
 
 	DuskBenchEnd("Window::Init");
 	return res;
+}
+
+void Window::
+Term( void )
+{
+	delete mp_GraphicsContext;
+	mp_GraphicsContext = nullptr;
+
+	glfwHideWindow(mp_GLFWWindow);
+	glfwDestroyWindow(mp_GLFWWindow);
+	mp_GLFWWindow = nullptr;
 }
 
 bool Window::
@@ -103,9 +103,31 @@ CreateGLFWWindow( void )
 }
 
 void Window::
-Title( const string& title )
+SetTitle( const string& title )
 {
+	glfwSetWindowTitle(mp_GLFWWindow, title.c_str());
+}
 
+void Window::
+SetSize(const size_t& width, const size_t& height)
+{
+	m_Width = width;
+	m_Height = height;
+	glfwSetWindowSize(mp_GLFWWindow, (int)m_Width, (int)m_Height);
+}
+
+void Window::
+SetWidth( const size_t& width )
+{
+	m_Width = width;
+	glfwSetWindowSize(mp_GLFWWindow, (int)m_Width, (int)m_Height);
+}
+
+void Window::
+SetHeight( const size_t& height )
+{
+	m_Height = height;
+	glfwSetWindowSize(mp_GLFWWindow, (int)m_Width, (int)m_Height);
 }
 
 GraphicsContext* Window::
@@ -114,14 +136,98 @@ GetGraphicsContext( void )
 	return mp_GraphicsContext;
 }
 
+void Window::
+InitScripting(void)
+{
+	ScriptingSystem::RegisterFunction("dusk_window_set_size",   &Window::Script_SetSize);
+
+	ScriptingSystem::RegisterFunction("dusk_window_get_width",  &Window::Script_GetWidth);
+	ScriptingSystem::RegisterFunction("dusk_window_set_width",  &Window::Script_SetWidth);
+
+	ScriptingSystem::RegisterFunction("dusk_window_get_height", &Window::Script_GetHeight);
+	ScriptingSystem::RegisterFunction("dusk_window_set_height", &Window::Script_SetHeight);
+
+	ScriptingSystem::RegisterFunction("dusk_window_get_title",  &Window::Script_GetTitle);
+	ScriptingSystem::RegisterFunction("dusk_window_set_title",  &Window::Script_SetTitle);
+}
+
+int Window::
+Script_SetSize( lua_State* pState )
+{
+	Window* pWindow = (Window*)lua_tointeger(pState, 1);
+	int width = (int)lua_tointeger(pState, 2);
+	int height = (int)lua_tointeger(pState, 3);
+	pWindow->SetSize(width, height);
+
+	return 0;
+}
+
+int Window::
+Script_GetWidth( lua_State* pState )
+{
+	Window* pWindow = (Window*)lua_tointeger(pState, 1);
+	lua_pushinteger(pState, (int)pWindow->GetWidth());
+
+	return 1;
+}
+
+int Window::
+Script_SetWidth( lua_State* pState )
+{
+	Window* pWindow = (Window*)lua_tointeger(pState, 1);
+	int width = (int)lua_tointeger(pState, 2);
+	pWindow->SetWidth(width);
+
+	return 0;
+}
+
+int Window::
+Script_GetHeight( lua_State* pState )
+{
+	Window* pWindow = (Window*)lua_tointeger(pState, 1);
+	lua_pushinteger(pState, (int)pWindow->GetHeight());
+
+	return 1;
+}
+
+int Window::
+Script_SetHeight( lua_State* pState )
+{
+	Window* pWindow = (Window*)lua_tointeger(pState, 1);
+	int height = (int)lua_tointeger(pState, 2);
+	pWindow->SetHeight(height);
+
+	return 0;
+}
+
+int Window::
+Script_GetTitle( lua_State* pState )
+{
+	Window* pWindow = (Window*)lua_tointeger(pState, 1);
+	lua_pushstring(pState, pWindow->GetTitle().c_str());
+
+	return 1;
+}
+
+int Window::
+Script_SetTitle( lua_State* pState )
+{
+	Window* pWindow = (Window*)lua_tointeger(pState, 1);
+	string title = lua_tostring(pState, 2);
+	pWindow->SetTitle(title);
+
+	return 0;
+}
+
 void Dusk::Graphics::
 glfwResize( GLFWwindow* pGLFWWindow, int width, int height )
 {
-	Window* pWindow = Program::Inst()->GetGraphicsSystem()->GetWindow();
-	//pWindow->hookResize(width, height);
+	Window* pWindow = Dusk::Program::Inst()->GetGraphicsSystem()->GetWindow();
+	pWindow->TriggerResize(width, height);
 }
 
-void Dusk::Graphics::glfwClose(GLFWwindow* pGLFWWindow)
+void Dusk::Graphics::
+glfwClose( GLFWwindow* pGLFWWindow )
 {
-	Program::Inst()->Exit();
+	Dusk::Program::Inst()->Exit();
 }

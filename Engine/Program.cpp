@@ -5,6 +5,7 @@
 #include <Timing/FrameTimeInfo.h>
 #include <Graphics/GraphicsSystem.h>
 #include <Input/InputSystem.h>
+#include <Scripting/ScriptingSystem.h>
 
 #include <chrono>
 #include <GLFW/glfw3.h>
@@ -13,8 +14,9 @@ using namespace Dusk;
 using namespace Dusk::Logging;
 using namespace Dusk::Events;
 using namespace Dusk::Timing;
-using namespace Dusk::Input;
 using namespace Dusk::Graphics;
+using namespace Dusk::Input;
+using namespace Dusk::Scripting;
 
 using namespace std::chrono;
 
@@ -47,8 +49,12 @@ Init( void )
 	}
 	DuskLog("info", "Input Init Succeeded");
 
+	GraphicsSystem::InitScripting();
+	InputSystem::InitScripting();
+
 	SetTargetFPS(60.0);
 
+	ScriptingSystem::RunFile("Assets/Scripts/Setup.luac");
 
 	GetInputSystem()->MapKey("jump", Key::KEY_SPACE);
 	GetInputSystem()->MapKey("remap", Key::KEY_ENTER);
@@ -56,7 +62,6 @@ Init( void )
 	GetInputSystem()->addEventListener(InputSystem::EVT_MAPPED_INPUT_PRESS, this, &Program::MappedInputPressCallback);
 	GetInputSystem()->addEventListener(InputSystem::EVT_KEY_PRESS, this, &Program::KeyPressCallback);
 	GetInputSystem()->addEventListener(InputSystem::EVT_MOUSE_BUTTON_PRESS, this, &Program::MouseButtonPressCallback);
-
 
 	DuskBenchEnd("Program::Init");
 	return true;
@@ -69,11 +74,9 @@ Term( void )
 	GetInputSystem()->removeEventListener(InputSystem::EVT_KEY_PRESS, this, &Program::KeyPressCallback);
 	GetInputSystem()->removeEventListener(InputSystem::EVT_MAPPED_INPUT_PRESS, this, &Program::MappedInputPressCallback);
 
-	delete mp_GraphicsSystem;
-	mp_GraphicsSystem = nullptr;
-
-	delete mp_InputSystem;
-	mp_InputSystem = nullptr;
+	TermGraphics();
+	TermAudio();
+	TermInput();
 }
 
 void Program::
@@ -146,6 +149,13 @@ InitGraphics( void )
 	return mp_GraphicsSystem->Init();
 }
 
+void Program::
+TermGraphics( void )
+{
+	delete mp_GraphicsSystem;
+	mp_GraphicsSystem = nullptr;
+}
+
 bool Program::
 InitInput( void )
 {
@@ -155,20 +165,32 @@ InitInput( void )
 	return mp_InputSystem->Init();
 }
 
+void Program::
+TermInput( void )
+{
+	delete mp_InputSystem;
+	mp_InputSystem = nullptr;
+}
+
 bool Program::
 InitAudio( void )
 {
 	return true;
 }
 
+void Program::
+TermAudio( void )
+{
+}
+
 GraphicsSystem* Program::
-GetGraphicsSystem(void)
+GetGraphicsSystem( void )
 {
 	return mp_GraphicsSystem;
 }
 
 InputSystem* Program::
-GetInputSystem(void)
+GetInputSystem( void )
 {
 	return mp_InputSystem;
 }
@@ -201,7 +223,8 @@ void Dusk::Program::KeyPressCallback(const Events::Event& event)
 	const KeyEventData* pData = event.GetDataAs<KeyEventData>();
 	Key key = pData->GetKey();
 
-	if (m_Remap && key != Key::KEY_ENTER) {
+	if (m_Remap && key != Key::KEY_ENTER) 
+	{
 		GetInputSystem()->MapKey("jump", key);
 		DuskExtLog("debug", "Remapped jump to key %d", key);
 		m_Remap = false;
@@ -213,7 +236,8 @@ void Dusk::Program::MouseButtonPressCallback(const Events::Event& event)
 	const MouseButtonEventData* pData = event.GetDataAs<MouseButtonEventData>();
 	MouseButton button = pData->GetMouseButton();
 
-	if (m_Remap) {
+	if (m_Remap) 
+	{
 		GetInputSystem()->MapMouseButton("jump", button);
 		DuskExtLog("debug", "Remapped jump to mouse button %d", button);
 		m_Remap = false;

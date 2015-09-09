@@ -2,10 +2,12 @@
 #include <Program.h>
 #include <Logging/Logging.h>
 #include <Events/Event.h>
+#include <Scripting/ScriptingSystem.h>
 
 using namespace Dusk::Logging;
 using namespace Dusk::Events;
 using namespace Dusk::Input;
+using namespace Dusk::Scripting;
 
 EventID InputSystem::EVT_KEY_PRESS				= 1;
 EventID InputSystem::EVT_KEY_RELEASE			= 2;
@@ -18,20 +20,7 @@ EventID InputSystem::EVT_MOUSE_BUTTON_RELEASE   = 13;
 EventID InputSystem::EVT_MAPPED_INPUT_PRESS		= 20;
 EventID InputSystem::EVT_MAPPED_INPUT_RELEASE	= 21;
 
-Dusk::Input::InputSystem::
-InputSystem( void ) :
-	m_GLFWKeyMap(),
-	m_MappedKeys(),
-	m_MappedMouseButtons()
-{
-}
-
-Dusk::Input::InputSystem::
-~InputSystem( void )
-{
-}
-
-bool Dusk::Input::InputSystem::
+bool InputSystem::
 Init( void )
 {
 	m_GLFWKeyMap.Clear();
@@ -43,24 +32,30 @@ Init( void )
 	return true;
 }
 
-void Dusk::Input::InputSystem::
+void InputSystem::
+Term( void )
+{
+	
+}
+
+void InputSystem::
 MapKey( const MappedInputID & id, const Key & key )
 {
 	m_MappedKeys.RemoveAllValues(id);
 	m_MappedKeys.Add(key, id);
 }
 
-void Dusk::Input::InputSystem::
+void InputSystem::
 MapMouseButton( const MappedInputID& id, const MouseButton& button )
 {
 	m_MappedMouseButtons.RemoveAllValues(id);
 	m_MappedMouseButtons.Add(button, id);
 }
 
-void Dusk::Input::InputSystem::
+void InputSystem::
 TriggerKeyPress( const Key& key )
 {
-	if (m_MappedKeys.ContainsKey(key))
+	if ( m_MappedKeys.ContainsKey(key) )
 	{
 		dispatch(Event(EVT_MAPPED_INPUT_PRESS, MappedInputEventData(m_MappedKeys[key])));
 	}
@@ -68,10 +63,10 @@ TriggerKeyPress( const Key& key )
 	dispatch(Event(EVT_KEY_PRESS, KeyEventData(key)));
 }
 
-void Dusk::Input::InputSystem::
+void InputSystem::
 TriggerKeyRelease( const Key& key )
 {
-	if (m_MappedKeys.ContainsKey(key)) 
+	if ( m_MappedKeys.ContainsKey(key) ) 
 	{
 		dispatch(Event(EVT_MAPPED_INPUT_RELEASE, MappedInputEventData(m_MappedKeys[key])));
 	}
@@ -79,7 +74,7 @@ TriggerKeyRelease( const Key& key )
 	dispatch(Event(EVT_KEY_RELEASE, KeyEventData(key)));
 }
 
-void Dusk::Input::InputSystem::
+void InputSystem::
 TriggerMouseMoveRelative( const double& dx, const double& dy )
 {
 	m_MouseX += dx;
@@ -88,7 +83,7 @@ TriggerMouseMoveRelative( const double& dx, const double& dy )
 	dispatch(Event(EVT_MOUSE_MOVE, MouseMoveEventData(m_MouseX, m_MouseY, dx, dy)));
 }
 
-void Dusk::Input::InputSystem::
+void InputSystem::
 TriggerMouseMoveAbsolute( const double& x, const double& y )
 {
 	double dx = x - m_MouseX,
@@ -100,16 +95,16 @@ TriggerMouseMoveAbsolute( const double& x, const double& y )
 	dispatch(Event(EVT_MOUSE_MOVE, MouseMoveEventData(m_MouseX, m_MouseY, dx, dy)));
 }
 
-void Dusk::Input::InputSystem::
+void InputSystem::
 TriggerMouseScroll( double x, double y )
 {
 	dispatch(Event(EVT_MOUSE_SCROLL, MouseScrollEventData(x, y)));
 }
 
-void Dusk::Input::InputSystem::
+void InputSystem::
 TriggerMouseButtonPress( const MouseButton& mouseButton )
 {
-	if (m_MappedMouseButtons.ContainsKey(mouseButton))
+	if ( m_MappedMouseButtons.ContainsKey(mouseButton) )
 	{
 		dispatch(Event(EVT_MAPPED_INPUT_PRESS, MappedInputEventData(m_MappedMouseButtons[mouseButton])));
 	}
@@ -117,10 +112,10 @@ TriggerMouseButtonPress( const MouseButton& mouseButton )
 	dispatch(Event(EVT_MOUSE_BUTTON_PRESS, MouseButtonEventData(mouseButton)));
 }
 
-void Dusk::Input::InputSystem::
+void InputSystem::
 TriggerMouseButtonRelease( const MouseButton& mouseButton )
 {
-	if (m_MappedMouseButtons.ContainsKey(mouseButton))
+	if ( m_MappedMouseButtons.ContainsKey(mouseButton) )
 	{
 		dispatch(Event(EVT_MAPPED_INPUT_RELEASE, MappedInputEventData(m_MappedMouseButtons[mouseButton])));
 	}
@@ -128,28 +123,28 @@ TriggerMouseButtonRelease( const MouseButton& mouseButton )
 	dispatch(Event(EVT_MOUSE_BUTTON_RELEASE, MouseButtonEventData(mouseButton)));
 }
 
-void Dusk::Input::InputSystem::
+void InputSystem::
 TriggerMappedInputPress( const MappedInputID& input )
 {
 	dispatch(Event(EVT_MAPPED_INPUT_PRESS, MappedInputEventData(input)));
 }
 
-void Dusk::Input::InputSystem::
+void InputSystem::
 TriggerMappedInputRelease( const MappedInputID& input )
 {
 	dispatch(Event(EVT_MAPPED_INPUT_RELEASE, MappedInputEventData(input)));
 }
 
-Dusk::Input::Key Dusk::Input::InputSystem::
+Key InputSystem::
 ConvertGLFWKey( const int& key )
 {
 	return m_GLFWKeyMap[key];
 }
 
-Dusk::Input::MouseButton Dusk::Input::InputSystem::
+MouseButton InputSystem::
 ConvertGLFWMouseButton( const int& mouseButton )
 {
-	switch (mouseButton) {
+	switch ( mouseButton ) {
 		case GLFW_MOUSE_BUTTON_LEFT:
 
 			return MouseButton::MOUSE_BUTTON_LEFT;
@@ -170,6 +165,19 @@ ConvertGLFWMouseButton( const int& mouseButton )
 	return INVALID_MOUSE_BUTTON;
 }
 
+void InputSystem::
+InitScripting( void )
+{
+	ScriptingSystem::RegisterFunction("dusk_input_system_map_key", &InputSystem::Script_MapKey);
+}
+
+int InputSystem::
+Script_MapKey( lua_State* pState )
+{
+
+	return 0;
+}
+
 void Dusk::Input::
 glfwKey( GLFWwindow* pGLFWWindow, int glfwKeyCode, int scancode, int action, int mods )
 {
@@ -177,7 +185,7 @@ glfwKey( GLFWwindow* pGLFWWindow, int glfwKeyCode, int scancode, int action, int
 
 	Key key = pInputSystem->ConvertGLFWKey(glfwKeyCode);
 
-	switch (action) 
+	switch ( action ) 
 	{
 		case GLFW_PRESS:
 
@@ -206,7 +214,7 @@ glfwMouse( GLFWwindow* pGLFWWindow, int glfwButtonCode, int action, int mods )
 
 	MouseButton button = pInputSystem->ConvertGLFWMouseButton(glfwButtonCode);
 
-	switch (action)
+	switch ( action )
 	{
 	case GLFW_PRESS:
 

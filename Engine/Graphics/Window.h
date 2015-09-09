@@ -4,6 +4,7 @@
 #include <Graphics/Graphics.h>
 #include <Tracking/TrackedObject.h>
 #include <Utility/Types.h>
+#include <Scripting/Scripting.h>
 
 using namespace Dusk::Tracking;
 using namespace Dusk::Utility;
@@ -35,25 +36,44 @@ public:
 		m_Resizable(false)
 	{ }
 
-	~Window(void);
+	~Window(void) { Term(); }
 
 	virtual inline string GetClassName(void) const { return "Window"; }
 
 	bool Init( const size_t& width, const size_t& height, const string& title, const Flag& flags );
+	void Term( void );
 
-	inline string Title( void ) const { return m_Title; }
-	void Title( const string& title );
+	inline string GetTitle( void ) const { return m_Title; }
+	void SetTitle( const string& title );
 
-	inline bool Fullscreen( void ) const { return m_Fullscreen; }
-	inline void Fullscreen( const bool& fullscreen ) { m_Fullscreen = fullscreen; }
+	void SetSize( const size_t& width, const size_t& height );
 
-	inline bool Decorated( void ) const { return m_Decorated; }
-	inline void Decorated( const bool& decorated ) { m_Decorated = decorated; }
+	inline size_t GetWidth( void ) const { return m_Width; }
+	void SetWidth( const size_t& width );
 
-	inline bool Resizable ( void ) const { return m_Resizable; }
-	inline void Resizable ( const bool& resizable ) { m_Resizable = resizable; }
+	inline size_t GetHeight( void ) const { return m_Height; }
+	void SetHeight( const size_t& height );
+
+	inline bool IsFullscreen( void ) const { return m_Fullscreen; }
+	inline bool IsDecorated( void ) const { return m_Decorated; }
+	inline bool IsResizable ( void ) const { return m_Resizable; }
 
 	GraphicsContext* GetGraphicsContext( void );
+
+	static void InitScripting( void );
+	static int Script_SetSize  ( lua_State* pState );
+	static int Script_GetWidth ( lua_State* pState );
+	static int Script_GetHeight( lua_State* pState );
+	static int Script_SetWidth ( lua_State* pState );
+	static int Script_SetHeight( lua_State* pState );
+	static int Script_GetTitle ( lua_State* pState );
+	static int Script_SetTitle ( lua_State* pState );
+
+	inline void TriggerResize( const size_t& width, const size_t& height )
+	{
+		m_Width = width;
+		m_Height = height;
+	}
 
 private:
 

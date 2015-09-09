@@ -1,6 +1,7 @@
 #ifndef DUSK_GRAPHICS_GRAPHICS_SYSTEM_H
 #define DUSK_GRAPHICS_GRAPHICS_SYSTEM_H
 
+#include <Scripting/Scripting.h>
 #include <Tracking/TrackedObject.h>
 
 namespace Dusk
@@ -10,6 +11,7 @@ namespace Graphics
 {
 
 class Window;
+class GraphicsContext;
 
 class GraphicsSystem :
 	public Tracking::TrackedObject
@@ -20,13 +22,19 @@ public:
 		mp_Window(nullptr)
 	{ }
 
-	~GraphicsSystem( void );
+	~GraphicsSystem( void ) { Term(); }
 
 	virtual inline string GetClassName( void ) const { return "Graphics System"; }
 
 	bool Init( void );
+	void Term( void );
 
-	Graphics::Window * GetWindow( void ) const;
+	Window* GetWindow( void ) const;
+	GraphicsContext* GetGraphicsContext( void ) const;
+
+	static void InitScripting( void );
+	static int Script_GetWindow( lua_State* pState );
+	static int Script_GetGraphicsContext( lua_State* pState );
 
 private:
 

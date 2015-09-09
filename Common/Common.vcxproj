@@ -95,7 +95,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>./</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./;../Libraries/lua/include/</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -107,7 +107,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>./</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./;../Libraries/lua/include/</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -121,7 +121,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>./</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./;../Libraries/lua/include/</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -137,7 +137,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>./</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./;../Libraries/lua/include/</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -150,11 +150,11 @@
     <ClCompile Include="Dusk.cpp" />
     <ClCompile Include="Events\Event.cpp" />
     <ClCompile Include="Events\IEventDispatcher.cpp" />
-    <ClCompile Include="Logging\Logger.cpp" />
     <ClCompile Include="Logging\Loggers\ConsoleLogger.cpp" />
     <ClCompile Include="Logging\Loggers\FileLogger.cpp" />
     <ClCompile Include="Logging\Loggers\StreamLogger.cpp" />
     <ClCompile Include="Logging\LoggingSystem.cpp" />
+    <ClCompile Include="Scripting\ScriptingSystem.cpp" />
     <ClCompile Include="Tracking\MemoryTracker.cpp" />
     <ClCompile Include="Tracking\TrackedObject.cpp" />
     <ClCompile Include="Utility\Strings.cpp" />
@@ -175,6 +175,8 @@
     <ClInclude Include="Logging\Loggers\StreamLogger.h" />
     <ClInclude Include="Logging\Logging.h" />
     <ClInclude Include="Logging\LoggingSystem.h" />
+    <ClInclude Include="Scripting\ScriptingSystem.h" />
+    <ClInclude Include="Scripting\Scripting.h" />
     <ClInclude Include="Timing\FrameTimeInfo.h" />
     <ClInclude Include="Timing\Timing.h" />
     <ClInclude Include="Tracking\MemoryTracker.h" />

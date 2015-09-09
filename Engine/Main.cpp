@@ -1,6 +1,7 @@
 #include <Program.h>
 
 #include <Utility/Benchmark.h>
+#include <Scripting/ScriptingSystem.h>
 #include <Tracking/MemoryTracker.h>
 #include <Logging/LoggingSystem.h>
 #include <Utility/Console.h>
@@ -8,6 +9,7 @@
 
 using namespace Dusk::Tracking;
 using namespace Dusk::Logging;
+using namespace Dusk::Scripting;
 
 void initLoggingSystem(void) {
 	DuskBenchStart();
@@ -46,7 +48,13 @@ void initLoggingSystem(void) {
 int main(int argc, char* argv[])
 {
 	MemoryTracker::Init();
+
 	initLoggingSystem();
+
+	ScriptingSystem::Init();
+	ScriptingSystem::RunFile("Assets/Scripts/Dusk.luac");
+
+	LoggingSystem::InitScripting();
 
 	Dusk::Program* pProgram = Dusk::Program::Inst();
 
@@ -61,6 +69,7 @@ int main(int argc, char* argv[])
 	DuskLog("verbose", "Program deleted, preparing to close logs");
 
 	LoggingSystem::CloseAllLoggers();
+	ScriptingSystem::Term();
 
 #ifdef DUSK_DEBUG_BUILD
 

@@ -2,9 +2,9 @@
 
 #include <Graphics/Window.h>
 
-bool Dusk::Graphics::GraphicsContext::Bind(void)
+bool Dusk::Graphics::GraphicsContext::Bind( void )
 {
-	if (mp_GLFWWindow == nullptr)
+	if ( mp_GLFWWindow == nullptr )
 		return false;
 
 	glfwMakeContextCurrent(mp_GLFWWindow);
@@ -14,7 +14,7 @@ bool Dusk::Graphics::GraphicsContext::Bind(void)
 	return true;
 }
 
-void Dusk::Graphics::GraphicsContext::SwapBuffers(void)
+void Dusk::Graphics::GraphicsContext::SwapBuffers( void )
 {
 	glfwSwapBuffers(mp_GLFWWindow);
 }
