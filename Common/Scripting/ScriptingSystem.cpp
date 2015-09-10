@@ -2,39 +2,29 @@
 
 #include <Utility/Benchmark.h>
 #include <Logging/LoggingSystem.h>
+#include <Scripting/ScriptHost.h>
 
 using namespace Dusk::Scripting;
 using namespace Dusk::Logging;
 
-lua_State* ScriptingSystem::mp_LuaState = nullptr;
+Map<string, LuaCallback> Dusk::Scripting::ScriptingSystem::s_Functions;
+ArrayList<ScriptHost*> Dusk::Scripting::ScriptingSystem::s_ScriptHosts;
 
-bool ScriptingSystem::
-Init(void)
+void Dusk::Scripting::ScriptingSystem::AddScriptHost( ScriptHost* pHost )
 {
-	DuskBenchStart();
+	s_ScriptHosts.Add(pHost);
 
-	mp_LuaState = luaL_newstate();
-
-	if (!mp_LuaState)
-	{
-		DuskLog("error", "Failed to create Lua State");
-		return false;
+	for (auto it : s_Functions) {
+		pHost->RegisterFunction(it.first, it.second);
 	}
-
-	luaL_openlibs(mp_LuaState);
-
-	DuskBenchEnd("ScriptingSystem::Init");
-	return true;
 }
 
-void ScriptingSystem::
-Term(void)
+void Dusk::Scripting::ScriptingSystem::RemoveScriptHost( ScriptHost* pHost )
 {
-	lua_close(mp_LuaState);
+	s_ScriptHosts.Remove(pHost);
 }
 
-bool ScriptingSystem::
-RegisterFunction(const string& funcName, LuaCallback callback)
+bool Dusk::Scripting::ScriptingSystem::RegisterFunction(const string& funcName, LuaCallback callback)
 {
 	if (funcName.empty())
 	{
@@ -47,31 +37,17 @@ RegisterFunction(const string& funcName, LuaCallback callback)
 		DuskLog("error", "Cannot register a fucntion with no callback");
 	}
 
-	lua_register(mp_LuaState, funcName.c_str(), callback);
-	return true;
-}
+	if (s_Functions.ContainsKey(funcName))
+	{
+		DuskLog("error", "Cannot register a function twice");
+		return false;
+	}
 
-bool ScriptingSystem::
-RunFile(const string& filename)
-{
-	int status = luaL_loadfile(mp_LuaState, filename.c_str());
+	s_Functions.Add(funcName, callback);
 
-	if (status)
-		goto error;
-
-	status = lua_pcall(mp_LuaState,
-		0,
-		LUA_MULTRET,
-		0); // Set the error callback to 0, this means errors will be pushed onto the stack
-
-	if (status)
-		goto error;
+	for (auto it : s_ScriptHosts) {
+		it->RegisterFunction(funcName, callback);
+	}
 
 	return true;
-
-error:
-
-	DuskExtLog("error", "%s", lua_tostring(mp_LuaState, -1)); // get error message from stack
-	lua_pop(mp_LuaState, 1); // remove error message
-	return false;
 }

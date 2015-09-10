@@ -154,6 +154,7 @@
     <ClCompile Include="Logging\Loggers\FileLogger.cpp" />
     <ClCompile Include="Logging\Loggers\StreamLogger.cpp" />
     <ClCompile Include="Logging\LoggingSystem.cpp" />
+    <ClCompile Include="Scripting\ScriptHost.cpp" />
     <ClCompile Include="Scripting\ScriptingSystem.cpp" />
     <ClCompile Include="Tracking\MemoryTracker.cpp" />
     <ClCompile Include="Tracking\TrackedObject.cpp" />
@@ -175,6 +176,7 @@
     <ClInclude Include="Logging\Loggers\StreamLogger.h" />
     <ClInclude Include="Logging\Logging.h" />
     <ClInclude Include="Logging\LoggingSystem.h" />
+    <ClInclude Include="Scripting\ScriptHost.h" />
     <ClInclude Include="Scripting\ScriptingSystem.h" />
     <ClInclude Include="Scripting\Scripting.h" />
     <ClInclude Include="Timing\FrameTimeInfo.h" />

@@ -104,6 +104,32 @@ public:
     inline ConstReverseIterator ConstRevEnd( void ) const
         { return m_Map.crend(); }
 
+	// For compatibility with range-based for loops
+	
+    inline Iterator begin( void )
+        { return m_Map.begin(); }
+
+    inline Iterator end( void )
+        { return m_Map.end(); }
+
+    inline ReverseIterator rbegin( void )
+        { return m_Map.rbegin(); }
+
+    inline ReverseIterator rend( void )
+        { return m_Map.rend(); }
+
+    inline ConstIterator cbegin( void ) const
+        { return m_Map.cbegin(); }
+
+    inline ConstIterator cend( void ) const
+        { return m_Map.cend(); }
+
+    inline ConstReverseIterator crbegin( void ) const
+        { return m_Map.crbegin(); }
+
+    inline ConstReverseIterator crend( void ) const
+        { return m_Map.crend(); }
+
 private:
 
     std::map<K, T, Sort>    m_Map;

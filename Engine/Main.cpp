@@ -51,9 +51,6 @@ int main(int argc, char* argv[])
 
 	initLoggingSystem();
 
-	ScriptingSystem::Init();
-	ScriptingSystem::RunFile("Assets/Scripts/Dusk.luac");
-
 	LoggingSystem::InitScripting();
 
 	Dusk::Program* pProgram = Dusk::Program::Inst();
@@ -69,7 +66,6 @@ int main(int argc, char* argv[])
 	DuskLog("verbose", "Program deleted, preparing to close logs");
 
 	LoggingSystem::CloseAllLoggers();
-	ScriptingSystem::Term();
 
 #ifdef DUSK_DEBUG_BUILD
 

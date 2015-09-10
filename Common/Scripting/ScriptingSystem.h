@@ -5,6 +5,10 @@
 
 #include <Scripting/Scripting.h>
 #include <Utility/Types.h>
+#include <Collections/Map.h>
+#include <Collections/ArrayList.h>
+
+using namespace Dusk::Collections;
 
 namespace Dusk
 {
@@ -12,21 +16,20 @@ namespace Dusk
 namespace Scripting
 {
 
-typedef int(*LuaCallback)(lua_State* pState);
+class ScriptHost;
 
 class ScriptingSystem
 {
 public:
 
-	static bool Init( void );
-	static void Term( void );
-
+	static void AddScriptHost( ScriptHost* pHost );
+	static void RemoveScriptHost(ScriptHost* pHost);
 	static bool RegisterFunction( const string& funcName, LuaCallback callback );
-	static bool RunFile( const string& filename );
 
 private:
 
-	static lua_State*		mp_LuaState;
+	static Map<string, LuaCallback>  s_Functions;
+	static ArrayList<ScriptHost*>    s_ScriptHosts;
 
 };
 

@@ -207,6 +207,32 @@ public:
     inline ConstReverseIterator ConstRevEnd( void )
         { return m_List.crend(); }
 
+	// For compatibility with range-based for loops
+	
+    inline Iterator begin( void )
+        { return m_List.begin(); }
+
+    inline Iterator end( void )
+        { return m_List.end(); }
+
+    inline ReverseIterator rbegin( void )
+        { return m_List.rbegin(); }
+
+    inline ReverseIterator rend( void )
+        { return m_List.rend(); }
+
+    inline ConstIterator cbegin( void ) const
+        { return m_List.cbegin(); }
+
+    inline ConstIterator cend( void ) const
+        { return m_List.cend(); }
+
+    inline ConstReverseIterator crbegin( void ) const
+        { return m_List.crbegin(); }
+
+    inline ConstReverseIterator crend( void ) const
+        { return m_List.crend(); }
+
 private:
 
 	std::vector<T>		m_List;

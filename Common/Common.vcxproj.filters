@@ -12,6 +12,7 @@
     <ClCompile Include="Events\Event.cpp" />
     <ClCompile Include="Events\IEventDispatcher.cpp" />
     <ClCompile Include="Scripting\ScriptingSystem.cpp" />
+    <ClCompile Include="Scripting\ScriptHost.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dusk.h" />
@@ -42,5 +43,6 @@
     <ClInclude Include="Events\IEventDispatcher.h" />
     <ClInclude Include="Scripting\Scripting.h" />
     <ClInclude Include="Scripting\ScriptingSystem.h" />
+    <ClInclude Include="Scripting\ScriptHost.h" />
   </ItemGroup>
 </Project>

@@ -6,6 +6,7 @@
 #include <Graphics/GraphicsSystem.h>
 #include <Input/InputSystem.h>
 #include <Scripting/ScriptingSystem.h>
+#include <Scripting/ScriptHost.h>
 
 #include <chrono>
 #include <GLFW/glfw3.h>
@@ -54,7 +55,10 @@ Init( void )
 
 	SetTargetFPS(60.0);
 
-	ScriptingSystem::RunFile("Assets/Scripts/Setup.luac");
+	mp_ScriptHost = New ScriptHost();
+	mp_ScriptHost->Init();
+
+	mp_ScriptHost->RunFile("Assets/Scripts/Setup.luac");
 
 	GetInputSystem()->MapKey("jump", Key::KEY_SPACE);
 	GetInputSystem()->MapKey("remap", Key::KEY_ENTER);
@@ -73,6 +77,9 @@ Term( void )
 	GetInputSystem()->removeEventListener(InputSystem::EVT_MOUSE_BUTTON_PRESS, this, &Program::MouseButtonPressCallback);
 	GetInputSystem()->removeEventListener(InputSystem::EVT_KEY_PRESS, this, &Program::KeyPressCallback);
 	GetInputSystem()->removeEventListener(InputSystem::EVT_MAPPED_INPUT_PRESS, this, &Program::MappedInputPressCallback);
+
+	delete mp_ScriptHost;
+	mp_ScriptHost = nullptr;
 
 	TermGraphics();
 	TermAudio();

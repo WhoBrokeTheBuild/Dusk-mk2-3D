@@ -21,6 +21,7 @@ namespace Input
 namespace Scripting
 {
 	class ScriptingSystem;
+	class ScriptHost;
 }
 
 namespace Timing
@@ -75,6 +76,7 @@ private:
 		mp_GraphicsSystem(nullptr),
 		mp_InputSystem(nullptr),
 		mp_ScriptingSystem(nullptr),
+		mp_ScriptHost(nullptr),
 
 		m_Remap(false)
 	{ };
@@ -106,10 +108,10 @@ private:
 				m_UpdateInterval;
 
 	Graphics::GraphicsSystem*		mp_GraphicsSystem;
-
 	Input::InputSystem*				mp_InputSystem;
-
 	Scripting::ScriptingSystem*		mp_ScriptingSystem;
+
+	Scripting::ScriptHost*		mp_ScriptHost;
 
 	// Temporary
 
