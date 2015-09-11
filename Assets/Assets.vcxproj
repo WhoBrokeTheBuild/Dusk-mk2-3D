@@ -18,6 +18,9 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Scripts\Dusk\Logging.lua" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{5B9AFE5D-CBD2-4688-A98F-51B806E8F92C}</ProjectGuid>
     <RootNamespace>Assets</RootNamespace>

@@ -1,19 +1,14 @@
 
 Dusk.Graphics = { }
 
--- Dusk::Graphics::GraphicsSystem
+Dusk.Graphics.GetWindow = function()
 
-Dusk.Graphics.GraphicsSystem = {
+	local win = Dusk.Graphics.Window();
+	rawset(rawget(getmetatable(win), "private"), "dusk_ptr", dusk_graphics_system_get_window());
 
-    GetWindow = function()
+	return win;
 
-        local win = Dusk.Graphics.Window();
-        rawset(rawget(getmetatable(win), "private"), "dusk_ptr", dusk_graphics_system_get_window());
-
-        return win;
-
-        end
-}
+end
 
 -- Dusk::Graphics::Window
 

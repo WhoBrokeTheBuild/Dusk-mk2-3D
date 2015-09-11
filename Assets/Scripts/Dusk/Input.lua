@@ -1,13 +1,8 @@
 
 Dusk.Input = { }
 
--- Dusk::Input::InputSystem
+Dusk.Input.MapKey = function(inputId, key)
 
-Dusk.Input.InputSystem = { 
+	dusk_input_system_map_key(inputId, key);
 
-	MapKey = function(inputId, key)
-
-		dusk_input_system_map_key(inputId, key);
-
-		end
-}
+end
