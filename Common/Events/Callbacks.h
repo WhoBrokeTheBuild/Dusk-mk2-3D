@@ -1,7 +1,7 @@
 #ifndef DUSK_CALLBACKS_H
 #define DUSK_CALLBACKS_H
 
-#include <Tracking/TrackedObject.h>
+#include <Tracking/ITrackedObject.h>
 
 namespace Dusk
 {
@@ -10,25 +10,25 @@ namespace Events
 {
 
 template <typename ReturnType, typename Param = void>
-class Callback :
-	public Tracking::TrackedObject
+class ICallback :
+	public Tracking::ITrackedObject
 {
 public:
 
-    virtual inline ~Callback( void ) { }
+    virtual inline ~ICallback( void ) { }
 
-    friend bool operator==( const Callback<ReturnType, Param>& lhs, const Callback<ReturnType, Param>& rhs ) { return lhs.isEqualTo(rhs); }
-    friend bool operator!=( const Callback<ReturnType, Param>& lhs, const Callback<ReturnType, Param>& rhs ) { return ! lhs.isEqualTo(rhs); }
+    friend bool operator==( const ICallback<ReturnType, Param>& lhs, const ICallback<ReturnType, Param>& rhs ) { return lhs.IsEqualTo(rhs); }
+    friend bool operator!=( const ICallback<ReturnType, Param>& lhs, const ICallback<ReturnType, Param>& rhs ) { return ! lhs.IsEqualTo(rhs); }
 
     virtual inline string GetClassName( void ) const { return "Callback"; }
 
-    virtual ReturnType invoke( Param param ) = 0;
-    virtual Callback* clone( void )          = 0;
-    virtual bool isMethodOf( void* pObject ) = 0;
+    virtual ReturnType Invoke( Param param ) = 0;
+    virtual ICallback* Clone( void )          = 0;
+    virtual bool IsMethodOf( void* pObject ) = 0;
 
 protected:
 
-    inline virtual bool isEqualTo( const Callback<ReturnType, Param>& rhs ) const { return false; };
+    inline virtual bool IsEqualTo( const ICallback<ReturnType, Param>& rhs ) const { return false; };
 
 private:
 
@@ -36,7 +36,7 @@ private:
 
 template <typename ReturnType, typename Param = void>
 class FunctionCallback :
-    public Callback<ReturnType, Param>
+    public ICallback<ReturnType, Param>
 {
 public:
 
@@ -44,15 +44,15 @@ public:
         mp_Function(pFunction)
     { }
 
-    inline virtual ReturnType invoke( Param param ) { return (*mp_Function)(param); }
-    inline virtual FunctionCallback* clone ( void ) { return New FunctionCallback(mp_Function); }
-    inline virtual bool isMethodOf( void* pObject ) { return false; }
+    inline virtual ReturnType Invoke( Param param ) { return (*mp_Function)(param); }
+    inline virtual FunctionCallback* Clone ( void ) { return New FunctionCallback(mp_Function); }
+    inline virtual bool IsMethodOf( void* pObject ) { return false; }
 
     virtual inline string GetClassName( void ) const { return "Function Callback"; }
 
 protected:
 
-    virtual bool isEqualTo( const Callback<ReturnType, Param>& rhs ) const
+    virtual bool IsEqualTo( const ICallback<ReturnType, Param>& rhs ) const
     {
         if ( const FunctionCallback<ReturnType, Param>* pConvert = dynamic_cast<const FunctionCallback<ReturnType, Param>*>(&rhs) )
         {
@@ -70,7 +70,7 @@ private:
 
 template <typename ReturnType, typename Param = void, typename ObjectType = void, typename Method = void>
 class MethodCallback :
-    public Callback<ReturnType, Param>
+    public ICallback<ReturnType, Param>
 {
 public:
 
@@ -79,15 +79,15 @@ public:
         mp_Object(pObject)
     { }
 
-    inline virtual ReturnType invoke( Param param ) { return (static_cast<ObjectType*>(mp_Object)->*m_Method)(param); }
-    inline virtual MethodCallback* clone ( void ) { return New MethodCallback(mp_Object, m_Method); }
-    inline virtual bool isMethodOf( void* pObject ) { return mp_Object == pObject; }
+    inline virtual ReturnType Invoke( Param param ) { return (static_cast<ObjectType*>(mp_Object)->*m_Method)(param); }
+    inline virtual MethodCallback* Clone ( void ) { return New MethodCallback(mp_Object, m_Method); }
+    inline virtual bool IsMethodOf( void* pObject ) { return mp_Object == pObject; }
 
     virtual inline string GetClassName( void ) const { return "Method Callback"; }
 
 protected:
 
-    virtual bool isEqualTo( const Callback<ReturnType, Param>& rhs ) const
+    virtual bool IsEqualTo( const ICallback<ReturnType, Param>& rhs ) const
     {
         if ( const MethodCallback<ReturnType, Param, ObjectType, Method>* pConvert = dynamic_cast<const MethodCallback<ReturnType, Param, ObjectType, Method>*>(&rhs) )
         {

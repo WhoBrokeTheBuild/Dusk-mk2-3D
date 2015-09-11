@@ -69,7 +69,7 @@ int main(int argc, char* argv[])
 
 #ifdef DUSK_DEBUG_BUILD
 
-	if (MemoryTracker::AllocationCount() > 0)
+	if (MemoryTracker::GetAllocationCount() > 0)
 	{
 		MemoryTracker::PrintAllocations();
 		Dusk::Utility::ConsolePause();

@@ -1,7 +1,8 @@
 #ifndef DUSK_PROGRAM_H
 #define DUSK_PROGRAM_H
 
-#include <Tracking/TrackedObject.h>
+#include <Events/IEventDispatcher.h>
+#include <Tracking/ITrackedObject.h>
 
 #include <Events/Event.h>
 
@@ -11,6 +12,7 @@ namespace Dusk
 namespace Graphics
 {
 	class GraphicsSystem;
+	class GraphicsContext;
 }
 
 namespace Input
@@ -30,7 +32,8 @@ namespace Timing
 }
 
 class Program :
-	public Tracking::TrackedObject
+	public Events::IEventDispatcher,
+	public Tracking::ITrackedObject
 {
 public:
 
@@ -118,6 +121,48 @@ private:
 	bool m_Remap;
 
 }; // class Program
+
+class UpdateEventData :
+	public Events::EventData
+{
+public:
+
+	UpdateEventData( Timing::FrameTimeInfo* timeInfo ) :
+		mp_TimeInfo(timeInfo)
+	{ }
+
+	virtual inline string GetClassName( void ) const { return "Update Event Data"; }
+
+	virtual inline EventData* Clone(void) const { return New UpdateEventData(mp_TimeInfo); }
+
+	Timing::FrameTimeInfo* GetTimeInfo( void );
+
+private:
+
+	Timing::FrameTimeInfo*	mp_TimeInfo;
+
+};
+
+class RenderEventData :
+	public Events::EventData
+{
+public:
+
+	RenderEventData(Graphics::GraphicsContext* context) :
+		mp_GraphicsContext(context)
+	{ }
+
+	virtual inline string GetClassName(void) const { return "Render Event Data"; }
+
+	virtual inline EventData* Clone(void) const { return New RenderEventData(mp_GraphicsContext); }
+
+	Graphics::GraphicsContext* GetGraphicsContext( void );
+
+private:
+
+	Graphics::GraphicsContext*	mp_GraphicsContext;
+
+};
 
 } // namespace Dusk
 

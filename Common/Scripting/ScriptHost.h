@@ -5,7 +5,7 @@
 
 #include <Scripting/Scripting.h>
 #include <Utility/Types.h>
-#include <Tracking/TrackedObject.h>
+#include <Tracking/ITrackedObject.h>
 
 namespace Dusk
 {
@@ -14,7 +14,7 @@ namespace Scripting
 {
 
 class ScriptHost :
-	public Tracking::TrackedObject
+	public Tracking::ITrackedObject
 {
 public:
 

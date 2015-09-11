@@ -57,10 +57,10 @@ TriggerKeyPress( const Key& key )
 {
 	if ( m_MappedKeys.ContainsKey(key) )
 	{
-		dispatch(Event(EVT_MAPPED_INPUT_PRESS, MappedInputEventData(m_MappedKeys[key])));
+		Dispatch(Event(EVT_MAPPED_INPUT_PRESS, MappedInputEventData(m_MappedKeys[key])));
 	}
 
-	dispatch(Event(EVT_KEY_PRESS, KeyEventData(key)));
+	Dispatch(Event(EVT_KEY_PRESS, KeyEventData(key)));
 }
 
 void InputSystem::
@@ -68,10 +68,10 @@ TriggerKeyRelease( const Key& key )
 {
 	if ( m_MappedKeys.ContainsKey(key) ) 
 	{
-		dispatch(Event(EVT_MAPPED_INPUT_RELEASE, MappedInputEventData(m_MappedKeys[key])));
+		Dispatch(Event(EVT_MAPPED_INPUT_RELEASE, MappedInputEventData(m_MappedKeys[key])));
 	}
 
-	dispatch(Event(EVT_KEY_RELEASE, KeyEventData(key)));
+	Dispatch(Event(EVT_KEY_RELEASE, KeyEventData(key)));
 }
 
 void InputSystem::
@@ -80,7 +80,7 @@ TriggerMouseMoveRelative( const double& dx, const double& dy )
 	m_MouseX += dx;
 	m_MouseY += dy;
 
-	dispatch(Event(EVT_MOUSE_MOVE, MouseMoveEventData(m_MouseX, m_MouseY, dx, dy)));
+	Dispatch(Event(EVT_MOUSE_MOVE, MouseMoveEventData(m_MouseX, m_MouseY, dx, dy)));
 }
 
 void InputSystem::
@@ -92,13 +92,13 @@ TriggerMouseMoveAbsolute( const double& x, const double& y )
 	m_MouseX = x;
 	m_MouseY = y;
 
-	dispatch(Event(EVT_MOUSE_MOVE, MouseMoveEventData(m_MouseX, m_MouseY, dx, dy)));
+	Dispatch(Event(EVT_MOUSE_MOVE, MouseMoveEventData(m_MouseX, m_MouseY, dx, dy)));
 }
 
 void InputSystem::
 TriggerMouseScroll( double x, double y )
 {
-	dispatch(Event(EVT_MOUSE_SCROLL, MouseScrollEventData(x, y)));
+	Dispatch(Event(EVT_MOUSE_SCROLL, MouseScrollEventData(x, y)));
 }
 
 void InputSystem::
@@ -106,10 +106,10 @@ TriggerMouseButtonPress( const MouseButton& mouseButton )
 {
 	if ( m_MappedMouseButtons.ContainsKey(mouseButton) )
 	{
-		dispatch(Event(EVT_MAPPED_INPUT_PRESS, MappedInputEventData(m_MappedMouseButtons[mouseButton])));
+		Dispatch(Event(EVT_MAPPED_INPUT_PRESS, MappedInputEventData(m_MappedMouseButtons[mouseButton])));
 	}
 
-	dispatch(Event(EVT_MOUSE_BUTTON_PRESS, MouseButtonEventData(mouseButton)));
+	Dispatch(Event(EVT_MOUSE_BUTTON_PRESS, MouseButtonEventData(mouseButton)));
 }
 
 void InputSystem::
@@ -117,22 +117,22 @@ TriggerMouseButtonRelease( const MouseButton& mouseButton )
 {
 	if ( m_MappedMouseButtons.ContainsKey(mouseButton) )
 	{
-		dispatch(Event(EVT_MAPPED_INPUT_RELEASE, MappedInputEventData(m_MappedMouseButtons[mouseButton])));
+		Dispatch(Event(EVT_MAPPED_INPUT_RELEASE, MappedInputEventData(m_MappedMouseButtons[mouseButton])));
 	}
 
-	dispatch(Event(EVT_MOUSE_BUTTON_RELEASE, MouseButtonEventData(mouseButton)));
+	Dispatch(Event(EVT_MOUSE_BUTTON_RELEASE, MouseButtonEventData(mouseButton)));
 }
 
 void InputSystem::
 TriggerMappedInputPress( const MappedInputID& input )
 {
-	dispatch(Event(EVT_MAPPED_INPUT_PRESS, MappedInputEventData(input)));
+	Dispatch(Event(EVT_MAPPED_INPUT_PRESS, MappedInputEventData(input)));
 }
 
 void InputSystem::
 TriggerMappedInputRelease( const MappedInputID& input )
 {
-	dispatch(Event(EVT_MAPPED_INPUT_RELEASE, MappedInputEventData(input)));
+	Dispatch(Event(EVT_MAPPED_INPUT_RELEASE, MappedInputEventData(input)));
 }
 
 Key InputSystem::

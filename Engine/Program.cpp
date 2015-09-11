@@ -1,10 +1,16 @@
 #include "Program.h"
 
 #include <Utility/Benchmark.h>
-#include <Logging/Logging.h>
-#include <Timing/FrameTimeInfo.h>
+
+#include <Logging/LoggingSystem.h>
+
 #include <Graphics/GraphicsSystem.h>
+#include <Graphics/GraphicsContext.h>
+
+#include <Timing/FrameTimeInfo.h>
+
 #include <Input/InputSystem.h>
+
 #include <Scripting/ScriptingSystem.h>
 #include <Scripting/ScriptHost.h>
 
@@ -22,7 +28,7 @@ using namespace Dusk::Scripting;
 using namespace std::chrono;
 
 EventID Program::EVT_UPDATE	= 1;
-EventID Program::EVT_RENDER = 2;
+EventID Program::EVT_RENDER	= 3;
 
 bool Program::
 Init( void )
@@ -63,9 +69,9 @@ Init( void )
 	GetInputSystem()->MapKey("jump", Key::KEY_SPACE);
 	GetInputSystem()->MapKey("remap", Key::KEY_ENTER);
 
-	GetInputSystem()->addEventListener(InputSystem::EVT_MAPPED_INPUT_PRESS, this, &Program::MappedInputPressCallback);
-	GetInputSystem()->addEventListener(InputSystem::EVT_KEY_PRESS, this, &Program::KeyPressCallback);
-	GetInputSystem()->addEventListener(InputSystem::EVT_MOUSE_BUTTON_PRESS, this, &Program::MouseButtonPressCallback);
+	GetInputSystem()->AddEventListener(InputSystem::EVT_MAPPED_INPUT_PRESS, this, &Program::MappedInputPressCallback);
+	GetInputSystem()->AddEventListener(InputSystem::EVT_KEY_PRESS, this, &Program::KeyPressCallback);
+	GetInputSystem()->AddEventListener(InputSystem::EVT_MOUSE_BUTTON_PRESS, this, &Program::MouseButtonPressCallback);
 
 	DuskBenchEnd("Program::Init");
 	return true;
@@ -74,9 +80,9 @@ Init( void )
 void Program::
 Term( void )
 {
-	GetInputSystem()->removeEventListener(InputSystem::EVT_MOUSE_BUTTON_PRESS, this, &Program::MouseButtonPressCallback);
-	GetInputSystem()->removeEventListener(InputSystem::EVT_KEY_PRESS, this, &Program::KeyPressCallback);
-	GetInputSystem()->removeEventListener(InputSystem::EVT_MAPPED_INPUT_PRESS, this, &Program::MappedInputPressCallback);
+	GetInputSystem()->RemoveEventListener(InputSystem::EVT_MOUSE_BUTTON_PRESS, this, &Program::MouseButtonPressCallback);
+	GetInputSystem()->RemoveEventListener(InputSystem::EVT_KEY_PRESS, this, &Program::KeyPressCallback);
+	GetInputSystem()->RemoveEventListener(InputSystem::EVT_MAPPED_INPUT_PRESS, this, &Program::MappedInputPressCallback);
 
 	delete mp_ScriptHost;
 	mp_ScriptHost = nullptr;
@@ -139,12 +145,19 @@ Run(void)
 void Program::
 Update( FrameTimeInfo& timeInfo )
 {
+	Dispatch(Event(EVT_UPDATE, UpdateEventData(&timeInfo)));
 }
 
 void Program::
 Render( void )
 {
+	GraphicsContext* ctx = GetGraphicsSystem()->GetGraphicsContext();
 
+	ctx->Clear();
+
+	Dispatch(Event(EVT_RENDER, RenderEventData(ctx)));
+
+	ctx->SwapBuffers();
 }
 
 bool Program::
@@ -208,6 +221,19 @@ SetTargetFPS( double fps )
 	m_TargetFPS = fps;
 	m_UpdateInterval = (1.0 / m_TargetFPS);
 }
+
+FrameTimeInfo* UpdateEventData::
+GetTimeInfo( void )
+{
+	return mp_TimeInfo;
+}
+
+GraphicsContext* RenderEventData::
+GetGraphicsContext( void )
+{
+	return mp_GraphicsContext;
+}
+
 
 void Dusk::Program::MappedInputPressCallback(const Event& event)
 {

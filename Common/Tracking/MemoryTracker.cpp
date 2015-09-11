@@ -1,11 +1,11 @@
 #include "MemoryTracker.h"
 
-#include <Tracking/TrackedObject.h>
+#include <Tracking/ITrackedObject.h>
 
 using namespace Dusk::Tracking;
 
-Map<TrackedObject*, MemoryTracker::AllocationRecord> MemoryTracker::
-s_Allocations = Map<TrackedObject*, MemoryTracker::AllocationRecord>();
+Map<ITrackedObject*, MemoryTracker::AllocationRecord> MemoryTracker::
+s_Allocations = Map<ITrackedObject*, MemoryTracker::AllocationRecord>();
 
 unsigned int MemoryTracker::s_AllocationIndex = 0;
 
@@ -25,7 +25,7 @@ Term(void)
 }
 
 bool MemoryTracker::
-AddAllocation( TrackedObject* pObject, size_t size, 
+AddAllocation( ITrackedObject* pObject, size_t size, 
 			   unsigned int lineNumber, string filename )
 {
 	if (s_Allocations.ContainsKey(pObject))
@@ -39,7 +39,7 @@ AddAllocation( TrackedObject* pObject, size_t size,
 }
 
 bool MemoryTracker::
-RemoveAllocation( TrackedObject* pObject )
+RemoveAllocation( ITrackedObject* pObject )
 {
 	if ( ! s_Allocations.ContainsKey(pObject) )
 		return false;

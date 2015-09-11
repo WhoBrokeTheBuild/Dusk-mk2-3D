@@ -1,62 +1,62 @@
-#include "TrackedObject.h"
+#include "ITrackedObject.h"
 
 #include <Tracking/MemoryTracker.h>
 
 using namespace Dusk::Tracking;
 
-void* TrackedObject::
+void* ITrackedObject::
 operator new(size_t size)
 {
 	// Allocate memory normally 
 	return malloc(size);
 }
 
-void* TrackedObject::
+void* ITrackedObject::
 operator new[](size_t size)
 {
 	// Allocate memory normally 
 	return malloc(size);
 }
 
-void* TrackedObject::
+void* ITrackedObject::
 operator new(size_t size, int lineNumber, const char *filename)
 {
 	// Call base operator
 	void* ptr = ::operator new(size);
 
 	// Record allocation in memory tracker
-	MemoryTracker::AddAllocation((TrackedObject*)ptr, size, lineNumber, string(filename));
+	MemoryTracker::AddAllocation((ITrackedObject*)ptr, size, lineNumber, string(filename));
 
 	return ptr;
 }
 
-void* TrackedObject::
+void* ITrackedObject::
 operator new[](size_t size, int lineNumber, const char *filename)
 {
 	// Call base operator
 	void* ptr = ::operator new(size);
 
 	// Record allocation in memory tracker
-	MemoryTracker::AddAllocation((TrackedObject*)ptr, size, lineNumber, string(filename));
+	MemoryTracker::AddAllocation((ITrackedObject*)ptr, size, lineNumber, string(filename));
 
 	return ptr;
 }
 
-void TrackedObject::
+void ITrackedObject::
 operator delete(void *ptr)
 {
 	// Remove the allocation record if it exists
-	MemoryTracker::RemoveAllocation((TrackedObject*)ptr);
+	MemoryTracker::RemoveAllocation((ITrackedObject*)ptr);
 
 	// Free memory normally 
 	free(ptr);
 }
 
-void TrackedObject::
+void ITrackedObject::
 operator delete[](void *ptr)
 {
 	// Remove the allocation record if it exists
-	MemoryTracker::RemoveAllocation((TrackedObject*)ptr);
+	MemoryTracker::RemoveAllocation((ITrackedObject*)ptr);
 
 	// Free memory normally 
 	free(ptr);

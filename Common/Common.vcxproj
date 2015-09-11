@@ -157,7 +157,7 @@
     <ClCompile Include="Scripting\ScriptHost.cpp" />
     <ClCompile Include="Scripting\ScriptingSystem.cpp" />
     <ClCompile Include="Tracking\MemoryTracker.cpp" />
-    <ClCompile Include="Tracking\TrackedObject.cpp" />
+    <ClCompile Include="Tracking\ITrackedObject.cpp" />
     <ClCompile Include="Utility\Strings.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -170,7 +170,7 @@
     <ClInclude Include="Events\Event.h" />
     <ClInclude Include="Events\IEventDispatcher.h" />
     <ClInclude Include="Logging\LogColors.h" />
-    <ClInclude Include="Logging\Logger.h" />
+    <ClInclude Include="Logging\ILogger.h" />
     <ClInclude Include="Logging\Loggers\ConsoleLogger.h" />
     <ClInclude Include="Logging\Loggers\FileLogger.h" />
     <ClInclude Include="Logging\Loggers\StreamLogger.h" />
@@ -182,7 +182,7 @@
     <ClInclude Include="Timing\FrameTimeInfo.h" />
     <ClInclude Include="Timing\Timing.h" />
     <ClInclude Include="Tracking\MemoryTracker.h" />
-    <ClInclude Include="Tracking\TrackedObject.h" />
+    <ClInclude Include="Tracking\ITrackedObject.h" />
     <ClInclude Include="Tracking\Tracking.h" />
     <ClInclude Include="Utility\Benchmark.h" />
     <ClInclude Include="Utility\Types.h" />

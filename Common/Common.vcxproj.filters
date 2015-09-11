@@ -7,12 +7,12 @@
     <ClCompile Include="Logging\Loggers\FileLogger.cpp" />
     <ClCompile Include="Logging\Loggers\StreamLogger.cpp" />
     <ClCompile Include="Tracking\MemoryTracker.cpp" />
-    <ClCompile Include="Tracking\TrackedObject.cpp" />
     <ClCompile Include="Utility\Strings.cpp" />
     <ClCompile Include="Events\Event.cpp" />
     <ClCompile Include="Events\IEventDispatcher.cpp" />
     <ClCompile Include="Scripting\ScriptingSystem.cpp" />
     <ClCompile Include="Scripting\ScriptHost.cpp" />
+    <ClCompile Include="Tracking\ITrackedObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dusk.h" />
@@ -20,14 +20,12 @@
     <ClInclude Include="Collections\Collections.h" />
     <ClInclude Include="Collections\Map.h" />
     <ClInclude Include="Logging\LogColors.h" />
-    <ClInclude Include="Logging\Logger.h" />
     <ClInclude Include="Logging\Logging.h" />
     <ClInclude Include="Logging\LoggingSystem.h" />
     <ClInclude Include="Logging\Loggers\ConsoleLogger.h" />
     <ClInclude Include="Logging\Loggers\FileLogger.h" />
     <ClInclude Include="Logging\Loggers\StreamLogger.h" />
     <ClInclude Include="Tracking\MemoryTracker.h" />
-    <ClInclude Include="Tracking\TrackedObject.h" />
     <ClInclude Include="Tracking\Tracking.h" />
     <ClInclude Include="Utility\Console.h" />
     <ClInclude Include="Utility\Platform.h" />
@@ -44,5 +42,7 @@
     <ClInclude Include="Scripting\Scripting.h" />
     <ClInclude Include="Scripting\ScriptingSystem.h" />
     <ClInclude Include="Scripting\ScriptHost.h" />
+    <ClInclude Include="Logging\ILogger.h" />
+    <ClInclude Include="Tracking\ITrackedObject.h" />
   </ItemGroup>
 </Project>

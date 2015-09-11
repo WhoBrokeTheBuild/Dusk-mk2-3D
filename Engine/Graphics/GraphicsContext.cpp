@@ -2,7 +2,10 @@
 
 #include <Graphics/Window.h>
 
-bool Dusk::Graphics::GraphicsContext::Bind( void )
+using namespace Dusk::Graphics;
+
+bool GraphicsContext::
+Bind( void )
 {
 	if ( mp_GLFWWindow == nullptr )
 		return false;
@@ -14,7 +17,22 @@ bool Dusk::Graphics::GraphicsContext::Bind( void )
 	return true;
 }
 
-void Dusk::Graphics::GraphicsContext::SwapBuffers( void )
+
+void GraphicsContext::
+Clear(void)
+{
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+	glClearDepth(1.0f);
+}
+
+void GraphicsContext::
+ResetDepthBuffer(void)
+{
+	glClear(GL_DEPTH_BUFFER_BIT);
+}
+
+void GraphicsContext::
+SwapBuffers( void )
 {
 	glfwSwapBuffers(mp_GLFWWindow);
 }

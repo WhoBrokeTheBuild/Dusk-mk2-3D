@@ -13,23 +13,23 @@ namespace Dusk
 namespace Tracking
 {
 
-class TrackedObject;
+class ITrackedObject;
 
 class MemoryTracker
 {
 
-	friend class TrackedObject;
+	friend class ITrackedObject;
 
 public:
 
 	static bool Init( void );
 	static void Term( void );
 
-	static bool AddAllocation( TrackedObject* pObject, size_t size, 
+	static bool AddAllocation( ITrackedObject* pObject, size_t size, 
 							   unsigned int lineNumber, string filename );
-	static bool RemoveAllocation( TrackedObject* pObject );
+	static bool RemoveAllocation( ITrackedObject* pObject );
 
-	static inline unsigned int AllocationCount( void ) 
+	static inline unsigned int GetAllocationCount( void ) 
 		{ return (unsigned int)s_Allocations.Size(); }
 
 	static void PrintAllocations( void );
@@ -54,7 +54,7 @@ private:
 
 	}; // struct AllocationRecord
 
-	static Map<TrackedObject*, AllocationRecord>	s_Allocations;
+	static Map<ITrackedObject*, AllocationRecord>	s_Allocations;
 
 	static unsigned int								s_AllocationIndex;
 

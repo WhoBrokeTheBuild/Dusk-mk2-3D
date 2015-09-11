@@ -2,7 +2,7 @@
 #define DUSK_COLLECTIONS_MAP_H
 
 #include <Collections/Collections.h>
-#include <Tracking/TrackedObject.h>
+#include <Tracking/ITrackedObject.h>
 
 #include <map>
 
@@ -14,7 +14,7 @@ namespace Collections
 
 template <class K, class T, typename Sort = std::less<K>>
 class Map :
-	public Tracking::TrackedObject
+	public Tracking::ITrackedObject
 {
 public:
 

@@ -12,7 +12,7 @@ namespace Dusk
 namespace Tracking
 {
 
-class TrackedObject
+class ITrackedObject
 {
 public:
 

@@ -2,37 +2,37 @@
 
 using namespace Dusk::Logging;
 
-Map<string, ofstream*> Dusk::Logging::FileLogger::m_Streams;
-Map<string, int> Dusk::Logging::FileLogger::m_StreamOwners;
+Map<string, ofstream*> Dusk::Logging::FileLogger::s_Streams;
+Map<string, int> Dusk::Logging::FileLogger::s_StreamOwners;
 
 FileLogger::
 FileLogger( const string& filename ) :
 	m_Filename(filename),
 	m_Stream(nullptr)
 {
-	if ( m_Streams.ContainsKey(m_Filename) )
+	if (s_Streams.ContainsKey(m_Filename) )
 	{
-		m_Stream = m_Streams[m_Filename];
-		++m_StreamOwners[m_Filename];
+		m_Stream = s_Streams[m_Filename];
+		++s_StreamOwners[m_Filename];
 	}
 	else
 	{
 		m_Stream = new ofstream();
 		m_Stream->open(m_Filename);
 
-		m_Streams.Add(m_Filename, m_Stream);
-		m_StreamOwners.Add(m_Filename, 1);
+		s_Streams.Add(m_Filename, m_Stream);
+		s_StreamOwners.Add(m_Filename, 1);
 	}
 }
 
 FileLogger::
 ~FileLogger( void )
 {
-	if (--m_StreamOwners[m_Filename] <= 0)
+	if (--s_StreamOwners[m_Filename] <= 0)
 	{
-		ofstream* pFile = m_Streams[m_Filename];
+		ofstream* pFile = s_Streams[m_Filename];
 		pFile->close();
-		m_Streams.RemoveAt(m_Filename);
+		s_Streams.RemoveAt(m_Filename);
 	}
 }
 

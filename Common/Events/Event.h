@@ -1,7 +1,7 @@
 #ifndef DUSK_EVENT_H
 #define DUSK_EVENT_H
 
-#include <Tracking/TrackedObject.h>
+#include <Tracking/ITrackedObject.h>
 #include <string>
 
 using std::string;
@@ -17,7 +17,7 @@ typedef unsigned int EventID;
 class IEventDispatcher;
 
 class EventData :
-	public Tracking::TrackedObject
+	public Tracking::ITrackedObject
 {
 public:
 
@@ -35,7 +35,7 @@ public:
 }; // class EventData
 
 class Event :
-	public Tracking::TrackedObject
+	public Tracking::ITrackedObject
 {
 public:
 

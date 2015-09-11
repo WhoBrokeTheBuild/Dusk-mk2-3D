@@ -1,7 +1,7 @@
 #ifndef DUSK_LOGGING_CONSOLE_LOGGER_H
 #define DUSK_LOGGING_CONSOLE_LOGGER_H
 
-#include <Logging/Logger.h>
+#include <Logging/ILogger.h>
 
 #include <string>
 
@@ -14,7 +14,7 @@ namespace Logging
 {
 
 class ConsoleLogger :
-    public Logger
+    public ILogger
 {
 public:
 

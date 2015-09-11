@@ -26,7 +26,7 @@ namespace Dusk
 namespace Logging
 {
 
-class Logger;
+class ILogger;
 
 class LoggingSystem
 {
@@ -35,23 +35,20 @@ public:
     static bool AddLevel( const int& index, const string& level );
 
     static inline bool HasLevel( const string& level )
-        { return (m_Loggers.ContainsKey(level)); }
+        { return (s_Loggers.ContainsKey(level)); }
 
-    static inline bool LevelShown( const string& level )
-        { return (m_Levels[level] >= m_CurrentLevel); }
+    static inline bool IsLevelShown( const string& level )
+        { return (s_Levels[level] >= s_CurrentLevel); }
 
     static inline void SetLoggingLevel( const string& level )
-        { m_CurrentLevel = m_Levels[level]; }
-
-    static inline void SetLoggingLevel( const int& index )
-        { m_CurrentLevel = index; }
+        { s_CurrentLevel = s_Levels[level]; }
 
     static inline int GetLoggingLevel( void )
-        { return m_CurrentLevel; }
+        { return s_CurrentLevel; }
 
     static bool AddConsoleLogger ( const string& level );
     static bool AddFileLogger    ( const string& level, const string& filename );
-    static bool AddStreamLogger  ( const string& level, ostream& stream );
+    //static bool AddStreamLogger  ( const string& level, ostream& stream );
 
     static void SetLevelForegroundColor( const string& level,
                                          const LogForegroundColor& color );
@@ -70,7 +67,7 @@ public:
 
 private:
 
-    static void Format( const char* level, const char*,
+    static void Format( const char* level, const char* message,
                         const char* file,  const int& line );
 
     static void DispatchLog( const string& level );
@@ -78,14 +75,14 @@ private:
     static char  m_LogBuffer[DUSK_LOGGING_MAX_BUFFER_SIZE],
                  m_FormatBuffer[DUSK_LOGGING_MAX_BUFFER_SIZE];
 
-    static int                                  m_CurrentLevel;
+    static int                                  s_CurrentLevel;
 
-    static Map<string, int>                     m_Levels;
+    static Map<string, int>                     s_Levels;
 
-    static Map<string, LogForegroundColor>      m_ForegroundColors;
-    static Map<string, LogBackgroundColor>      m_BackgroundColors;
+    static Map<string, LogForegroundColor>      s_ForegroundColors;
+    static Map<string, LogBackgroundColor>      s_BackgroundColors;
 
-    static Map<string, ArrayList<Logger*>>      m_Loggers;
+    static Map<string, ArrayList<ILogger*>>     s_Loggers;
 
 }; // class LoggingSystem
 

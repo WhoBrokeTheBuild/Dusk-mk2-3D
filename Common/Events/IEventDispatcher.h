@@ -24,36 +24,36 @@ public:
     IEventDispatcher( void );
     virtual ~IEventDispatcher( void );
 
-    void addEventListener   ( const EventID& eventId, const EventDelegate& funcDelegate );
-    void removeEventListener( const EventID& eventId, const EventDelegate& funcDelegate );
+    void AddEventListener   ( const EventID& eventId, const EventDelegate& funcDelegate );
+    void RemoveEventListener( const EventID& eventId, const EventDelegate& funcDelegate );
 
-    void addEventListener   ( const EventID& eventId, void (*pFunction)(const Event&) );
-    void removeEventListener( const EventID& eventId, void (*pFunction)(const Event&) );
+    void AddEventListener   ( const EventID& eventId, void (*pFunction)(const Event&) );
+    void RemoveEventListener( const EventID& eventId, void (*pFunction)(const Event&) );
 
     template <typename ObjectType, typename Method>
-    void addEventListener   ( const EventID& eventId, ObjectType* pObject, Method method );
+    void AddEventListener   ( const EventID& eventId, ObjectType* pObject, Method method );
     template <typename ObjectType, typename Method>
-    void removeEventListener( const EventID& eventId, ObjectType* pObject, Method method );
+    void RemoveEventListener( const EventID& eventId, ObjectType* pObject, Method method );
 
     template <typename ObjectType>
-    void removeAllMethods( ObjectType* pObject );
+    void RemoveAllMethods( ObjectType* pObject );
 
-    void removeAllListeners( void );
-    void removeAllListeners( const EventID& eventId );
+    void RemoveAllListeners( void );
+    void RemoveAllListeners( const EventID& eventId );
 
-    void dispatch( const Event& event );
+    void Dispatch( const Event& event );
 
-    static void cleanEvents( void )
+    static void CleanEvents( void )
     {
         unsigned int length = (unsigned int)s_Dispatchers.Size();
         for (unsigned int i = 0; i < length; ++i)
-            s_Dispatchers[i]->cleanMap();
+            s_Dispatchers[i]->CleanMap();
     }
 
 private:
 
-    void cleanMap( void );
-    virtual inline void noop( void ) { }
+    void CleanMap( void );
+    virtual inline void NoOp( void ) { }
 
     static ArrayList<IEventDispatcher*>         s_Dispatchers;
     Map<EventID, ArrayList<EventDelegate*>>     m_EventMap;
@@ -64,19 +64,19 @@ private:
 }; // class EventDispatcher
 
 template <typename ObjectType, typename Method>
-void IEventDispatcher::addEventListener( const EventID& eventId, ObjectType* object, Method method )
+void IEventDispatcher::AddEventListener( const EventID& eventId, ObjectType* object, Method method )
 {
-    addEventListener(eventId, EventDelegate(object, method));
+    AddEventListener(eventId, EventDelegate(object, method));
 }
 
 template <typename ObjectType, typename Method>
-void IEventDispatcher::removeEventListener( const EventID& eventId, ObjectType* object, Method method )
+void IEventDispatcher::RemoveEventListener( const EventID& eventId, ObjectType* object, Method method )
 {
-    removeEventListener(eventId, EventDelegate(object, method));
+    RemoveEventListener(eventId, EventDelegate(object, method));
 }
 
 template <typename ObjectType>
-void IEventDispatcher::removeAllMethods( ObjectType* object )
+void IEventDispatcher::RemoveAllMethods( ObjectType* object )
 {
     bool needRepeat = true;
     Map<EventID, ArrayList<EventDelegate*>>::Iterator mapIt;

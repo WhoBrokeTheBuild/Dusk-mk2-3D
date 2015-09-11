@@ -4,7 +4,7 @@
 #define DUSK_INPUT_INPUT_SYSTEM_H
 
 #include <Scripting/Scripting.h>
-#include <Tracking/TrackedObject.h>
+#include <Tracking/ITrackedObject.h>
 #include <Events/IEventDispatcher.h>
 
 #include <Input/Inputs/Key.h>
@@ -42,7 +42,7 @@ private:
 }; // class MappedInputEventData
 
 class InputSystem :
-	public Tracking::TrackedObject,
+	public Tracking::ITrackedObject,
 	public Events::IEventDispatcher
 {
 public:

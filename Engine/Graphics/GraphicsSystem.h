@@ -2,7 +2,7 @@
 #define DUSK_GRAPHICS_GRAPHICS_SYSTEM_H
 
 #include <Scripting/Scripting.h>
-#include <Tracking/TrackedObject.h>
+#include <Tracking/ITrackedObject.h>
 
 namespace Dusk
 {
@@ -14,7 +14,7 @@ class Window;
 class GraphicsContext;
 
 class GraphicsSystem :
-	public Tracking::TrackedObject
+	public Tracking::ITrackedObject
 {
 public:
 

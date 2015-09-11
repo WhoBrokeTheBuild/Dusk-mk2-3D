@@ -2,7 +2,7 @@
 #define DUSK_LOGGING_LOGGER_H
 
 #include <Logging/Logging.h>
-#include <Tracking/TrackedObject.h>
+#include <Tracking/ITrackedObject.h>
 #include <Logging/LogColors.h>
 
 #include <string>
@@ -15,12 +15,12 @@ namespace Dusk
 namespace Logging
 {
 
-class Logger :
-	public Tracking::TrackedObject
+class ILogger :
+	public Tracking::ITrackedObject
 {
 public:
 
-    virtual inline ~Logger( void ) { }
+    virtual inline ~ILogger( void ) { }
 
     virtual void Log( const string& line,
                       const LogForegroundColor& fgColor,

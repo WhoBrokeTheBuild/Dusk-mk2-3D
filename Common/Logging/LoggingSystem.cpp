@@ -1,6 +1,6 @@
 #include "LoggingSystem.h"
 
-#include <Logging/Logger.h>
+#include <Logging/ILogger.h>
 #include <Logging/Loggers/ConsoleLogger.h>
 #include <Logging/Loggers/FileLogger.h>
 #include <Logging/Loggers/StreamLogger.h>
@@ -18,30 +18,30 @@ char LoggingSystem::m_LogBuffer[DUSK_LOGGING_MAX_BUFFER_SIZE];
 char LoggingSystem::m_FormatBuffer[DUSK_LOGGING_MAX_BUFFER_SIZE];
 
 int LoggingSystem::
-m_CurrentLevel = 0;
+s_CurrentLevel = 0;
 
 Map<string, int> 
-LoggingSystem::m_Levels = Map<string, int>();
+LoggingSystem::s_Levels = Map<string, int>();
 
 Map<string, LogForegroundColor>
-LoggingSystem::m_ForegroundColors = Map<string, LogForegroundColor>();
+LoggingSystem::s_ForegroundColors = Map<string, LogForegroundColor>();
 
 Map<string, LogBackgroundColor>
-LoggingSystem::m_BackgroundColors = Map<string, LogBackgroundColor>();
+LoggingSystem::s_BackgroundColors = Map<string, LogBackgroundColor>();
 
-Map<string, ArrayList<Logger*>>
-LoggingSystem::m_Loggers = Map<string, ArrayList<Logger*>>();
+Map<string, ArrayList<ILogger*>>
+LoggingSystem::s_Loggers = Map<string, ArrayList<ILogger*>>();
 
 bool LoggingSystem::
 AddLevel( const int& index, const string& level )
 {
-    if (m_Loggers.ContainsKey(level) || m_Levels.ContainsKey(level))
+    if (s_Loggers.ContainsKey(level) || s_Levels.ContainsKey(level))
         return false;
 
-    m_Loggers.Add(level, ArrayList<Logger*>());
-    m_Levels.Add(level, index);
-    m_ForegroundColors.Add(level, LOG_FG_DEFAULT);
-    m_BackgroundColors.Add(level, LOG_BG_DEFAULT);
+    s_Loggers.Add(level, ArrayList<ILogger*>());
+    s_Levels.Add(level, index);
+    s_ForegroundColors.Add(level, LOG_FG_DEFAULT);
+    s_BackgroundColors.Add(level, LOG_BG_DEFAULT);
 
     return true;
 }
@@ -49,16 +49,16 @@ AddLevel( const int& index, const string& level )
 void LoggingSystem::
 CloseAllLoggers( void )
 {
-    for (auto it = m_Loggers.Begin(); it != m_Loggers.End(); ++it)
+    for (auto& level : s_Loggers)
     {
-        ArrayList<Logger*>& loggers = it->second;
-        for (auto jt = loggers.Begin(); jt != loggers.End(); ++jt)
-        {
-			delete *jt;
-        }
+        ArrayList<ILogger*>& loggers = level.second;
+        
+		for (auto logger : loggers)
+			delete logger;
+
         loggers.Clear();
     }
-    m_Loggers.Clear();
+    s_Loggers.Clear();
 }
 
 void LoggingSystem::
@@ -66,7 +66,7 @@ SetLevelForegroundColor( const string& level, const LogForegroundColor& color )
 {
     if ( ! HasLevel(level)) return;
 
-    m_ForegroundColors[level] = color;
+    s_ForegroundColors[level] = color;
 }
 
 void LoggingSystem::
@@ -74,14 +74,14 @@ SetLevelBackgroundColor( const string& level, const LogBackgroundColor& color )
 {
     if ( ! HasLevel(level)) return;
 
-    m_BackgroundColors[level] = color;
+    s_BackgroundColors[level] = color;
 }
 
 void LoggingSystem::
 Log( const string& level, const string& message,
      const string& file, const int& line )
 {
-    if ( ! LevelShown(level)) return;
+    if ( ! IsLevelShown(level)) return;
 
     Format(level.c_str(), message.c_str(), Basename(file).c_str(), line);
     DispatchLog(level);
@@ -91,7 +91,7 @@ void LoggingSystem::
 ExtLog( const string& level, const string& format,
      const string& file, const int line, ... )
 {
-	if (!LevelShown(level)) return;
+	if (!IsLevelShown(level)) return;
 
 	va_list args;
 
@@ -119,35 +119,34 @@ DispatchLog( const string& level )
 {
     if ( ! HasLevel(level)) return;
 
-    LogForegroundColor fgColor = m_ForegroundColors[level];
-    LogBackgroundColor bgColor = m_BackgroundColors[level];
+    LogForegroundColor fgColor = s_ForegroundColors[level];
+    LogBackgroundColor bgColor = s_BackgroundColors[level];
 
-    ArrayList<Logger*>& loggers = m_Loggers[level];
-    for (auto it = loggers.Begin(); it != loggers.End(); ++it)
+    ArrayList<ILogger*>& loggers = s_Loggers[level];
+    for (auto logger : loggers)
     {
-        Logger* pLogger = (*it);
-        if (pLogger == nullptr)
+        if (logger == nullptr)
             continue;
 
-        pLogger->Log(m_LogBuffer, fgColor, bgColor);
+		logger->Log(m_LogBuffer, fgColor, bgColor);
     }
 }
 
 bool LoggingSystem::
 AddConsoleLogger( const string& level )
 {
-    if ( ! m_Loggers.ContainsKey(level))
+    if ( ! s_Loggers.ContainsKey(level))
         return false;
-    m_Loggers[level].Add(New ConsoleLogger());
+    s_Loggers[level].Add(New ConsoleLogger());
     return true;
 }
 
 bool LoggingSystem::
 AddFileLogger( const string& level, const string& filename )
 {
-    if ( ! m_Loggers.ContainsKey(level))
+    if ( ! s_Loggers.ContainsKey(level))
         return false;
-	m_Loggers[level].Add(New FileLogger(filename));
+	s_Loggers[level].Add(New FileLogger(filename));
     return true;
 }
 

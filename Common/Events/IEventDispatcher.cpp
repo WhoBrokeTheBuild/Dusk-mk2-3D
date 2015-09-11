@@ -12,10 +12,10 @@ Dusk::Events::IEventDispatcher::IEventDispatcher( void )
 Dusk::Events::IEventDispatcher::~IEventDispatcher( void )
 {
     s_Dispatchers.Remove(this);
-    removeAllListeners();
+    RemoveAllListeners();
 }
 
-void Dusk::Events::IEventDispatcher::addEventListener( const EventID& eventId, const EventDelegate& functionDelegate )
+void Dusk::Events::IEventDispatcher::AddEventListener( const EventID& eventId, const EventDelegate& functionDelegate )
 {
     if ( ! m_EventMap.ContainsKey(eventId))
         m_EventMap[eventId] = ArrayList<EventDelegate*>();
@@ -33,7 +33,7 @@ void Dusk::Events::IEventDispatcher::addEventListener( const EventID& eventId, c
     m_EventMap[eventId].Add(New EventDelegate(functionDelegate));
 }
 
-void Dusk::Events::IEventDispatcher::removeEventListener( const EventID& eventId, const EventDelegate& functionDelegate )
+void Dusk::Events::IEventDispatcher::RemoveEventListener( const EventID& eventId, const EventDelegate& functionDelegate )
 {
     if ( ! m_EventMap.ContainsKey(eventId))
         return;
@@ -54,17 +54,17 @@ void Dusk::Events::IEventDispatcher::removeEventListener( const EventID& eventId
     }
 }
 
-void Dusk::Events::IEventDispatcher::removeEventListener( const EventID& eventId, void (*function)(const Event&) )
+void Dusk::Events::IEventDispatcher::RemoveEventListener( const EventID& eventId, void (*function)(const Event&) )
 {
-    removeEventListener(eventId, EventDelegate(function));
+    RemoveEventListener(eventId, EventDelegate(function));
 }
 
-void Dusk::Events::IEventDispatcher::addEventListener( const EventID& eventId, void (*function)(const Event&) )
+void Dusk::Events::IEventDispatcher::AddEventListener( const EventID& eventId, void (*function)(const Event&) )
 {
-    addEventListener(eventId, EventDelegate(function));
+    AddEventListener(eventId, EventDelegate(function));
 }
 
-void Dusk::Events::IEventDispatcher::removeAllListeners( void )
+void Dusk::Events::IEventDispatcher::RemoveAllListeners( void )
 {
     Map<EventID, ArrayList<EventDelegate*>>::Iterator mapIt;
     ArrayList<EventDelegate*>::Iterator listIt;
@@ -86,7 +86,7 @@ void Dusk::Events::IEventDispatcher::removeAllListeners( void )
     m_EventMap.Clear();
 }
 
-void Dusk::Events::IEventDispatcher::removeAllListeners( const EventID& eventId )
+void Dusk::Events::IEventDispatcher::RemoveAllListeners( const EventID& eventId )
 {
     if ( ! m_EventMap.ContainsKey(eventId))
         return;
@@ -106,7 +106,7 @@ void Dusk::Events::IEventDispatcher::removeAllListeners( const EventID& eventId 
     m_Changed = true;
 }
 
-void Dusk::Events::IEventDispatcher::dispatch( const Event& event )
+void Dusk::Events::IEventDispatcher::Dispatch( const Event& event )
 {
     EventID id = event.GetID();
 
@@ -121,11 +121,11 @@ void Dusk::Events::IEventDispatcher::dispatch( const Event& event )
     for(unsigned int i = 0; i < length; ++i)
     {
         if (m_EventMap[id][i] != nullptr)
-            m_EventMap[id][i]->invoke(event);
+            m_EventMap[id][i]->Invoke(event);
     }
 }
 
-void Dusk::Events::IEventDispatcher::cleanMap( void )
+void Dusk::Events::IEventDispatcher::CleanMap( void )
 {
     if ( ! m_Changed)
         return;

@@ -1,7 +1,7 @@
 #ifndef DUSK_DELEGATE_H
 #define DUSK_DELEGATE_H
 
-#include <Tracking/TrackedObject.h>
+#include <Tracking/ITrackedObject.h>
 #include <Events/Callbacks.h>
 
 namespace Dusk
@@ -12,7 +12,7 @@ namespace Events
 
 template <typename ReturnType, typename Param = void>
 class Delegate :
-	public Tracking::TrackedObject
+	public Tracking::ITrackedObject
 {
 public:
 
@@ -29,20 +29,20 @@ public:
 
     Delegate( const Delegate<ReturnType, Param>& rhs )
     {
-        mp_Callback = rhs.mp_Callback->clone();
+        mp_Callback = rhs.mp_Callback->Clone();
     }
 
     virtual inline ~Delegate( void ) { delete mp_Callback; mp_Callback = nullptr; }
 
     virtual inline string GetClassName( void ) const { return "Delegate"; }
 
-    inline ReturnType invoke( Param param ) { return mp_Callback->invoke(param); }
-    inline ReturnType operator()( Param param ) { return invoke(param); }
+    inline ReturnType Invoke( Param param ) { return mp_Callback->Invoke(param); }
+    inline ReturnType operator()( Param param ) { return Invoke(param); }
 
-    inline bool isMethodOf( void* pObject )
+    inline bool IsMethodOf( void* pObject )
     {
         if (!mp_Callback) return false;
-        return mp_Callback->isMethodOf(pObject);
+        return mp_Callback->IsMethodOf(pObject);
     }
 
     bool operator==( const Delegate<ReturnType, Param>& rhs )
@@ -60,7 +60,7 @@ public:
 
 private:
 
-    Callback<ReturnType, Param>*    mp_Callback;
+    ICallback<ReturnType, Param>*    mp_Callback;
 
 
 }; // class Delegate
