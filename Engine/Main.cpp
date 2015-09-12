@@ -39,7 +39,7 @@ void initLoggingSystem(void) {
 	LoggingSystem::SetLevelForegroundColor("debug", LOG_FG_GREEN);
 	LoggingSystem::SetLevelForegroundColor("perf", LOG_FG_YELLOW);
 
-	LoggingSystem::SetLoggingLevel("verbose");
+	LoggingSystem::SetLoggingLevel("perf");
 
 	DuskLog("verbose", "Finished LoggingSystem setup");
 	DuskBenchEnd("main::initLoggingSystem");

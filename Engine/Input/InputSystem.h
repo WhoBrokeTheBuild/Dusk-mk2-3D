@@ -77,6 +77,9 @@ public:
 	void MapKey( const MappedInputID& id, const Key& key );
 	void MapMouseButton( const MappedInputID& id, const MouseButton& button );
 
+	Key GetMappedKey( const MappedInputID& id );
+	MouseButton GetMappedMouseButton( const MappedInputID& id );
+
 	void TriggerKeyPress( const Key& key );
 	void TriggerKeyRelease(const Key& key);
 
@@ -94,6 +97,9 @@ public:
 
 	static void InitScripting( void );
 	static int Script_MapKey( lua_State* pState );
+	static int Script_MapMouseButton( lua_State* pState );
+	static int Script_GetMappedKey( lua_State* pState );
+	static int Script_GetMappedMouseButton( lua_State* pState );
 
 private:
 

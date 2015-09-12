@@ -66,9 +66,6 @@ Init( void )
 
 	mp_ScriptHost->RunFile("Assets/Scripts/Setup.luac");
 
-	GetInputSystem()->MapKey("jump", Key::KEY_SPACE);
-	GetInputSystem()->MapKey("remap", Key::KEY_ENTER);
-
 	GetInputSystem()->AddEventListener(InputSystem::EVT_MAPPED_INPUT_PRESS, this, &Program::MappedInputPressCallback);
 	GetInputSystem()->AddEventListener(InputSystem::EVT_KEY_PRESS, this, &Program::KeyPressCallback);
 	GetInputSystem()->AddEventListener(InputSystem::EVT_MOUSE_BUTTON_PRESS, this, &Program::MouseButtonPressCallback);
@@ -234,6 +231,20 @@ GetGraphicsContext( void )
 	return mp_GraphicsContext;
 }
 
+void Program::
+InitScripting( lua_State* pState )
+{
+	ScriptingSystem::RegisterFunction("dusk_get_program", &Program::Script_GetProgram);
+}
+
+int Program::
+Script_GetProgram( lua_State* pState )
+{
+	lua_pushinteger(pState, (ptrdiff_t)Program::Inst());
+
+	return 1;
+}
+
 
 void Dusk::Program::MappedInputPressCallback(const Event& event)
 {
@@ -256,7 +267,7 @@ void Dusk::Program::KeyPressCallback(const Events::Event& event)
 	const KeyEventData* pData = event.GetDataAs<KeyEventData>();
 	Key key = pData->GetKey();
 
-	if (m_Remap && key != Key::KEY_ENTER) 
+	if (m_Remap && key != GetInputSystem()->GetMappedKey("remap")) 
 	{
 		GetInputSystem()->MapKey("jump", key);
 		DuskExtLog("debug", "Remapped jump to key %d", key);
@@ -269,7 +280,7 @@ void Dusk::Program::MouseButtonPressCallback(const Events::Event& event)
 	const MouseButtonEventData* pData = event.GetDataAs<MouseButtonEventData>();
 	MouseButton button = pData->GetMouseButton();
 
-	if (m_Remap) 
+	if (m_Remap && button != GetInputSystem()->GetMappedMouseButton("remap"))
 	{
 		GetInputSystem()->MapMouseButton("jump", button);
 		DuskExtLog("debug", "Remapped jump to mouse button %d", button);

@@ -3,22 +3,15 @@ if not Dusk then
 
 Dusk = { }
 
-end
+end -- Dusk
 
 if not Dusk.Graphics then
 
 Dusk.Graphics = { }
 
-Dusk.Graphics.GetWindow = function()
+end -- Dusk.Graphics
 
-	local win = Dusk.Graphics.Window();
-	rawset(rawget(getmetatable(win), "private"), "dusk_ptr", dusk_graphics_system_get_window());
-
-	return win;
-
-end
-
--- Dusk::Graphics::Window
+-- Dusk.Graphics.Window
 
 Dusk.Graphics.Window = { }
 Dusk.Graphics.Window.methods = {
@@ -68,7 +61,7 @@ Dusk.Graphics.Window.methods = {
 }
 
 function Dusk.Graphics.Window:new_field( key, value )
-	dusk_log("error", "Dusk.Graphics.Window does not support new fields");
+	DuskLog("error", "Dusk.Graphics.Window does not support new fields");
 end
 
 function Dusk.Graphics.Window:dtor()
@@ -90,5 +83,3 @@ function Dusk.Graphics.Window:ctor()
 end
 
 setmetatable(Dusk.Graphics.Window, {__call = Dusk.Graphics.Window.ctor});
-
-end -- Dusk.Graphics

@@ -153,7 +153,7 @@ AddFileLogger( const string& level, const string& filename )
 void LoggingSystem::
 InitScripting( void )
 {
-	ScriptingSystem::RegisterFunction("dusk_log", &LoggingSystem::Script_Log);
+	ScriptingSystem::RegisterFunction("DuskLog", &LoggingSystem::Script_Log);
 }
 
 int LoggingSystem::

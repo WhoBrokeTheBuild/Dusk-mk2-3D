@@ -62,6 +62,7 @@ InitScripting( void )
 	ScriptingSystem::RegisterFunction("dusk_graphics_system_get_graphics_context", &GraphicsSystem::Script_GetGraphicsContext);
 
 	Window::InitScripting();
+	GraphicsContext::InitScripting();
 }
 
 int GraphicsSystem::

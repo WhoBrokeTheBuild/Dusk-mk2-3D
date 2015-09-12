@@ -4,6 +4,7 @@
 #include <Events/IEventDispatcher.h>
 #include <Tracking/ITrackedObject.h>
 
+#include <Scripting/Scripting.h>
 #include <Events/Event.h>
 
 namespace Dusk
@@ -62,6 +63,10 @@ public:
 	Graphics::GraphicsSystem* GetGraphicsSystem( void );
 
 	Input::InputSystem* GetInputSystem( void );
+
+	static void InitScripting( lua_State* pState );
+	static int Script_GetProgram( lua_State* pState );
+	static int Script_AddEventListener( lua_State* pState );
 
 	// Temporary
 

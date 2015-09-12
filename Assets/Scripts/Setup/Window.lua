@@ -1,5 +1,5 @@
 
-Dusk.Log("verbose", "Setting up the Window");
+DuskLog("verbose", "Setting up the Window");
 
 local win = Dusk.Graphics.GetWindow();
 

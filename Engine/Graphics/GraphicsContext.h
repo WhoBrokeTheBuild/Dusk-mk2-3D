@@ -1,6 +1,7 @@
 #ifndef DUSK_GRAPHICS_CONTEXT_H
 #define DUSK_GRAPHICS_CONTEXT_H
 
+#include <Scripting/Scripting.h>
 #include <Tracking/ITrackedObject.h>
 #include <Graphics/Graphics.h>
 
@@ -28,6 +29,12 @@ public:
 	void ResetDepthBuffer( void );
 
 	void SwapBuffers( void );
+	
+	static void InitScripting( void );
+	static int Script_Clear( lua_State* pState );
+	static int Script_ResetDepthBuffer( lua_State* pState );
+	static int Script_SwapBuffers( lua_State* pState );
+
 
 private:
 

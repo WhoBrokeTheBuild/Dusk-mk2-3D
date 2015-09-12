@@ -52,6 +52,26 @@ MapMouseButton( const MappedInputID& id, const MouseButton& button )
 	m_MappedMouseButtons.Add(button, id);
 }
 
+Key InputSystem::
+GetMappedKey(const MappedInputID& id)
+{
+	if (m_MappedKeys.ContainsValue(id)) {
+		return m_MappedKeys.GetIndexOf(id);
+	}
+
+	return Key::INVALID_KEY;
+}
+
+MouseButton InputSystem::
+GetMappedMouseButton(const MappedInputID& id)
+{
+	if (m_MappedMouseButtons.ContainsValue(id)) {
+		return m_MappedMouseButtons.GetIndexOf(id);
+	}
+
+	return MouseButton::INVALID_MOUSE_BUTTON;
+}
+
 void InputSystem::
 TriggerKeyPress( const Key& key )
 {
@@ -168,14 +188,64 @@ ConvertGLFWMouseButton( const int& mouseButton )
 void InputSystem::
 InitScripting( void )
 {
-	ScriptingSystem::RegisterFunction("dusk_input_system_map_key", &InputSystem::Script_MapKey);
+	ScriptingSystem::RegisterFunction("dusk_input_system_map_key",					&InputSystem::Script_MapKey);
+	ScriptingSystem::RegisterFunction("dusk_input_system_map_mouse_button",			&InputSystem::Script_MapMouseButton);
+	ScriptingSystem::RegisterFunction("dusk_input_system_get_mapped_key",			&InputSystem::Script_GetMappedKey);
+	ScriptingSystem::RegisterFunction("dusk_input_system_get_mapped_mouse_button",	&InputSystem::Script_GetMappedMouseButton);
 }
 
 int InputSystem::
 Script_MapKey( lua_State* pState )
 {
+	InputSystem* pInputSystem = Program::Inst()->GetInputSystem();
+
+	string input = lua_tostring(pState, 1);
+	Key key = (Key)lua_tointeger(pState, 2);
+
+	pInputSystem->MapKey(input, key);
 
 	return 0;
+}
+
+int InputSystem::
+Script_MapMouseButton( lua_State* pState )
+{
+	InputSystem* pInputSystem = Program::Inst()->GetInputSystem();
+
+	string input = lua_tostring(pState, 1);
+	MouseButton button = (MouseButton)lua_tointeger(pState, 2);
+
+	pInputSystem->MapMouseButton(input, button);
+
+	return 0;
+}
+
+int InputSystem::
+Script_GetMappedKey( lua_State* pState )
+{
+	InputSystem* pInputSystem = Program::Inst()->GetInputSystem();
+
+	string input = lua_tostring(pState, 1);
+
+	Key key = pInputSystem->GetMappedKey(input);
+
+	lua_pushinteger(pState, key);
+
+	return 1;
+}
+
+int InputSystem::
+Script_GetMappedMouseButton(lua_State* pState)
+{
+	InputSystem* pInputSystem = Program::Inst()->GetInputSystem();
+
+	string input = lua_tostring(pState, 1);
+
+	MouseButton button = pInputSystem->GetMappedMouseButton(input);
+
+	lua_pushinteger(pState, button);
+
+	return 1;
 }
 
 void Dusk::Input::
