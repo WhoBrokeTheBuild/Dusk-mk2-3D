@@ -19,7 +19,8 @@ namespace Collections
  */
 template <class T>
 class ArrayList :
-	public Tracking::ITrackedObject
+	public Tracking::ITrackedObject,
+	public std::vector<T>
 {
 public:
 
@@ -32,16 +33,6 @@ public:
 	typedef typename std::vector<T>::const_reverse_iterator
 		ConstReverseIterator;
 
-    inline ArrayList( void ) :
-        m_List()
-    { }
-
-    inline ArrayList( const ArrayList& rhs ) :
-        m_List(rhs.m_List)
-    { }
-																			   
-    virtual inline ~ArrayList( void ) { Clear(); }
-
 	virtual inline string GetClassName( void ) const { return "Array List"; }
 
 	/// Add a new element to the list
@@ -49,40 +40,15 @@ public:
 	 * \param item The item to be added to the list
 	 */
     inline void Add( const T& item )
-        { m_List.push_back(item); }
+        { push_back(item); }
 
 	/// Clear the list of all elements
-    inline void Clear( void ) { m_List.clear(); }
+    inline void Clear( void ) { clear(); }
 
-	/// Returns the element at the given index
-	/*!
-	 * \param index The index to get the element from
-	 * \returns The element at the given index
-	 */
-    inline       T& At( const int& index )       { return m_List[index]; }
-
-	/// Returns the element at the given index
-	/*!
-	* \param index The index to get the element from
-	* \returns The element at the given index
-	*/
-    inline const T& At( const int& index ) const { return m_List[index]; }
-
-	/// Returns the element at the given index
-	/*!
-	* \param index The index to get the element from
-	* \returns The element at the given index
-	*/
+    inline       T& At( const int& index )       { return at(index); }
+    inline const T& At( const int& index ) const { return at(index); }
 	inline       T& operator[]( const int& index )       { return At(index); }
-
-	/// Returns the element at the given index
-	/*!
-	 * \param index The index to get the element from
-	 * \returns The element at the given index
-	 */
 	inline const T& operator[]( const int& index ) const { return At(index); }
-
-	// TODO: Implement Data()
 
 	/// Returns if the given element exists within the list
 	/*! 
@@ -99,7 +65,7 @@ public:
 	 * \returns True if the index is in the list, False otherwise
 	 */
 	inline bool HasIndex( const unsigned int& index ) const
-		{ return (IsEmpty() ? false : (index >= 0 && index <= Size() - 1)); }
+		{ return (IsEmpty() ? false : (index >= 0 && index <= GetSize() - 1)); }
 
 	/// Returns the index of a given element, or -1 if not found
 	/*!
@@ -113,13 +79,13 @@ public:
 	* \returns True if the list is empty, False otherwise
 	*/
     inline bool IsEmpty( void ) const
-        { return m_List.empty(); }
+        { return empty(); }
 
 	/// Returns the size of the array
 	/*!
 	* \returns The size of the array
 	*/
-    inline size_t Size( void ) const { return m_List.size(); }
+    inline size_t GetSize( void ) const { return size(); }
 
 	/// Resizes the internal capacity of the array
 	/*!
@@ -130,30 +96,23 @@ public:
 	* \param size The new internal size of the array
 	*/
 	inline void Resize( const unsigned int& size ) 
-		{ m_List.resize(size); }
-
-    inline void Insert( Iterator& first, Iterator& last )
-        { m_List.insert(first, last); }
-
-    inline void Insert( ConstIterator& first,
-                        ConstIterator& last ) const
-        { m_List.insert(first, last); }
+		{ resize(size); }
 
 	inline void InsertAt( const T& item, const unsigned int& index ) 
-		{ m_List.insert(Begin() + index, item); }
+		{ insert(Begin() + index, item); }
 
-	inline T& Front( void ) { return m_List.front(); }
-	inline T& Back ( void ) { return m_List.back(); }
-	inline const T& Front( void ) const { return m_List.front(); }
-	inline const T& Back ( void ) const { return m_List.back(); }
+	inline T& Front( void ) { return front(); }
+	inline T& Back ( void ) { return back(); }
+	inline const T& Front( void ) const { return front(); }
+	inline const T& Back ( void ) const { return back(); }
 
-	inline T PopBack ( void ) { return m_List.pop_back(); }
+	inline T PopBack ( void ) { return pop_back(); }
 
-	inline Iterator Remove( Iterator it ) { return m_List.erase(it); }
+	inline Iterator Remove( Iterator it ) { return erase(it); }
 	inline Iterator Remove( Iterator start, Iterator end ) 
-		{ return m_List.erase(start, end); }
+		{ return erase(start, end); }
 
-	bool Remove( const T& item );
+	bool RemoveFirst( const T& item );
 	bool RemoveAll( const T& item );
 
 	/// Remove the element at the given index
@@ -165,7 +124,7 @@ public:
 	{
 		if ( ! HasIndex(index))
 			return false;
-		m_List.erase(Begin() + index);
+		erase(Begin() + index);
 		return true;
 	}
 
@@ -177,65 +136,31 @@ public:
 		return true; 
 	}
 
-	void Fill( const T& value, const unsigned int& amount );
-
-	template <class InputIterator>
-	inline void Assign( InputIterator first, InputIterator last )
-		{ m_List.assign(first, last); }
-
     inline Iterator Begin( void )
-        { return m_List.begin(); }
+        { return begin(); }
 
     inline Iterator End( void )
-        { return m_List.end(); }
+        { return end(); }
 
     inline ReverseIterator RevBegin( void )
-        { return m_List.rbegin(); }
+        { return rbegin(); }
 
     inline ReverseIterator RevEnd( void )
-        { return m_List.rend(); }
+        { return rend(); }
 
     inline ConstIterator ConstBegin( void )
-        { return m_List.cbegin(); }
+        { return cbegin(); }
 
     inline ConstIterator ConstEnd( void )
-        { return m_List.cend(); }
+        { return cend(); }
 
     inline ConstReverseIterator ConstRevBegin( void )
-        { return m_List.crbegin(); }
+        { return crbegin(); }
 
     inline ConstReverseIterator ConstRevEnd( void )
-        { return m_List.crend(); }
-
-	// For compatibility with range-based for loops
-	
-    inline Iterator begin( void )
-        { return m_List.begin(); }
-
-    inline Iterator end( void )
-        { return m_List.end(); }
-
-    inline ReverseIterator rbegin( void )
-        { return m_List.rbegin(); }
-
-    inline ReverseIterator rend( void )
-        { return m_List.rend(); }
-
-    inline ConstIterator cbegin( void ) const
-        { return m_List.cbegin(); }
-
-    inline ConstIterator cend( void ) const
-        { return m_List.cend(); }
-
-    inline ConstReverseIterator crbegin( void ) const
-        { return m_List.crbegin(); }
-
-    inline ConstReverseIterator crend( void ) const
-        { return m_List.crend(); }
+        { return crend(); }
 
 private:
-
-	std::vector<T>		m_List;
 
 }; // class ArrayList
 
@@ -249,7 +174,7 @@ unsigned int Dusk::Collections::ArrayList<T>::IndexOf(const T& item) const
 }
 
 template <class T>
-bool Dusk::Collections::ArrayList<T>::Remove(const T& item)
+bool Dusk::Collections::ArrayList<T>::RemoveFirst(const T& item)
 {
 	for (auto it = Begin(); it != End(); ++it)
 		if (*it == item)
@@ -264,12 +189,21 @@ template <class T>
 bool Dusk::Collections::ArrayList<T>::RemoveAll(const T& item)
 {
 	bool found = false;
-	for (auto it = Begin(); it != End(); ++it)
+	
+	auto it = Begin();
+	while (it != End()) 
+	{
 		if (*it == item)
 		{
-			Remove(it);
+			it = Remove(it);
 			found = true;
 		}
+		else
+		{
+			++it;
+		}
+	}
+
 	return found;
 }
 

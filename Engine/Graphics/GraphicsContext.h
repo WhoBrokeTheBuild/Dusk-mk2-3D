@@ -31,9 +31,9 @@ public:
 	void SwapBuffers( void );
 	
 	static void InitScripting( void );
-	static int Script_Clear( lua_State* pState );
-	static int Script_ResetDepthBuffer( lua_State* pState );
-	static int Script_SwapBuffers( lua_State* pState );
+	static int Script_Clear( lua_State* L );
+	static int Script_ResetDepthBuffer( lua_State* L );
+	static int Script_SwapBuffers( lua_State* L );
 
 
 private:

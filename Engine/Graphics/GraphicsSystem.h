@@ -33,8 +33,8 @@ public:
 	GraphicsContext* GetGraphicsContext( void ) const;
 
 	static void InitScripting( void );
-	static int Script_GetWindow( lua_State* pState );
-	static int Script_GetGraphicsContext( lua_State* pState );
+	static int Script_GetWindow( lua_State* L );
+	static int Script_GetGraphicsContext( lua_State* L );
 
 private:
 

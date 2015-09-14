@@ -254,6 +254,8 @@ public:
 
 	inline Key GetKey( void ) const { return m_Key; }
 
+	virtual int PushDataToLua( lua_State* L ) const;
+
 private:
 
 	Key		m_Key;

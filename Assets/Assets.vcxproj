@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Scripts\Dusk\Input.InputSystem.lua" />
     <None Include="Scripts\Dusk\Logging.lua" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

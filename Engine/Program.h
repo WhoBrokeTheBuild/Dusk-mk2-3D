@@ -61,12 +61,13 @@ public:
 	void   SetTargetFPS( double fps );
 
 	Graphics::GraphicsSystem* GetGraphicsSystem( void );
+	Input::InputSystem*		  GetInputSystem( void );
 
-	Input::InputSystem* GetInputSystem( void );
-
-	static void InitScripting( lua_State* pState );
-	static int Script_GetProgram( lua_State* pState );
-	static int Script_AddEventListener( lua_State* pState );
+	static void InitScripting( void );
+	static int Script_GetProgram( lua_State* L );
+	static int Script_GetGraphicsSystem( lua_State* L );
+	static int Script_GetInputSystem( lua_State* L );
+	static int Script_AddEventListener( lua_State* L );
 
 	// Temporary
 
@@ -83,7 +84,6 @@ private:
 		m_UpdateInterval(),
 		mp_GraphicsSystem(nullptr),
 		mp_InputSystem(nullptr),
-		mp_ScriptingSystem(nullptr),
 		mp_ScriptHost(nullptr),
 
 		m_Remap(false)
@@ -117,7 +117,6 @@ private:
 
 	Graphics::GraphicsSystem*		mp_GraphicsSystem;
 	Input::InputSystem*				mp_InputSystem;
-	Scripting::ScriptingSystem*		mp_ScriptingSystem;
 
 	Scripting::ScriptHost*		mp_ScriptHost;
 
@@ -142,6 +141,8 @@ public:
 
 	Timing::FrameTimeInfo* GetTimeInfo( void );
 
+	virtual int PushDataToLua( lua_State* L ) const;
+
 private:
 
 	Timing::FrameTimeInfo*	mp_TimeInfo;
@@ -162,6 +163,8 @@ public:
 	virtual inline EventData* Clone(void) const { return New RenderEventData(mp_GraphicsContext); }
 
 	Graphics::GraphicsContext* GetGraphicsContext( void );
+
+	virtual int PushDataToLua( lua_State* L ) const;
 
 private:
 

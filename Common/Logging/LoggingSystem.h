@@ -63,7 +63,7 @@ public:
                         const string& file, const int line, ... );
 
 	static void InitScripting( void );
-	static int Script_Log( lua_State* pState );
+	static int Script_Log( lua_State* L );
 
 private:
 

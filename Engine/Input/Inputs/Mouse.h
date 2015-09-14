@@ -40,6 +40,8 @@ public:
 
 	inline MouseButton GetMouseButton( void ) const { return m_MouseButton; }
 
+	virtual int PushDataToLua( lua_State* L ) const;
+
 private:
 
 	MouseButton		m_MouseButton;
@@ -74,6 +76,8 @@ public:
 	inline double GetDeltaX( void ) const { return m_DeltaX; }
 	inline double GetDeltaY( void ) const { return m_DeltaY; }
 
+	virtual int PushDataToLua( lua_State* L ) const;
+
 private:
 
 	double	m_MouseX,
@@ -104,6 +108,8 @@ public:
 
 	inline double GetScrollX(void) const { return m_ScrollX; }
 	inline double GetScrollY(void) const { return m_ScrollY; }
+
+	virtual int PushDataToLua( lua_State* L ) const;
 
 private:
 

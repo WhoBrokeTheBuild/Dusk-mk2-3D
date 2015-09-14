@@ -1,6 +1,7 @@
 #ifndef DUSK_EVENT_H
 #define DUSK_EVENT_H
 
+#include <Scripting/Scripting.h>
 #include <Tracking/ITrackedObject.h>
 #include <string>
 
@@ -32,6 +33,8 @@ public:
 
     virtual EventData* Clone( void ) const { return New EventData(); };
 
+	virtual int PushDataToLua( lua_State* L ) const;
+
 }; // class EventData
 
 class Event :
@@ -59,6 +62,8 @@ public:
     {
         delete mp_Data;
     }
+
+	virtual int PushDataToLua( lua_State* L ) const;
 
     virtual inline string GetClassName( void ) const { return "Event"; }
 

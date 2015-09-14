@@ -157,14 +157,14 @@ InitScripting( void )
 }
 
 int LoggingSystem::
-Script_Log( lua_State* pState )
+Script_Log( lua_State* L )
 {
 	lua_Debug ar;
-	lua_getstack(pState, 1, &ar);
-	lua_getinfo(pState, "nSl", &ar);
+	lua_getstack(L, 1, &ar);
+	lua_getinfo(L, "nSl", &ar);
 
-	string level = lua_tostring(pState, 1);
-	string message = lua_tostring(pState, 2);
+	string level = lua_tostring(L, 1);
+	string message = lua_tostring(L, 2);
 
 	LoggingSystem::Log(level.c_str(), message.c_str(), ar.source, ar.currentline);
 

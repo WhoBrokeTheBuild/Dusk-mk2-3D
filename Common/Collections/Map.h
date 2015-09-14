@@ -14,7 +14,8 @@ namespace Collections
 
 template <class K, class T, typename Sort = std::less<K>>
 class Map :
-	public Tracking::ITrackedObject
+	public Tracking::ITrackedObject,
+	public std::map<K, T, Sort>
 {
 public:
 
@@ -29,121 +30,74 @@ public:
 
 	typedef std::pair<K, T> Pair;
 
-    inline Map( void ) :
-        m_Map()
-    { }
-
-    inline Map( const Map& rhs ) :
-        m_Map(rhs.m_Map)
-    { }
-
-    virtual inline ~Map( void ) { Clear(); }
-
 	virtual inline string GetClassName( void ) const { return "Map"; }
 
     inline void Add( const K& key, const T& item )
-        { m_Map.insert(Pair(key, item)); }
+        { insert(Pair(key, item)); }
 
-    inline void Clear( void ) { m_Map.clear(); }
+    inline void Clear( void ) { clear(); }
 
     inline void RemoveAt( const K& key )
-		{ m_Map.erase(key); }
-    bool RemoveFirstValue( const T& value );
-    bool RemoveAllValues( const T& value );
+		{ erase(key); }
+    bool RemoveFirst( const T& value );
+    bool RemoveAll( const T& value );
 
-    inline T& At( const K& key )       { return m_Map[key]; }
-    inline T& At( const K& key ) const { return m_Map[key]; }
+    inline T& At( const K& key )       { return at(key); }
+    inline T& At( const K& key ) const { return at(key); }
 	inline T& operator[]( const K& key )	   { return At(key); }
 	inline T& operator[]( const K& key ) const { return At(key); }
 
     inline bool ContainsKey( const K& key )
-		{ return (m_Map.find(key) != ConstEnd()); }
+		{ return (find(key) != ConstEnd()); }
     bool ContainsValue( const T& value ) const;
 
     inline bool IsEmpty( void ) const
-        { return m_Map.empty(); }
+        { return empty(); }
 
     K GetIndexOf( const T& item ) const;
 
-    inline size_t Size( void ) const { return m_Map.size(); }
+    inline size_t GetSize( void ) const { return size(); }
 
     inline Iterator Find( const K& key )
-        { return m_Map.find(key); }
+        { return find(key); }
 
     inline ConstIterator Find( const K& key ) const
-        { return m_Map.find(key); }
-
-    inline void Insert( Iterator& first, Iterator& last )
-        { m_Map.insert(first, last); }
-
-    inline void Insert( ConstIterator& first,
-                        ConstIterator& last ) const
-        { m_Map.insert(first, last); }
+        { return find(key); }
 
     inline Iterator Begin( void )
-        { return m_Map.begin(); }
+        { return begin(); }
 
     inline Iterator End( void )
-        { return m_Map.end(); }
+        { return end(); }
 
     inline ReverseIterator RevBegin( void )
-        { return m_Map.rbegin(); }
+        { return rbegin(); }
 
     inline ReverseIterator RevEnd( void )
-        { return m_Map.rend(); }
+        { return rend(); }
 
     inline ConstIterator ConstBegin( void ) const
-        { return m_Map.cbegin(); }
+        { return cbegin(); }
 
     inline ConstIterator ConstEnd( void ) const
-        { return m_Map.cend(); }
+        { return cend(); }
 
     inline ConstReverseIterator ConstRevBegin( void ) const
-        { return m_Map.crbegin(); }
+        { return crbegin(); }
 
     inline ConstReverseIterator ConstRevEnd( void ) const
-        { return m_Map.crend(); }
-
-	// For compatibility with range-based for loops
-	
-    inline Iterator begin( void )
-        { return m_Map.begin(); }
-
-    inline Iterator end( void )
-        { return m_Map.end(); }
-
-    inline ReverseIterator rbegin( void )
-        { return m_Map.rbegin(); }
-
-    inline ReverseIterator rend( void )
-        { return m_Map.rend(); }
-
-    inline ConstIterator cbegin( void ) const
-        { return m_Map.cbegin(); }
-
-    inline ConstIterator cend( void ) const
-        { return m_Map.cend(); }
-
-    inline ConstReverseIterator crbegin( void ) const
-        { return m_Map.crbegin(); }
-
-    inline ConstReverseIterator crend( void ) const
-        { return m_Map.crend(); }
-
-private:
-
-    std::map<K, T, Sort>    m_Map;
+        { return crend(); }
 
 }; // class Map<T, K, Sort>
 
 template <class K, class T, typename Sort>
-bool Dusk::Collections::Map<K, T, Sort>::RemoveFirstValue( const T& value )
+bool Dusk::Collections::Map<K, T, Sort>::RemoveFirst( const T& value )
 {
 	for (auto it = Begin(); it != End(); ++it)
     {
         if (it->second == value)
         {
-			m_Map.erase(it);
+			erase(it);
             return true;
         }
 	}
@@ -151,7 +105,7 @@ bool Dusk::Collections::Map<K, T, Sort>::RemoveFirstValue( const T& value )
 }
 
 template <class K, class T, typename Sort>
-bool Dusk::Collections::Map<K, T, Sort>::RemoveAllValues(const T& value)
+bool Dusk::Collections::Map<K, T, Sort>::RemoveAll(const T& value)
 {
     bool found = false;
 	auto it = Begin();
@@ -159,7 +113,7 @@ bool Dusk::Collections::Map<K, T, Sort>::RemoveAllValues(const T& value)
 	{
 		if (it->second == value)
 		{
-			it = m_Map.erase(it);
+			it = erase(it);
 			found = true;
 		}
 		else

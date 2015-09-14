@@ -17,7 +17,15 @@ class FrameTimeInfo
 {
 public:
 
-	FrameTimeInfo() { }
+	FrameTimeInfo( void ) :
+		TargetFPS(0.0),
+		CurrentFPS(0.0),
+		TotalSeconds(0.0),
+		TotalMilliseconds(0.0),
+		ElapsedSeconds(0.0),
+		ElapsedMilliseconds(0.0),
+		Delta(0.0)
+	{ }
 
 	double TargetFPS;
 	double CurrentFPS;

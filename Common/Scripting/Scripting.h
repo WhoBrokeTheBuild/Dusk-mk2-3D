@@ -11,7 +11,7 @@ namespace Dusk
 namespace Scripting
 {
 
-typedef int(*LuaCallback)(lua_State* pState);
+typedef int(*LuaCallback)(lua_State* L);
 
 } // namespace Scripting
 

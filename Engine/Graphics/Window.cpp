@@ -152,68 +152,68 @@ InitScripting(void)
 }
 
 int Window::
-Script_SetSize( lua_State* pState )
+Script_SetSize( lua_State* L )
 {
-	Window* pWindow = (Window*)lua_tointeger(pState, 1);
-	int width = (int)lua_tointeger(pState, 2);
-	int height = (int)lua_tointeger(pState, 3);
+	Window* pWindow = (Window*)lua_tointeger(L, 1);
+	int width = (int)lua_tointeger(L, 2);
+	int height = (int)lua_tointeger(L, 3);
 	pWindow->SetSize(width, height);
 
 	return 0;
 }
 
 int Window::
-Script_GetWidth( lua_State* pState )
+Script_GetWidth( lua_State* L )
 {
-	Window* pWindow = (Window*)lua_tointeger(pState, 1);
-	lua_pushinteger(pState, (int)pWindow->GetWidth());
+	Window* pWindow = (Window*)lua_tointeger(L, 1);
+	lua_pushinteger(L, (int)pWindow->GetWidth());
 
 	return 1;
 }
 
 int Window::
-Script_SetWidth( lua_State* pState )
+Script_SetWidth( lua_State* L )
 {
-	Window* pWindow = (Window*)lua_tointeger(pState, 1);
-	int width = (int)lua_tointeger(pState, 2);
+	Window* pWindow = (Window*)lua_tointeger(L, 1);
+	int width = (int)lua_tointeger(L, 2);
 	pWindow->SetWidth(width);
 
 	return 0;
 }
 
 int Window::
-Script_GetHeight( lua_State* pState )
+Script_GetHeight( lua_State* L )
 {
-	Window* pWindow = (Window*)lua_tointeger(pState, 1);
-	lua_pushinteger(pState, (int)pWindow->GetHeight());
+	Window* pWindow = (Window*)lua_tointeger(L, 1);
+	lua_pushinteger(L, (int)pWindow->GetHeight());
 
 	return 1;
 }
 
 int Window::
-Script_SetHeight( lua_State* pState )
+Script_SetHeight( lua_State* L )
 {
-	Window* pWindow = (Window*)lua_tointeger(pState, 1);
-	int height = (int)lua_tointeger(pState, 2);
+	Window* pWindow = (Window*)lua_tointeger(L, 1);
+	int height = (int)lua_tointeger(L, 2);
 	pWindow->SetHeight(height);
 
 	return 0;
 }
 
 int Window::
-Script_GetTitle( lua_State* pState )
+Script_GetTitle( lua_State* L )
 {
-	Window* pWindow = (Window*)lua_tointeger(pState, 1);
-	lua_pushstring(pState, pWindow->GetTitle().c_str());
+	Window* pWindow = (Window*)lua_tointeger(L, 1);
+	lua_pushstring(L, pWindow->GetTitle().c_str());
 
 	return 1;
 }
 
 int Window::
-Script_SetTitle( lua_State* pState )
+Script_SetTitle( lua_State* L )
 {
-	Window* pWindow = (Window*)lua_tointeger(pState, 1);
-	string title = lua_tostring(pState, 2);
+	Window* pWindow = (Window*)lua_tointeger(L, 1);
+	string title = lua_tostring(L, 2);
 	pWindow->SetTitle(title);
 
 	return 0;

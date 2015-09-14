@@ -148,6 +148,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Dusk.cpp" />
+    <ClCompile Include="Events\Callbacks.cpp" />
     <ClCompile Include="Events\Event.cpp" />
     <ClCompile Include="Events\IEventDispatcher.cpp" />
     <ClCompile Include="Logging\Loggers\ConsoleLogger.cpp" />

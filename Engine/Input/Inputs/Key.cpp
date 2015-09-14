@@ -66,3 +66,9 @@ void Dusk::Input::AddGLFWKeyMappings( Collections::Map<int, Key>& map )
 		map.Add(GLFW_KEY_F1 + i, (Key)(Key::KEY_F1 + i));
 	}
 }
+
+int Dusk::Input::KeyEventData::PushDataToLua( lua_State* L ) const
+{
+	lua_pushinteger(L, m_Key);
+	return 1;
+}

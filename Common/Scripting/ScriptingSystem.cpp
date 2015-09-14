@@ -19,12 +19,23 @@ void Dusk::Scripting::ScriptingSystem::AddScriptHost( ScriptHost* pHost )
 	}
 }
 
-void Dusk::Scripting::ScriptingSystem::RemoveScriptHost( ScriptHost* pHost )
+ScriptHost* Dusk::Scripting::ScriptingSystem::GetScriptHost( lua_State* L )
 {
-	s_ScriptHosts.Remove(pHost);
+	for (auto it : s_ScriptHosts)
+	{
+		if (it->GetState() == L)
+			return it;
+	}
+
+	return nullptr;
 }
 
-bool Dusk::Scripting::ScriptingSystem::RegisterFunction(const string& funcName, LuaCallback callback)
+void Dusk::Scripting::ScriptingSystem::RemoveScriptHost( ScriptHost* pHost )
+{
+	s_ScriptHosts.RemoveAll(pHost);
+}
+
+bool Dusk::Scripting::ScriptingSystem::RegisterFunction( const string& funcName, LuaCallback callback )
 {
 	if (funcName.empty())
 	{

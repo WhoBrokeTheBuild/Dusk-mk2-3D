@@ -61,13 +61,13 @@ public:
 	GraphicsContext* GetGraphicsContext( void );
 
 	static void InitScripting( void );
-	static int Script_SetSize  ( lua_State* pState );
-	static int Script_GetWidth ( lua_State* pState );
-	static int Script_GetHeight( lua_State* pState );
-	static int Script_SetWidth ( lua_State* pState );
-	static int Script_SetHeight( lua_State* pState );
-	static int Script_GetTitle ( lua_State* pState );
-	static int Script_SetTitle ( lua_State* pState );
+	static int Script_SetSize  ( lua_State* L );
+	static int Script_GetWidth ( lua_State* L );
+	static int Script_GetHeight( lua_State* L );
+	static int Script_SetWidth ( lua_State* L );
+	static int Script_SetHeight( lua_State* L );
+	static int Script_GetTitle ( lua_State* L );
+	static int Script_SetTitle ( lua_State* L );
 
 	inline void TriggerResize( const size_t& width, const size_t& height )
 	{

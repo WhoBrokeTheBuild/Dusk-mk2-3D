@@ -7,6 +7,11 @@
 namespace Dusk
 {
 
+namespace Scripting 
+{
+	class ScriptHost;
+}
+
 namespace Events
 {
 
@@ -25,6 +30,11 @@ public:
     Delegate( ObjectType* pObject, Method method )
     {
 		mp_Callback = New MethodCallback<ReturnType, Param, ObjectType, Method>(pObject, method);
+    }
+
+    Delegate( Scripting::ScriptHost* pScriptHost, const string& callback )
+    {
+        mp_Callback = New LuaFucntionCallback(pScriptHost, callback);
     }
 
     Delegate( const Delegate<ReturnType, Param>& rhs )

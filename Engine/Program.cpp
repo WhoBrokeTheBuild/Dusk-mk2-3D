@@ -56,8 +56,7 @@ Init( void )
 	}
 	DuskLog("info", "Input Init Succeeded");
 
-	GraphicsSystem::InitScripting();
-	InputSystem::InitScripting();
+	InitScripting();
 
 	SetTargetFPS(60.0);
 
@@ -66,10 +65,6 @@ Init( void )
 
 	mp_ScriptHost->RunFile("Assets/Scripts/Setup.luac");
 
-	GetInputSystem()->AddEventListener(InputSystem::EVT_MAPPED_INPUT_PRESS, this, &Program::MappedInputPressCallback);
-	GetInputSystem()->AddEventListener(InputSystem::EVT_KEY_PRESS, this, &Program::KeyPressCallback);
-	GetInputSystem()->AddEventListener(InputSystem::EVT_MOUSE_BUTTON_PRESS, this, &Program::MouseButtonPressCallback);
-
 	DuskBenchEnd("Program::Init");
 	return true;
 }
@@ -77,10 +72,6 @@ Init( void )
 void Program::
 Term( void )
 {
-	GetInputSystem()->RemoveEventListener(InputSystem::EVT_MOUSE_BUTTON_PRESS, this, &Program::MouseButtonPressCallback);
-	GetInputSystem()->RemoveEventListener(InputSystem::EVT_KEY_PRESS, this, &Program::KeyPressCallback);
-	GetInputSystem()->RemoveEventListener(InputSystem::EVT_MAPPED_INPUT_PRESS, this, &Program::MappedInputPressCallback);
-
 	delete mp_ScriptHost;
 	mp_ScriptHost = nullptr;
 
@@ -114,6 +105,7 @@ Run(void)
 		auto elapsedTime = time - lastTime;
 		lastTime = time;
 
+		timeInfo.CurrentFPS = m_CurrentFPS;
 		timeInfo.TargetFPS = m_TargetFPS;
 		timeInfo.ElapsedSeconds = duration_cast<duration<double>>(elapsedTime).count();
 		timeInfo.ElapsedMilliseconds = duration_cast<duration<double, std::milli>>(elapsedTime).count();
@@ -225,6 +217,42 @@ GetTimeInfo( void )
 	return mp_TimeInfo;
 }
 
+int UpdateEventData::
+PushDataToLua( lua_State* L ) const
+{
+	lua_newtable(L);
+	int top = lua_gettop(L);
+
+	lua_pushnumber(L, mp_TimeInfo->CurrentFPS);
+	lua_setfield(L, -2, "CurrentFPS");
+
+	lua_pushnumber(L, mp_TimeInfo->TargetFPS);
+	lua_setfield(L, -2, "TargetFPS");
+
+	lua_pushnumber(L, mp_TimeInfo->ElapsedSeconds);
+	lua_setfield(L, -2, "ElapsedSeconds");
+
+	lua_pushnumber(L, mp_TimeInfo->ElapsedMilliseconds);
+	lua_setfield(L, -2, "ElapsedMilliseconds");
+
+	lua_pushnumber(L, mp_TimeInfo->TotalSeconds);
+	lua_setfield(L, -2, "TotalSeconds");
+
+	lua_pushnumber(L, mp_TimeInfo->TotalMilliseconds);
+	lua_setfield(L, -2, "TotalMilliseconds");
+
+	lua_pushnumber(L, mp_TimeInfo->Delta);
+	lua_setfield(L, -2, "Delta");
+
+	return 1;
+}
+
+int RenderEventData::
+PushDataToLua(lua_State* L) const
+{
+	return 0;
+}
+
 GraphicsContext* RenderEventData::
 GetGraphicsContext( void )
 {
@@ -232,58 +260,34 @@ GetGraphicsContext( void )
 }
 
 void Program::
-InitScripting( lua_State* pState )
+InitScripting( void )
 {
-	ScriptingSystem::RegisterFunction("dusk_get_program", &Program::Script_GetProgram);
+	ScriptingSystem::RegisterFunction("dusk_get_program",		  &Program::Script_GetProgram);
+	ScriptingSystem::RegisterFunction("dusk_get_graphics_system", &Program::Script_GetGraphicsSystem);
+	ScriptingSystem::RegisterFunction("dusk_get_input_system",    &Program::Script_GetInputSystem);
+
+	IEventDispatcher::InitScripting();
+	GraphicsSystem::InitScripting();
+	InputSystem::InitScripting();
 }
 
 int Program::
-Script_GetProgram( lua_State* pState )
+Script_GetProgram( lua_State* L )
 {
-	lua_pushinteger(pState, (ptrdiff_t)Program::Inst());
-
+	lua_pushinteger(L, (ptrdiff_t)Program::Inst());
 	return 1;
 }
 
-
-void Dusk::Program::MappedInputPressCallback(const Event& event)
+int Program::
+Script_GetGraphicsSystem(lua_State* L)
 {
-	const MappedInputEventData* pData = event.GetDataAs<MappedInputEventData>();
-	MappedInputID input = pData->GetMappedInput();
-
-	if (input == "jump")
-	{
-		DuskLog("debug", "Jumping!");
-	}
-	else if (input == "remap") 
-	{
-		DuskLog("debug", "Remapping jump");
-		m_Remap = true;
-	}
+	lua_pushinteger(L, (ptrdiff_t)Program::Inst()->GetGraphicsSystem());
+	return 1;
 }
 
-void Dusk::Program::KeyPressCallback(const Events::Event& event)
+int Program::
+Script_GetInputSystem( lua_State* L )
 {
-	const KeyEventData* pData = event.GetDataAs<KeyEventData>();
-	Key key = pData->GetKey();
-
-	if (m_Remap && key != GetInputSystem()->GetMappedKey("remap")) 
-	{
-		GetInputSystem()->MapKey("jump", key);
-		DuskExtLog("debug", "Remapped jump to key %d", key);
-		m_Remap = false;
-	}
-}
-
-void Dusk::Program::MouseButtonPressCallback(const Events::Event& event)
-{
-	const MouseButtonEventData* pData = event.GetDataAs<MouseButtonEventData>();
-	MouseButton button = pData->GetMouseButton();
-
-	if (m_Remap && button != GetInputSystem()->GetMappedMouseButton("remap"))
-	{
-		GetInputSystem()->MapMouseButton("jump", button);
-		DuskExtLog("debug", "Remapped jump to mouse button %d", button);
-		m_Remap = false;
-	}
+	lua_pushinteger(L, (ptrdiff_t)Program::Inst()->GetInputSystem());
+	return 1;
 }

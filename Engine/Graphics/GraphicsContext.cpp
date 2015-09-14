@@ -48,9 +48,9 @@ InitScripting( void )
 }
 
 int GraphicsContext::
-Script_Clear( lua_State * pState )
+Script_Clear( lua_State* L )
 {
-	GraphicsContext* pContext = (GraphicsContext*)lua_tointeger(pState, 1);
+	GraphicsContext* pContext = (GraphicsContext*)lua_tointeger(L, 1);
 	
 	pContext->Clear();
 
@@ -58,9 +58,9 @@ Script_Clear( lua_State * pState )
 }
 
 int GraphicsContext::
-Script_ResetDepthBuffer( lua_State* pState )
+Script_ResetDepthBuffer( lua_State* L )
 {
-	GraphicsContext* pContext = (GraphicsContext*)lua_tointeger(pState, 1);
+	GraphicsContext* pContext = (GraphicsContext*)lua_tointeger(L, 1);
 
 	pContext->ResetDepthBuffer();
 
@@ -68,9 +68,9 @@ Script_ResetDepthBuffer( lua_State* pState )
 }
 
 int GraphicsContext::
-Script_SwapBuffers( lua_State* pState )
+Script_SwapBuffers( lua_State* L )
 {
-	GraphicsContext* pContext = (GraphicsContext*)lua_tointeger(pState, 1);
+	GraphicsContext* pContext = (GraphicsContext*)lua_tointeger(L, 1);
 
 	pContext->SwapBuffers();
 

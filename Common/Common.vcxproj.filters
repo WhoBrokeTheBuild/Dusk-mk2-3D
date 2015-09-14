@@ -13,6 +13,7 @@
     <ClCompile Include="Scripting\ScriptingSystem.cpp" />
     <ClCompile Include="Scripting\ScriptHost.cpp" />
     <ClCompile Include="Tracking\ITrackedObject.cpp" />
+    <ClCompile Include="Events\Callbacks.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dusk.h" />

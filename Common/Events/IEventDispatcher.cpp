@@ -1,26 +1,34 @@
 #include "IEventDispatcher.h"
 
-ArrayList<Dusk::Events::IEventDispatcher*> Dusk::Events::IEventDispatcher::s_Dispatchers = ArrayList<Dusk::Events::IEventDispatcher*>();
+#include <Scripting/ScriptingSystem.h>
 
-Dusk::Events::IEventDispatcher::IEventDispatcher( void )
+using namespace Dusk::Events;
+using namespace Dusk::Scripting;
+
+ArrayList<IEventDispatcher*> IEventDispatcher::s_Dispatchers = ArrayList<IEventDispatcher*>();
+
+IEventDispatcher::
+IEventDispatcher( void )
 	: m_EventMap(),
 	  m_Changed(false)
 {
     s_Dispatchers.Add(this);
 }
 
-Dusk::Events::IEventDispatcher::~IEventDispatcher( void )
+IEventDispatcher::
+~IEventDispatcher( void )
 {
-    s_Dispatchers.Remove(this);
+    s_Dispatchers.RemoveAll(this);
     RemoveAllListeners();
 }
 
-void Dusk::Events::IEventDispatcher::AddEventListener( const EventID& eventId, const EventDelegate& functionDelegate )
+void IEventDispatcher::
+AddEventListener( const EventID& eventId, const EventDelegate& functionDelegate )
 {
     if ( ! m_EventMap.ContainsKey(eventId))
-        m_EventMap[eventId] = ArrayList<EventDelegate*>();
+		m_EventMap.Add(eventId, ArrayList<EventDelegate*>());
 
-    unsigned int length = (unsigned int)m_EventMap[eventId].Size();
+    unsigned int length = (unsigned int)m_EventMap[eventId].GetSize();
 
     for(unsigned int i = 0; i < length; ++i)
     {
@@ -33,12 +41,13 @@ void Dusk::Events::IEventDispatcher::AddEventListener( const EventID& eventId, c
     m_EventMap[eventId].Add(New EventDelegate(functionDelegate));
 }
 
-void Dusk::Events::IEventDispatcher::RemoveEventListener( const EventID& eventId, const EventDelegate& functionDelegate )
+void IEventDispatcher::
+RemoveEventListener( const EventID& eventId, const EventDelegate& functionDelegate )
 {
     if ( ! m_EventMap.ContainsKey(eventId))
         return;
 
-	unsigned int length = (unsigned int)m_EventMap[eventId].Size();
+	unsigned int length = (unsigned int)m_EventMap[eventId].GetSize();
 
     for(unsigned int i = 0; i < length; ++i)
     {
@@ -54,17 +63,20 @@ void Dusk::Events::IEventDispatcher::RemoveEventListener( const EventID& eventId
     }
 }
 
-void Dusk::Events::IEventDispatcher::RemoveEventListener( const EventID& eventId, void (*function)(const Event&) )
+void IEventDispatcher::
+RemoveEventListener( const EventID& eventId, void (*function)(const Event&) )
 {
     RemoveEventListener(eventId, EventDelegate(function));
 }
 
-void Dusk::Events::IEventDispatcher::AddEventListener( const EventID& eventId, void (*function)(const Event&) )
+void IEventDispatcher::
+AddEventListener( const EventID& eventId, void (*function)(const Event&) )
 {
     AddEventListener(eventId, EventDelegate(function));
 }
 
-void Dusk::Events::IEventDispatcher::RemoveAllListeners( void )
+void IEventDispatcher::
+RemoveAllListeners( void )
 {
     Map<EventID, ArrayList<EventDelegate*>>::Iterator mapIt;
     ArrayList<EventDelegate*>::Iterator listIt;
@@ -72,7 +84,7 @@ void Dusk::Events::IEventDispatcher::RemoveAllListeners( void )
     unsigned int length;
     for (mapIt = m_EventMap.Begin(); mapIt != m_EventMap.End(); ++mapIt)
     {
-        length = (unsigned int)mapIt->second.Size();
+        length = (unsigned int)mapIt->second.GetSize();
         for (unsigned int i = 0; i < length; ++i)
         {
             if (mapIt->second[i] != nullptr)
@@ -86,12 +98,13 @@ void Dusk::Events::IEventDispatcher::RemoveAllListeners( void )
     m_EventMap.Clear();
 }
 
-void Dusk::Events::IEventDispatcher::RemoveAllListeners( const EventID& eventId )
+void IEventDispatcher::
+RemoveAllListeners( const EventID& eventId )
 {
     if ( ! m_EventMap.ContainsKey(eventId))
         return;
 
-    unsigned int length = (unsigned int)m_EventMap[eventId].Size();
+    unsigned int length = (unsigned int)m_EventMap[eventId].GetSize();
     for(unsigned int i = 0; i < length; ++i)
     {
         if ( m_EventMap[eventId][i] != nullptr )
@@ -106,7 +119,8 @@ void Dusk::Events::IEventDispatcher::RemoveAllListeners( const EventID& eventId 
     m_Changed = true;
 }
 
-void Dusk::Events::IEventDispatcher::Dispatch( const Event& event )
+void IEventDispatcher::
+Dispatch( const Event& event )
 {
     EventID id = event.GetID();
 
@@ -117,7 +131,7 @@ void Dusk::Events::IEventDispatcher::Dispatch( const Event& event )
 
     tmp.setTarget(this);
 
-    unsigned int length = (unsigned int)m_EventMap[id].Size();
+    unsigned int length = (unsigned int)m_EventMap[id].GetSize();
     for(unsigned int i = 0; i < length; ++i)
     {
         if (m_EventMap[id][i] != nullptr)
@@ -125,7 +139,8 @@ void Dusk::Events::IEventDispatcher::Dispatch( const Event& event )
     }
 }
 
-void Dusk::Events::IEventDispatcher::CleanMap( void )
+void IEventDispatcher::
+CleanMap(void)
 {
     if ( ! m_Changed)
         return;
@@ -140,7 +155,7 @@ void Dusk::Events::IEventDispatcher::CleanMap( void )
         for (mapIt = m_EventMap.Begin(); !needRepeat && mapIt != m_EventMap.End(); ++mapIt)
         {
             list = &mapIt->second;
-            for (unsigned int i = 0; !needRepeat && i < list->Size(); ++i)
+            for (unsigned int i = 0; !needRepeat && i < list->GetSize(); ++i)
             {
                 if (list->At(i) == nullptr)
                 {
@@ -153,5 +168,71 @@ void Dusk::Events::IEventDispatcher::CleanMap( void )
     }
 
     m_Changed = false;
+}
+
+void IEventDispatcher::
+InitScripting( void )
+{
+	ScriptingSystem::RegisterFunction("dusk_ievent_dispatcher_add_event_listener",    &IEventDispatcher::Script_AddEventListener);
+	ScriptingSystem::RegisterFunction("dusk_ievent_dispatcher_remove_event_listener", &IEventDispatcher::Script_RemoveEventListener);
+}
+
+int IEventDispatcher::
+Script_AddEventListener( lua_State* L )
+{
+	IEventDispatcher* pEventDispatcher = (IEventDispatcher*)lua_tointeger(L, 1);
+
+	EventID eventId = (EventID)lua_tointeger(L, 2);
+	string callback = lua_tostring(L, 3);
+
+	EventDelegate *pDelegate = New EventDelegate(ScriptingSystem::GetScriptHost(L), callback);
+
+	if (!pEventDispatcher->m_EventMap.ContainsKey(eventId))
+		pEventDispatcher->m_EventMap.Add(eventId, ArrayList<EventDelegate*>());
+
+	unsigned int length = (unsigned int)pEventDispatcher->m_EventMap[eventId].GetSize();
+
+	for (unsigned int i = 0; i < length; ++i)
+	{
+		if (pEventDispatcher->m_EventMap[eventId][i] == nullptr)
+			continue;
+		if (*(pEventDispatcher->m_EventMap[eventId][i]) == *pDelegate)
+			return 0;
+	}
+
+	pEventDispatcher->m_EventMap[eventId].Add(pDelegate);
+
+	return 0;
+}
+
+int IEventDispatcher::
+Script_RemoveEventListener( lua_State* L )
+{
+	IEventDispatcher* pEventDispatcher = (IEventDispatcher*)lua_tointeger(L, 1);
+
+	EventID eventId = (EventID)lua_tointeger(L, 2);
+	string callback = lua_tostring(L, 3);
+
+	EventDelegate delegate = EventDelegate(ScriptingSystem::GetScriptHost(L), callback);
+
+	if (!pEventDispatcher->m_EventMap.ContainsKey(eventId))
+		return 0;
+
+	unsigned int length = (unsigned int)pEventDispatcher->m_EventMap[eventId].GetSize();
+
+	for (unsigned int i = 0; i < length; ++i)
+	{
+		if (pEventDispatcher->m_EventMap[eventId][i] == nullptr)
+			continue;
+		if (*(pEventDispatcher->m_EventMap[eventId][i]) == delegate)
+		{
+			delete pEventDispatcher->m_EventMap[eventId][i];
+			pEventDispatcher->m_EventMap[eventId][i] = nullptr;
+			pEventDispatcher->m_Changed = true;
+			return 0;
+		}
+	}
+
+	return 0;
 }
 

@@ -2,9 +2,15 @@
 #define DUSK_CALLBACKS_H
 
 #include <Tracking/ITrackedObject.h>
+#include <Events/Event.h>
 
 namespace Dusk
 {
+
+namespace Scripting
+{
+	class ScriptHost;
+}
 
 namespace Events
 {
@@ -102,6 +108,30 @@ private:
     void*       mp_Object;
 
 }; // class MethodCallback
+
+class LuaFucntionCallback :
+	public ICallback<void, const Event&>
+{
+public:
+
+	LuaFucntionCallback( Scripting::ScriptHost* pScriptHost, const string& callback );
+
+	virtual void Invoke( const Event& event );
+	inline virtual LuaFucntionCallback* Clone( void ) { return New LuaFucntionCallback(mp_ScriptHost, m_Callback); }
+	inline virtual bool IsMethodOf( void* pObject ) { return false; }
+
+	virtual inline string GetClassName( void ) const { return "Lua Function Callback"; }
+
+protected:
+
+	virtual bool IsEqualTo( const ICallback<void, const Event&>& rhs ) const;
+
+private:
+
+	Scripting::ScriptHost*		mp_ScriptHost;
+	string						m_Callback;
+
+}; // class LuaFucntionCallback
 
 } // namespace Events
 

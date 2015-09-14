@@ -32,6 +32,8 @@ public:
 	bool RunFile( const string& filename );
 	bool RegisterFunction( const string& funcName, LuaCallback callback );
 
+	inline lua_State* GetState( void ) { return mp_LuaState; }
+
 private:
 
 	lua_State*		mp_LuaState;

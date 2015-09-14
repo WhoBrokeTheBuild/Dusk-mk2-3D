@@ -30,7 +30,7 @@ public:
 	static bool RemoveAllocation( ITrackedObject* pObject );
 
 	static inline unsigned int GetAllocationCount( void ) 
-		{ return (unsigned int)s_Allocations.Size(); }
+		{ return (unsigned int)s_Allocations.GetSize(); }
 
 	static void PrintAllocations( void );
 

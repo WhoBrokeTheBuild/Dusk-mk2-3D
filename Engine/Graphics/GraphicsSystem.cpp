@@ -66,17 +66,17 @@ InitScripting( void )
 }
 
 int GraphicsSystem::
-Script_GetWindow( lua_State* pState )
+Script_GetWindow( lua_State* L )
 {
-	lua_pushinteger(pState, (ptrdiff_t)Program::Inst()->GetGraphicsSystem()->GetWindow());
+	lua_pushinteger(L, (ptrdiff_t)Program::Inst()->GetGraphicsSystem()->GetWindow());
 
 	return 1;
 }
 
 int GraphicsSystem::
-Script_GetGraphicsContext( lua_State* pState )
+Script_GetGraphicsContext( lua_State* L )
 {
-	lua_pushinteger(pState, (ptrdiff_t)Program::Inst()->GetGraphicsSystem()->GetGraphicsContext());
+	lua_pushinteger(L, (ptrdiff_t)Program::Inst()->GetGraphicsSystem()->GetGraphicsContext());
 
 	return 1;
 }

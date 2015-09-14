@@ -1,6 +1,7 @@
 #ifndef DUSK_EVENT_DISPATCHER_H
 #define DUSK_EVENT_DISPATCHER_H
 
+#include <scripting/Scripting.h>
 #include <Events/Event.h>
 #include <Events/Delegate.h>
 
@@ -45,10 +46,14 @@ public:
 
     static void CleanEvents( void )
     {
-        unsigned int length = (unsigned int)s_Dispatchers.Size();
+        unsigned int length = (unsigned int)s_Dispatchers.GetSize();
         for (unsigned int i = 0; i < length; ++i)
             s_Dispatchers[i]->CleanMap();
     }
+
+	static void InitScripting( void );
+	static int Script_AddEventListener( lua_State* L );
+	static int Script_RemoveEventListener( lua_State* L );
 
 private:
 

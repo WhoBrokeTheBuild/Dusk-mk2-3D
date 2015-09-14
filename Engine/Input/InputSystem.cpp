@@ -41,14 +41,14 @@ Term( void )
 void InputSystem::
 MapKey( const MappedInputID & id, const Key & key )
 {
-	m_MappedKeys.RemoveAllValues(id);
+	m_MappedKeys.RemoveAll(id);
 	m_MappedKeys.Add(key, id);
 }
 
 void InputSystem::
 MapMouseButton( const MappedInputID& id, const MouseButton& button )
 {
-	m_MappedMouseButtons.RemoveAllValues(id);
+	m_MappedMouseButtons.RemoveAll(id);
 	m_MappedMouseButtons.Add(button, id);
 }
 
@@ -116,9 +116,9 @@ TriggerMouseMoveAbsolute( const double& x, const double& y )
 }
 
 void InputSystem::
-TriggerMouseScroll( double x, double y )
+TriggerMouseScroll( const double& dx, const double& dy )
 {
-	Dispatch(Event(EVT_MOUSE_SCROLL, MouseScrollEventData(x, y)));
+	Dispatch(Event(EVT_MOUSE_SCROLL, MouseScrollEventData(dx, dy)));
 }
 
 void InputSystem::
@@ -195,12 +195,12 @@ InitScripting( void )
 }
 
 int InputSystem::
-Script_MapKey( lua_State* pState )
+Script_MapKey( lua_State* L )
 {
-	InputSystem* pInputSystem = Program::Inst()->GetInputSystem();
+	InputSystem* pInputSystem = (InputSystem*)lua_tointeger(L, 1);
 
-	string input = lua_tostring(pState, 1);
-	Key key = (Key)lua_tointeger(pState, 2);
+	string input = lua_tostring(L, 2);
+	Key key = (Key)lua_tointeger(L, 3);
 
 	pInputSystem->MapKey(input, key);
 
@@ -208,12 +208,12 @@ Script_MapKey( lua_State* pState )
 }
 
 int InputSystem::
-Script_MapMouseButton( lua_State* pState )
+Script_MapMouseButton( lua_State* L )
 {
-	InputSystem* pInputSystem = Program::Inst()->GetInputSystem();
+	InputSystem* pInputSystem = (InputSystem*)lua_tointeger(L, 1);
 
-	string input = lua_tostring(pState, 1);
-	MouseButton button = (MouseButton)lua_tointeger(pState, 2);
+	string input = lua_tostring(L, 2);
+	MouseButton button = (MouseButton)lua_tointeger(L, 3);
 
 	pInputSystem->MapMouseButton(input, button);
 
@@ -221,29 +221,29 @@ Script_MapMouseButton( lua_State* pState )
 }
 
 int InputSystem::
-Script_GetMappedKey( lua_State* pState )
+Script_GetMappedKey( lua_State* L )
 {
-	InputSystem* pInputSystem = Program::Inst()->GetInputSystem();
+	InputSystem* pInputSystem = (InputSystem*)lua_tointeger(L, 1);
 
-	string input = lua_tostring(pState, 1);
+	string input = lua_tostring(L, 2);
 
 	Key key = pInputSystem->GetMappedKey(input);
 
-	lua_pushinteger(pState, key);
+	lua_pushinteger(L, key);
 
 	return 1;
 }
 
 int InputSystem::
-Script_GetMappedMouseButton(lua_State* pState)
+Script_GetMappedMouseButton(lua_State* L)
 {
-	InputSystem* pInputSystem = Program::Inst()->GetInputSystem();
+	InputSystem* pInputSystem = (InputSystem*)lua_tointeger(L, 1);
 
-	string input = lua_tostring(pState, 1);
+	string input = lua_tostring(L, 2);
 
 	MouseButton button = pInputSystem->GetMappedMouseButton(input);
 
-	lua_pushinteger(pState, button);
+	lua_pushinteger(L, button);
 
 	return 1;
 }
@@ -304,4 +304,11 @@ glfwMouseScroll( GLFWwindow* pGLFWWindow, double x, double y )
 {
 	InputSystem* pInputSystem = Program::Inst()->GetInputSystem();
 	pInputSystem->TriggerMouseScroll(x, y);
+}
+
+int MappedInputEventData::
+PushDataToLua( lua_State* L ) const
+{
+	lua_pushstring(L, m_MappedInput.c_str());
+	return 1;
 }

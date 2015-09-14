@@ -1,40 +1,14 @@
+if not Dusk then Dusk = { } end
 
-if not Dusk then
-
-Dusk = { }
-
-end -- Dusk
-
-Dusk.GetProgram = function() 
-
-	local prog = Dusk.Program()
-	rawset(rawget(getmetatable(win), "private"), "dusk_ptr", dusk_get_program());
-	return prog;
-
+Dusk.GetProgram = function()
+	return Dusk.Program( dusk_get_program() )
 end
 
-Dusk.Program = class(Dusk.Events.IEventDispatcher)
+local Program = DuskClass(Dusk.Events.IEventDispatcher, function(self, ptr)
+	Dusk.Events.IEventDispatcher.init(self, ptr)
+end)
 
-function Dusk.Program:new_field( key, value )
-	DuskLog("error", "Dusk.Program does not support new fields");
-end
+Program.EVT_UPDATE	= 1;
+Program.EVT_RENDER	= 3;
 
-function Dusk.Program:dtor()
-end
-
-function Dusk.Program:ctor()
-	local c = { }
-	local c_mt = {
-					__index = Dusk.Program.methods,
-					__newindex = Dusk.Program.new_field,
-					__gc = Dusk.Program.dtor,
-					private = { }
-				 }
-	setmetatable(c, c_mt);
-
-	rawset(rawget(getmetatable(c), "private"), "dusk_ptr", 0);
-
-	return c
-end
-
-setmetatable(DuskProgram, {__call = Program.ctor});
+Dusk.Program = Program

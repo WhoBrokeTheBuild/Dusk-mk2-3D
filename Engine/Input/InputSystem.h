@@ -35,6 +35,8 @@ public:
 
 	inline MappedInputID GetMappedInput( void ) const { return m_MappedInput; }
 
+	virtual int PushDataToLua( lua_State* L ) const;
+
 private:
 
 	MappedInputID		m_MappedInput;
@@ -42,8 +44,8 @@ private:
 }; // class MappedInputEventData
 
 class InputSystem :
-	public Tracking::ITrackedObject,
-	public Events::IEventDispatcher
+	public Events::IEventDispatcher,
+	public Tracking::ITrackedObject
 {
 public:
 
@@ -83,9 +85,9 @@ public:
 	void TriggerKeyPress( const Key& key );
 	void TriggerKeyRelease(const Key& key);
 
-	void TriggerMouseMoveRelative( const double& dX, const double& dY );
+	void TriggerMouseMoveRelative( const double& dx, const double& dy );
 	void TriggerMouseMoveAbsolute( const double& x, const double& y );
-	void TriggerMouseScroll( double x, double y );
+	void TriggerMouseScroll( const double& dx, const double& dy );
 	void TriggerMouseButtonPress( const MouseButton& mouseButton );
 	void TriggerMouseButtonRelease( const MouseButton& mouseButton );
 
@@ -96,10 +98,10 @@ public:
 	MouseButton ConvertGLFWMouseButton( const int& mouseButton );
 
 	static void InitScripting( void );
-	static int Script_MapKey( lua_State* pState );
-	static int Script_MapMouseButton( lua_State* pState );
-	static int Script_GetMappedKey( lua_State* pState );
-	static int Script_GetMappedMouseButton( lua_State* pState );
+	static int Script_MapKey( lua_State* L );
+	static int Script_MapMouseButton( lua_State* L );
+	static int Script_GetMappedKey( lua_State* L );
+	static int Script_GetMappedMouseButton( lua_State* L );
 
 private:
 
