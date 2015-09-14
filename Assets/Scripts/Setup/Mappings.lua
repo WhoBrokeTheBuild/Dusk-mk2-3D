@@ -1,4 +1,3 @@
-
 DuskLog("verbose", "Applying mappings");
 
 local inputSys = Dusk.Input.GetInputSystem()

@@ -45,5 +45,6 @@
     <ClInclude Include="Scripting\ScriptHost.h" />
     <ClInclude Include="Logging\ILogger.h" />
     <ClInclude Include="Tracking\ITrackedObject.h" />
+    <ClInclude Include="Math\Math.h" />
   </ItemGroup>
 </Project>
