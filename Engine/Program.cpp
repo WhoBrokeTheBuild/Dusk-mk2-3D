@@ -263,6 +263,7 @@ void Program::
 InitScripting( void )
 {
 	ScriptingSystem::RegisterFunction("dusk_get_program",		  &Program::Script_GetProgram);
+	ScriptingSystem::RegisterFunction("dusk_program_exit",		  &Program::Script_Exit);
 	ScriptingSystem::RegisterFunction("dusk_get_graphics_system", &Program::Script_GetGraphicsSystem);
 	ScriptingSystem::RegisterFunction("dusk_get_input_system",    &Program::Script_GetInputSystem);
 
@@ -276,6 +277,13 @@ Script_GetProgram( lua_State* L )
 {
 	lua_pushinteger(L, (ptrdiff_t)Program::Inst());
 	return 1;
+}
+
+int Dusk::Program::Script_Exit(lua_State* L)
+{
+	Program* pProgram = (Program*)lua_tointeger(L, 1);
+	pProgram->Exit();
+	return 0;
 }
 
 int Program::

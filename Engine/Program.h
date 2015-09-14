@@ -65,6 +65,7 @@ public:
 
 	static void InitScripting( void );
 	static int Script_GetProgram( lua_State* L );
+	static int Script_Exit( lua_State* L );
 	static int Script_GetGraphicsSystem( lua_State* L );
 	static int Script_GetInputSystem( lua_State* L );
 	static int Script_AddEventListener( lua_State* L );
