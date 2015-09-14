@@ -5,6 +5,10 @@ Dusk.Graphics.GetWindow = function()
 	return Dusk.Graphics.Window( dusk_graphics_system_get_window() )
 end
 
+Dusk.Graphics.GetShaderManager = function()
+	return Dusk.Graphics.ShaderManager( dusk_graphics_system_get_shader_manager() );
+end
+
 Dusk.Graphics.GetContext = function()
 	return Dusk.Graphics.GraphicsContext( dusk_graphics_system_get_graphics_context() );
 end
@@ -44,3 +48,21 @@ function Window:SetTitle(title)
 end
 
 Dusk.Graphics.Window = Window
+
+-- Dusk.Graphics.ShaderManager
+
+local ShaderManager = DuskClass(DuskObject, function(self, ptr)
+	DuskObject.init(self, ptr)
+end)
+
+function ShaderManager:LoadProgram(name, fragShader, vertShader)
+	return dusk_shader_manager_load_program(self.dusk_ptr, name, fragShader, vertShader)
+end
+
+Dusk.Graphics.ShaderManager = ShaderManager
+
+-- Dusk.Graphics.GraphicsContext
+
+local GraphicsContext = DuskClass(DuskObject)
+
+Dusk.Graphics.GraphicsContext = GraphicsContext

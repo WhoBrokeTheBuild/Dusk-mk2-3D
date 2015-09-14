@@ -9,6 +9,7 @@
     <ClCompile Include="Input\InputSystem.cpp" />
     <ClCompile Include="Input\Inputs\Key.cpp" />
     <ClCompile Include="Input\Inputs\Mouse.cpp" />
+    <ClCompile Include="Graphics\ShaderManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Makefile" />
@@ -27,5 +28,6 @@
     <ClInclude Include="Input\IMappedInputListener.h" />
     <ClInclude Include="Input\Inputs\Key.h" />
     <ClInclude Include="Input\Inputs\Mouse.h" />
+    <ClInclude Include="Graphics\ShaderManager.h" />
   </ItemGroup>
 </Project>

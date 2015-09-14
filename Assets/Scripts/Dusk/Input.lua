@@ -11,14 +11,14 @@ local InputSystem = DuskClass(Dusk.Events.IEventDispatcher, function(self, ptr)
 	Dusk.Events.IEventDispatcher.init(self, ptr)
 end)
 
-InputSystem.EVT_KEY_PRESS			 = 1;
-InputSystem.EVT_KEY_RELEASE			 = 2;
-InputSystem.EVT_MOUSE_MOVE			 = 10;
-InputSystem.EVT_MOUSE_SCROLL         = 11;
-InputSystem.EVT_MOUSE_BUTTON_PRESS	 = 12;
-InputSystem.EVT_MOUSE_BUTTON_RELEASE = 13;
-InputSystem.EVT_MAPPED_INPUT_PRESS	 = 20;
-InputSystem.EVT_MAPPED_INPUT_RELEASE = 21;
+InputSystem.EVT_KEY_PRESS			 = 1
+InputSystem.EVT_KEY_RELEASE			 = 2
+InputSystem.EVT_MOUSE_MOVE			 = 10
+InputSystem.EVT_MOUSE_SCROLL         = 11
+InputSystem.EVT_MOUSE_BUTTON_PRESS	 = 12
+InputSystem.EVT_MOUSE_BUTTON_RELEASE = 13
+InputSystem.EVT_MAPPED_INPUT_PRESS	 = 20
+InputSystem.EVT_MAPPED_INPUT_RELEASE = 21
 
 function InputSystem:MapKey(inputId, key)
 	dusk_input_system_map_key(self.dusk_ptr, inputId, key);

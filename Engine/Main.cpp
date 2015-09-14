@@ -11,9 +11,8 @@ using namespace Dusk::Tracking;
 using namespace Dusk::Logging;
 using namespace Dusk::Scripting;
 
-void initLoggingSystem(void) {
-	DuskBenchStart();
-
+void initLoggingSystem(void) 
+{
 	LoggingSystem::AddLevel(4, "error");
 	LoggingSystem::AddLevel(3, "info");
 	LoggingSystem::AddLevel(2, "debug");
@@ -42,7 +41,6 @@ void initLoggingSystem(void) {
 	LoggingSystem::SetLoggingLevel("verbose");
 
 	DuskLog("verbose", "Finished LoggingSystem setup");
-	DuskBenchEnd("main::initLoggingSystem");
 }
 
 int main(int argc, char* argv[])

@@ -11,6 +11,7 @@ namespace Graphics
 {
 
 class Window;
+class ShaderManager;
 class GraphicsContext;
 
 class GraphicsSystem :
@@ -30,15 +31,18 @@ public:
 	void Term( void );
 
 	Window* GetWindow( void ) const;
+	ShaderManager* GetShaderManager( void ) const;
 	GraphicsContext* GetGraphicsContext( void ) const;
 
 	static void InitScripting( void );
 	static int Script_GetWindow( lua_State* L );
+	static int Script_GetShaderManager( lua_State* L );
 	static int Script_GetGraphicsContext( lua_State* L );
 
 private:
 
-	Graphics::Window	*mp_Window;
+	Window*			mp_Window;
+	ShaderManager*	mp_ShaderManager;
 
 }; // class GraphicsSystem
 
