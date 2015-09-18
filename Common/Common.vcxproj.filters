@@ -14,6 +14,13 @@
     <ClCompile Include="Scripting\ScriptHost.cpp" />
     <ClCompile Include="Tracking\ITrackedObject.cpp" />
     <ClCompile Include="Events\Callbacks.cpp" />
+    <ClCompile Include="Data\MaterialData.cpp" />
+    <ClCompile Include="Data\MeshData.cpp" />
+    <ClCompile Include="Data\ModelData.cpp" />
+    <ClCompile Include="Data\TextureData.cpp" />
+    <ClCompile Include="Data\OBJ.cpp" />
+    <ClCompile Include="External\lodepng\lodepng.cpp" />
+    <ClCompile Include="External\tinyobj\tiny_obj_loader.cc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dusk.h" />
@@ -46,5 +53,13 @@
     <ClInclude Include="Logging\ILogger.h" />
     <ClInclude Include="Tracking\ITrackedObject.h" />
     <ClInclude Include="Math\Math.h" />
+    <ClInclude Include="Data\Data.h" />
+    <ClInclude Include="Data\MaterialData.h" />
+    <ClInclude Include="Data\MeshData.h" />
+    <ClInclude Include="Data\ModelData.h" />
+    <ClInclude Include="Data\OBJ.h" />
+    <ClInclude Include="Data\TextureData.h" />
+    <ClInclude Include="External\lodepng\lodepng.h" />
+    <ClInclude Include="External\tinyobj\tiny_obj_loader.h" />
   </ItemGroup>
 </Project>

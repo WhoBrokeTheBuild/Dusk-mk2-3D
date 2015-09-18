@@ -1,4 +1,4 @@
-DuskLog("verbose", "Starting Menu");
+--[[ DuskLog("verbose", "Starting Menu");
 
 local inputSys = Dusk.Input.GetInputSystem()
 local win = Dusk.Graphics.GetWindow();
@@ -100,3 +100,4 @@ end
 inputSys:AddEventListener(inputSys.EVT_MAPPED_INPUT_PRESS, "menu_onMappedInputPress")
 
 showMenu()
+--]]

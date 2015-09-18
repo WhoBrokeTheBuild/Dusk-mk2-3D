@@ -1,7 +1,7 @@
 #include "Texture.h"
 
 #include <Logging/LoggingSystem.h>
-#include <lodepng.h>
+#include <External/lodepng/lodepng.h>
 
 using namespace Dusk::Logging;
 using namespace Dusk::Graphics;

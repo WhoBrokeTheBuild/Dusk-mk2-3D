@@ -95,7 +95,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>./;../Libraries/lua/include/;../Libraries/GLM/include/;../Libraries/lodepng/include/</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./;../Libraries/lua/include/;../Libraries/GLM/include/</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -107,7 +107,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>./;../Libraries/lua/include/;../Libraries/GLM/include/;../Libraries/lodepng/include/</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./;../Libraries/lua/include/;../Libraries/GLM/include/</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -121,7 +121,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>./;../Libraries/lua/include/;../Libraries/GLM/include/;../Libraries/lodepng/include/</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./;../Libraries/lua/include/;../Libraries/GLM/include/</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -137,7 +137,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>./;../Libraries/lua/include/;../Libraries/GLM/include/;../Libraries/lodepng/include/</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./;../Libraries/lua/include/;../Libraries/GLM/include/</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -147,10 +147,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Data\MaterialData.cpp" />
+    <ClCompile Include="Data\MeshData.cpp" />
+    <ClCompile Include="Data\ModelData.cpp" />
+    <ClCompile Include="Data\OBJ.cpp" />
+    <ClCompile Include="Data\TextureData.cpp" />
     <ClCompile Include="Dusk.cpp" />
     <ClCompile Include="Events\Callbacks.cpp" />
     <ClCompile Include="Events\Event.cpp" />
     <ClCompile Include="Events\IEventDispatcher.cpp" />
+    <ClCompile Include="External\lodepng\lodepng.cpp" />
+    <ClCompile Include="External\tinyobj\tiny_obj_loader.cc" />
     <ClCompile Include="Logging\Loggers\ConsoleLogger.cpp" />
     <ClCompile Include="Logging\Loggers\FileLogger.cpp" />
     <ClCompile Include="Logging\Loggers\StreamLogger.cpp" />
@@ -165,11 +172,19 @@
     <ClInclude Include="Collections\ArrayList.h" />
     <ClInclude Include="Collections\Collections.h" />
     <ClInclude Include="Collections\Map.h" />
+    <ClInclude Include="Data\Data.h" />
+    <ClInclude Include="Data\MaterialData.h" />
+    <ClInclude Include="Data\MeshData.h" />
+    <ClInclude Include="Data\ModelData.h" />
+    <ClInclude Include="Data\OBJ.h" />
+    <ClInclude Include="Data\TextureData.h" />
     <ClInclude Include="Dusk.h" />
     <ClInclude Include="Events\Callbacks.h" />
     <ClInclude Include="Events\Delegate.h" />
     <ClInclude Include="Events\Event.h" />
     <ClInclude Include="Events\IEventDispatcher.h" />
+    <ClInclude Include="External\lodepng\lodepng.h" />
+    <ClInclude Include="External\tinyobj\tiny_obj_loader.h" />
     <ClInclude Include="Logging\LogColors.h" />
     <ClInclude Include="Logging\ILogger.h" />
     <ClInclude Include="Logging\Loggers\ConsoleLogger.h" />

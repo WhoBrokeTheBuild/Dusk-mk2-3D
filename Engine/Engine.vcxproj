@@ -93,13 +93,13 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>./;../Common/;../Libraries/GLEW/include/;../Libraries/GLFW/include/;../Libraries/GLM/include/;../Libraries/lua/include/;../Libraries/lodepng/include/</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./;../Common/;../Libraries/GLEW/include/;../Libraries/GLFW/include/;../Libraries/GLM/include/;../Libraries/lua/include/</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>libdusk.lib;OpenGL32.lib;GLu32.lib;glfw3dll.lib;glew32.lib;lodepng.lib;lua53.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)Build\$(Configuration)\$(Platform)\;../Libraries/GLEW/lib/x86/;../Libraries/GLFW/lib/x86/;../Libraries/lua/lib/x86/;../Libraries/lodepng/lib/x86/</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libdusk.lib;OpenGL32.lib;GLu32.lib;glfw3dll.lib;glew32.lib;lua53.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Build\$(Configuration)\$(Platform)\;../Libraries/GLEW/lib/x86/;../Libraries/GLFW/lib/x86/;../Libraries/lua/lib/x86/</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>MSVCRT.lib</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
@@ -108,13 +108,13 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>./;../Common/;../Libraries/GLEW/include/;../Libraries/GLFW/include/;../Libraries/GLM/include/;../Libraries/lua/include/;../Libraries/lodepng/include/</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./;../Common/;../Libraries/GLEW/include/;../Libraries/GLFW/include/;../Libraries/GLM/include/;../Libraries/lua/include/</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>libdusk.lib;OpenGL32.lib;GLu32.lib;glfw3dll.lib;glew32.lib;lodepng.lib;lua53.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)Build\$(Configuration)\$(Platform)\;../Libraries/GLEW/lib/x64/;../Libraries/GLFW/lib/x64/;../Libraries/lua/lib/x64/;../Libraries/lodepng/lib/x64/</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libdusk.lib;OpenGL32.lib;GLu32.lib;glfw3dll.lib;glew32.lib;lua53.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Build\$(Configuration)\$(Platform)\;../Libraries/GLEW/lib/x64/;../Libraries/GLFW/lib/x64/;../Libraries/lua/lib/x64/</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>MSVCRT.lib</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
@@ -125,15 +125,15 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>./;../Common/;../Libraries/GLEW/include/;../Libraries/GLFW/include/;../Libraries/GLM/include/;../Libraries/lua/include/;../Libraries/lodepng/include/</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./;../Common/;../Libraries/GLEW/include/;../Libraries/GLFW/include/;../Libraries/GLM/include/;../Libraries/lua/include/</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>libdusk.lib;OpenGL32.lib;GLu32.lib;glfw3dll.lib;glew32.lib;lodepng.lib;lua53.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)Build\$(Configuration)\$(Platform)\;../Libraries/GLEW/lib/x86/;../Libraries/GLFW/lib/x86/;../Libraries/lua/lib/x86/;../Libraries/lodepng/lib/x86/</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libdusk.lib;OpenGL32.lib;GLu32.lib;glfw3dll.lib;glew32.lib;lua53.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Build\$(Configuration)\$(Platform)\;../Libraries/GLEW/lib/x86/;../Libraries/GLFW/lib/x86/;../Libraries/lua/lib/x86/</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>MSVCRT.lib</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
@@ -144,15 +144,15 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>./;../Common/;../Libraries/GLEW/include/;../Libraries/GLFW/include/;../Libraries/GLM/include/;../Libraries/lua/include/;../Libraries/lodepng/include/</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./;../Common/;../Libraries/GLEW/include/;../Libraries/GLFW/include/;../Libraries/GLM/include/;../Libraries/lua/include/</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>libdusk.lib;OpenGL32.lib;GLu32.lib;glfw3dll.lib;glew32.lib;lodepng.lib;lua53.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)Build\$(Configuration)\$(Platform)\;../Libraries/GLEW/lib/x64/;../Libraries/GLFW/lib/x64/;../Libraries/lua/lib/x64/;../Libraries/lodepng/lib/x64/</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libdusk.lib;OpenGL32.lib;GLu32.lib;glfw3dll.lib;glew32.lib;lua53.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Build\$(Configuration)\$(Platform)\;../Libraries/GLEW/lib/x64/;../Libraries/GLFW/lib/x64/;../Libraries/lua/lib/x64/</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>MSVCRT.lib</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
@@ -160,6 +160,7 @@
     <ClCompile Include="Graphics\GraphicsContext.cpp" />
     <ClCompile Include="Graphics\GraphicsSystem.cpp" />
     <ClCompile Include="Graphics\Mesh.cpp" />
+    <ClCompile Include="Graphics\Model.cpp" />
     <ClCompile Include="Graphics\ShaderManager.cpp" />
     <ClCompile Include="Graphics\Texture.cpp" />
     <ClCompile Include="Graphics\Window.cpp" />
@@ -177,7 +178,9 @@
     <ClInclude Include="Graphics\Graphics.h" />
     <ClInclude Include="Graphics\GraphicsContext.h" />
     <ClInclude Include="Graphics\GraphicsSystem.h" />
+    <ClInclude Include="Graphics\Material.h" />
     <ClInclude Include="Graphics\Mesh.h" />
+    <ClInclude Include="Graphics\Model.h" />
     <ClInclude Include="Graphics\ShaderManager.h" />
     <ClInclude Include="Graphics\Texture.h" />
     <ClInclude Include="Graphics\Window.h" />

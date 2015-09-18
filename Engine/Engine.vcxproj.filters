@@ -12,6 +12,7 @@
     <ClCompile Include="Graphics\ShaderManager.cpp" />
     <ClCompile Include="Graphics\Mesh.cpp" />
     <ClCompile Include="Graphics\Texture.cpp" />
+    <ClCompile Include="Graphics\Model.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Makefile" />
@@ -19,7 +20,6 @@
   <ItemGroup>
     <ClInclude Include="Program.h" />
     <ClInclude Include="Audio\Audio.h" />
-    <ClInclude Include="Graphics\Graphics.h" />
     <ClInclude Include="Graphics\GraphicsSystem.h" />
     <ClInclude Include="Input\Input.h" />
     <ClInclude Include="Graphics\Window.h" />
@@ -31,7 +31,10 @@
     <ClInclude Include="Input\Inputs\Key.h" />
     <ClInclude Include="Input\Inputs\Mouse.h" />
     <ClInclude Include="Graphics\ShaderManager.h" />
+    <ClInclude Include="Graphics\Graphics.h" />
     <ClInclude Include="Graphics\Mesh.h" />
     <ClInclude Include="Graphics\Texture.h" />
+    <ClInclude Include="Graphics\Model.h" />
+    <ClInclude Include="Graphics\Material.h" />
   </ItemGroup>
 </Project>

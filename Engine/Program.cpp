@@ -14,6 +14,8 @@
 #include <Scripting/ScriptingSystem.h>
 #include <Scripting/ScriptHost.h>
 
+#include <Data/OBJ.h>
+
 #include <chrono>
 #include <GLFW/glfw3.h>
 
@@ -24,6 +26,7 @@ using namespace Dusk::Timing;
 using namespace Dusk::Graphics;
 using namespace Dusk::Input;
 using namespace Dusk::Scripting;
+using namespace Dusk::Data;
 
 using namespace std::chrono;
 
@@ -59,6 +62,8 @@ Init( void )
 	InitScripting();
 
 	SetTargetFPS(60.0);
+
+	LoadModelDataFromOBJ("Assets/Models/mdl_cube.obj");
 
 	mp_ScriptHost = New ScriptHost();
 	mp_ScriptHost->Init();

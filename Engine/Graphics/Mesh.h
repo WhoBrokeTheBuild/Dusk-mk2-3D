@@ -3,7 +3,7 @@
 
 #include <Tracking/ITrackedObject.h>
 #include <Graphics/Graphics.h>
-//#include <Graphics/Material.h>
+#include <Graphics/Material.h>
 #include <Math/Math.h>
 #include <Collections/ArrayList.h>
 
@@ -33,7 +33,7 @@ public:
         m_VertexArray(0)
     { }
 
-    virtual inline string getClassName( void ) const { return "Mesh"; }
+    virtual inline string GetClassName( void ) const { return "Mesh"; }
 
     bool Init( const string& name, const GLPrimitiveType& primitiveType, 
 			   const ArrayList<vec3>& vertexes, 
@@ -52,9 +52,9 @@ public:
 
     void Render( void );
 
-    //bool hasMaterial( void ) const { return (mp_Material); }
-    //Material* getMaterial( void ) { return mp_Material; }
-    //void setMaterial( Material* pMaterial ) { mp_Material = pMaterial; }
+    bool HasMaterial( void ) const { return mp_Material; }
+    Material* GetMaterial( void ) { return mp_Material; }
+    void SetMaterial( Material* pMaterial ) { mp_Material = pMaterial; }
 
 private:
 
@@ -75,7 +75,7 @@ private:
 
     GLVertexArray   m_VertexArray;
 
-    //Material*       mp_Material;
+    Material*       mp_Material;
 
 }; // class Mesh
 

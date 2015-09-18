@@ -20,7 +20,7 @@ bool Dusk::Graphics::Mesh::Init( const string& name, const GLPrimitiveType& prim
 
     if (vertexes.IsEmpty()) return false;
 
-    unsigned int vertexCount = vertexes.GetSize();
+    unsigned int vertexCount = (unsigned int)vertexes.GetSize();
     pVertexes = (float*)&vertexes[0];
 
     if ( ! normals.IsEmpty())
